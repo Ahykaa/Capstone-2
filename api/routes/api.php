@@ -1,0 +1,67 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UnitController;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+
+Route::get('/ping', function () {
+    return 'ping test';
+});
+Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+   
+    Route::get('/departments', [DepartmentController::class, 'index']);
+    Route::get('/units', [UnitController::class, 'index']);
+    Route::get('/stauses', [StatusController::class, 'index']);
+
+    Route::prefix('auth')
+        ->controller(AuthController::class)
+        ->group(function () {
+            Route::get('/', 'user');
+            Route::post('/logout', 'logout');
+            Route::post('/change-password', 'changePassword');
+        });
+
+    Route::prefix('messages')
+        ->controller(MessageController::class)
+        ->group(function () {
+            Route::get('/', 'index');
+            Route::get('/{id}', 'show');
+            Route::post('/{id}', 'store');
+        });
+
+    Route::group(['middleware' => ['restrictRole:admin,staff,subadmin']], function () {
+        Route::resource('orders', OrderController::class);
+    });
+
+    Route::group(['middleware' => ['restrictRole:admin,staff']], function () {
+        Route::resource('transaction', TransactionController::class);
+    });
+    Route::group(['middleware' => ['restrictRole:admin'], 'prefix' => 'admin'], function () {
+        Route::get('/dashboard', [DashboardController::class, 'show']);
+        Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
+    });
+});
