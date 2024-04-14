@@ -14,7 +14,7 @@ const schema = yup.object({
   date_needed: yup.date().required(),
   from: yup.string().required(errors.required),
   department_id: yup.string().required(errors.required),
-  request_for: yup.string(),
+  request_for: yup.array(),
   notes: yup.string(),
   status_id: yup.string().required(errors.required),
   quantity: yup.number().required().typeError(errors.required),
@@ -37,11 +37,9 @@ export function useHooks() {
     control,
   } = useForm({
     defaultValues: {
-      order_at: dayjs(new Date()).format('YYYY-MM-DD'),
       quantity: 1,
       downpayment: 0,
       amount: 0,
-      request_for: 'others',
       status_id: '1',
     },
     resolver: yupResolver(schema),

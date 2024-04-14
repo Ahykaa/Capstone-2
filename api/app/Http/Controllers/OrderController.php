@@ -28,8 +28,9 @@ class OrderController extends Controller
     {
 
         $validatedData = $request->validated();
-
         $validatedData['user_id'] = Auth::id();
+
+        $validatedData['request_for'] = json_encode($validatedData['request_for']);
 
         $order = Order::create($validatedData);
 

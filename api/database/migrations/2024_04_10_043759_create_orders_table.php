@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('department_id')
                 ->constrained()
                 ->onUpdate('cascade');
-            $table->string('request_for')->nullable();
+            $table->json('request_for');
             $table->text('notes')->nullable();
             $table->foreignId('status_id')
             ->constrained()
