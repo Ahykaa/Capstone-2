@@ -22,10 +22,20 @@ const OrderForm = () => {
       <div className='flex flex-col space-y-4'>
         <div className='flex space-x-4 w-full'>
           <div className='w-full'>
-            <DatePicker label='Date' name='order_at' {...formState} />
+            <DatePicker
+              label='Date'
+              name='order_at'
+              placeholder='Date Prepared'
+              {...formState}
+            />
           </div>
           <div className='w-full'>
-            <DatePicker label='Date' name='date_needed' {...formState} />
+            <DatePicker
+              label='Date'
+              name='date_needed'
+              placeholder='Date Needed'
+              {...formState}
+            />
           </div>
         </div>
         <div className='flex space-x-4 w-full'>
