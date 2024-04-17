@@ -15,8 +15,9 @@ return new class extends Migration
             $staff = 'staff';
             $admin = 'admin';
             $subadmin = 'subadmin';
+            $subadmin1 = 'subadmin1';
             $superadmin = 'superadmin';
-            $roleEnum = [$superadmin, $admin, $staff, $subadmin, ];
+            $roleEnum = [$staff, $admin,  $subadmin, $subadmin1, $superadmin];
 
             $table->id();
             $table->string('name');
