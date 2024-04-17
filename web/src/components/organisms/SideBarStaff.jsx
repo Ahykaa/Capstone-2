@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { HiOutlineNewspaper, HiOutlineUsers, HiTemplate } from 'react-icons/hi'
+import { HiOutlineNewspaper, HiTemplate } from 'react-icons/hi'
 import { GrTransaction } from 'react-icons/gr'
 
 const links = [
@@ -18,14 +18,9 @@ const links = [
     icon: <HiOutlineNewspaper />,
     link: '/orders/new',
   },
-  {
-    label: 'Staffs',
-    icon: <HiOutlineUsers />,
-    link: '/staffs',
-  },
 ]
 
-const Sidebar = () => {
+const SidebarStaff = () => {
   return (
     <aside className='pt-2 w-64 overflow-y-auto bg-white drop-shadow-lg'>
       <ul className='space-y-2'>
@@ -46,4 +41,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default SidebarStaff

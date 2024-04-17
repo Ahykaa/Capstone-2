@@ -1,5 +1,5 @@
-import { Card as FlowbiteCard } from 'flowbite-react';
-import React from 'react';
+import { Card as FlowbiteCard } from 'flowbite-react'
+import React from 'react'
 
 const Card = ({ title, description }) => {
   return (
@@ -14,7 +14,7 @@ const Card = ({ title, description }) => {
         {description}
       </p>
     </FlowbiteCard>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card

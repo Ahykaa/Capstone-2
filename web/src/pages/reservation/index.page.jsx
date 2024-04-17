@@ -1,17 +1,17 @@
-import DatePicker from '@/components/organisms/DatePicker';
-import TextInput from '@/components/organisms/TextInput';
-import TemplateGSD from '@/components/templates/TemplateGSD';
-import { useHooks } from './hooks';
-import CheckboxInput from '@/components/organisms/Checkbox';
-import { facilitieOptions, ownItems } from '@/hooks/const';
-import PageHeader from '@/components/organisms/PageHeader';
-import { MdOutlineBookmarkAdded } from 'react-icons/md';
-import SelectInput from '@/components/organisms/SelectInput';
-import TotalBox from '@/components/organisms/TotalBox';
-import { useState } from 'react';
+import DatePicker from '@/components/organisms/DatePicker'
+import TextInput from '@/components/organisms/TextInput'
+import TemplateGSD from '@/components/templates/TemplateGSD'
+import { useHooks } from './hooks'
+import CheckboxInput from '@/components/organisms/Checkbox'
+import { facilitieOptions, ownItems } from '@/hooks/const'
+import PageHeader from '@/components/organisms/PageHeader'
+import { MdOutlineBookmarkAdded } from 'react-icons/md'
+import SelectInput from '@/components/organisms/SelectInput'
+import TotalBox from '@/components/organisms/TotalBox'
+import { useState } from 'react'
 
 const Reservation = () => {
-  const { control } = useHooks();
+  const { control } = useHooks()
 
   const breadcrumbs = [
     {
@@ -19,8 +19,8 @@ const Reservation = () => {
       title: 'Reservation Create',
       icon: MdOutlineBookmarkAdded,
     },
-  ];
-  const [totalAmount] = useState(0);
+  ]
+  const [totalAmount] = useState(0)
   return (
     <TemplateGSD>
       <PageHeader breadcrumbs={breadcrumbs} />
@@ -136,6 +136,6 @@ const Reservation = () => {
         </div>
       </section>
     </TemplateGSD>
-  );
-};
-export default Reservation;
+  )
+}
+export default Reservation

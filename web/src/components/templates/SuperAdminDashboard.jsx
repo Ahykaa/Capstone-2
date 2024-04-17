@@ -1,14 +1,14 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'
 
-import CardItem from '@/components/organisms/Card';
-import { dashboardApi } from '@/hooks/api/dashboardApi';
-import Chart from '../organisms/Chart';
-import { useDepartments } from '@/hooks/redux/useDepartments';
+import CardItem from '@/components/organisms/Card'
+import { dashboardApi } from '@/hooks/api/dashboardApi'
+import Chart from '../organisms/Chart'
+import { useDepartments } from '@/hooks/redux/useDepartments'
 
 const SuperAdminDasboard = () => {
-  const { watch } = useForm();
-  const { data } = dashboardApi.useGetDashboardQuery(watch());
-  const { departments } = useDepartments();
+  const { watch } = useForm()
+  const { data } = dashboardApi.useGetDashboardQuery(watch())
+  const { departments } = useDepartments()
 
   const cardData = [
     { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
@@ -19,7 +19,7 @@ const SuperAdminDasboard = () => {
     },
 
     { title: data?.total_amount ?? 0, description: 'Total Utilized Budget' },
-  ];
+  ]
   const chartOptions = {
     chart: {
       id: 'basic-bar',
@@ -27,13 +27,13 @@ const SuperAdminDasboard = () => {
     xaxis: {
       categories: departments.map((dept) => dept.label),
     },
-  };
+  }
   const chartSeries = [
     {
       name: 'series-1',
       data: [50, 74, 45, 50, 70, 31, 55, 21, 10, 29],
     },
-  ];
+  ]
   return (
     <div className='mx-auto max-w-screen-lg '>
       <div className='grid grid-cols-4 gap-4'>
@@ -55,7 +55,7 @@ const SuperAdminDasboard = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SuperAdminDasboard;
+export default SuperAdminDasboard

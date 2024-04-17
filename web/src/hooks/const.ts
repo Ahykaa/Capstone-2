@@ -1,3 +1,13 @@
+export const roles = [
+  {
+    value: 'staff',
+    label: 'Staff',
+  },
+  { value: 'admin', label: 'Unit / Department Head' },
+  { value: 'subadmin1', label: 'Purchaser' },
+  { value: 'subadmin', label: 'GSD admin' },
+]
+
 export const requestOptions = [
   {
     value: 'check',

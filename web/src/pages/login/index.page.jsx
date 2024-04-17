@@ -1,12 +1,12 @@
-import { Button } from 'flowbite-react';
-import Image from 'next/image';
+import { Button } from 'flowbite-react'
+import Image from 'next/image'
 
-import TextInput from '@/components/organisms/TextInput';
+import TextInput from '@/components/organisms/TextInput'
 
-import { useHooks } from './hooks';
+import { useHooks } from './hooks'
 
 const Login = () => {
-  const { formState, handleSubmit } = useHooks();
+  const { formState, handleSubmit } = useHooks()
 
   return (
     <section className='bg-white dark:bg-gray-900'>
@@ -40,7 +40,7 @@ const Login = () => {
         </form>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

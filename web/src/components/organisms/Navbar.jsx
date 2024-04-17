@@ -1,10 +1,10 @@
-import { useUser } from '@/hooks/redux/auth';
-import Image from 'next/image';
-import Link from 'next/link';
-import { HiLogout, HiOutlineUserCircle } from 'react-icons/hi';
+import { useUser } from '@/hooks/redux/auth'
+import Image from 'next/image'
+import Link from 'next/link'
+import { HiLogout, HiOutlineUserCircle } from 'react-icons/hi'
 
 const Navbar = () => {
-  const { user } = useUser();
+  const { user } = useUser()
   return (
     <nav className='p-3 px-8 flex justify-between items-center bg-green-100'>
       <Link href='/' className='font-bold flex items-center'>
@@ -25,7 +25,7 @@ const Navbar = () => {
         </Link>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import { dashboardApi } from '@/hooks/api/dashboardApi';
+import { dashboardApi } from '@/hooks/api/dashboardApi'
 
-import CardItem from '@/components/organisms/Card';
-import { useForm } from 'react-hook-form';
+import CardItem from '@/components/organisms/Card'
+import { useForm } from 'react-hook-form'
 
 const StaffDashboard = () => {
-  const { watch } = useForm();
-  const { data } = dashboardApi.useGetDashboardQuery(watch());
+  const { watch } = useForm()
+  const { data } = dashboardApi.useGetDashboardQuery(watch())
 
   const cardData = [
     { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
@@ -18,7 +18,7 @@ const StaffDashboard = () => {
     },
 
     { title: data?.total_amount ?? 0, description: 'Total Utilized Budget' },
-  ];
+  ]
   return (
     <div className='mx-auto max-w-screen-lg mt-12'>
       <div className='grid grid-cols-4 gap-4'>
@@ -31,7 +31,7 @@ const StaffDashboard = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StaffDashboard;
+export default StaffDashboard

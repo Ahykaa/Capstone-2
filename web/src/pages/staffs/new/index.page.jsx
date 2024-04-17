@@ -1,17 +1,18 @@
-import { Button } from 'flowbite-react';
-import React from 'react';
-import { FaUserFriends } from 'react-icons/fa';
+import { Button } from 'flowbite-react'
+import React from 'react'
+import { FaUserFriends } from 'react-icons/fa'
 
-import PageHeader from '@/components/organisms/PageHeader';
-import TextInput from '@/components/organisms/TextInput';
-import AdminGuard from '@/components/templates/AdminGuard';
-import Template from '@/components/templates/Template';
+import PageHeader from '@/components/organisms/PageHeader'
+import TextInput from '@/components/organisms/TextInput'
+import AdminGuard from '@/components/templates/AdminGuard'
+import Template from '@/components/templates/Template'
 
-import { useHooks } from './hooks';
-import SelectInput from '@/components/organisms/SelectInput';
+import { useHooks } from './hooks'
+import SelectInput from '@/components/organisms/SelectInput'
+import { roles } from '@/hooks/const'
 
 const AddStaff = () => {
-  const { formState, handleSubmit } = useHooks();
+  const { formState, handleSubmit } = useHooks()
   const breadcrumbs = [
     {
       href: '/staffs',
@@ -22,7 +23,7 @@ const AddStaff = () => {
       href: '#',
       title: 'Staff Create',
     },
-  ];
+  ]
 
   return (
     <Template>
@@ -64,24 +65,19 @@ const AddStaff = () => {
           <SelectInput
             label='Account Type'
             name='role'
-            options={[
-              {
-                value: 'staff',
-                label: 'Staff',
-              },
-              { value: 'admin', label: 'Admin' },
-              { value: 'subadmin', label: 'GSD admin' },
-            ]}
+            options={roles}
             {...formState}
           />
 
-          <Button color='warning' type='submit' style={{ width: 140 }}>
-            Submit
-          </Button>
+          <div className='flex justify-center'>
+            <Button color='success' type='submit' style={{ width: 140 }}>
+              Submit
+            </Button>
+          </div>
         </form>
       </AdminGuard>
     </Template>
-  );
-};
+  )
+}
 
-export default AddStaff;
+export default AddStaff

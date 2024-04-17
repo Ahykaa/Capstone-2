@@ -1,4 +1,4 @@
-import { Label, Select } from 'flowbite-react';
+import { Label, Select } from 'flowbite-react'
 
 const SelectInput = ({
   errors,
@@ -8,8 +8,8 @@ const SelectInput = ({
   options = [],
   ...rest
 }) => {
-  const formRegister = name && register && { ...register(name) };
-  const error = errors?.[name]?.message || null;
+  const formRegister = name && register && { ...register(name) }
+  const error = errors?.[name]?.message || null
 
   return (
     <div className='flex flex-col space-y-3'>
@@ -23,7 +23,7 @@ const SelectInput = ({
       </Select>
       {error && <span className='text-xs text-red-700'>{error}</span>}
     </div>
-  );
-};
+  )
+}
 
-export default SelectInput;
+export default SelectInput

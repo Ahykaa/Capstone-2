@@ -42,7 +42,7 @@ const AdminGuard = ({ children }) => {
     )
   }
 
-  return user.role === 'admin' ? children : <Forbidden />
+  return user.role === 'superadmin' ? children : <Forbidden />
 }
 
 export default AdminGuard

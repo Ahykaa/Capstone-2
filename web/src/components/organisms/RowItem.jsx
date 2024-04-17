@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const RowItem = ({ label, value, icon }) => {
   return (
@@ -9,7 +9,7 @@ const RowItem = ({ label, value, icon }) => {
         <span>{value}</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RowItem;
+export default RowItem
