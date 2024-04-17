@@ -17,9 +17,20 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::with('department', 'unit', 'status')->paginate(10);
+        $perPage = $request->perPage ?? 20;
+        $keyword = $request->keyword;
+
+        $orders = Order::with('status')
+            ->when($keyword != 'null', function ($q) use ($keyword) {
+                return $q->where('date_needed', 'LIKE', "%{$keyword}%")
+                    ->orWhere('description', 'LIKE', "%{$keyword}%");;
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate($perPage);
+
         return response()->json(['orders' => $orders]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -51,10 +62,27 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(StoreOrderRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        // Check user role and set status accordingly
+        if (auth()->user()->role === 'superadmin') {
+            $order->status_id = 5; // Approved
+        } elseif (auth()->user()->role === 'admin') {
+            $order->status_id = 2; // Approved for Checking
+        } elseif (auth()->user()->role === 'subadmin') {
+            $order->status_id = 3; // For Approval
+        } else {
+            $order->status_id = 4; // Pending
+        }
+
+        $order->save();
+
+        return response()->json(['message' => 'Order status updated successfully']);
     }
+
+
     /**
      * Remove the specified resource from storage.
      */

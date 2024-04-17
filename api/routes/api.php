@@ -53,14 +53,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::post('/{id}', 'store');
         });
 
-    Route::group(['middleware' => ['restrictRole:admin,staff,subadmin']], function () {
+    Route::group(['middleware' => ['restrictRole:superadmin,staff,subadmin,admin']], function () {
         Route::resource('orders', OrderController::class);
     });
 
-    Route::group(['middleware' => ['restrictRole:admin,staff']], function () {
+    Route::group(['middleware' => ['restrictRole:superadmin,staff,admin']], function () {
         Route::resource('transaction', TransactionController::class);
     });
-    Route::group(['middleware' => ['restrictRole:admin'], 'prefix' => 'admin'], function () {
+    Route::group(['middleware' => ['restrictRole:superadmin'], 'prefix' => 'superadmin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'show']);
         Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
     });

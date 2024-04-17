@@ -14,10 +14,10 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->upsert([
-            'name' => 'Admin',
-            'username' => 'admin',
+            'name' => 'Kimberly Pavino ',
+            'username' => 'Kimberly',
             'password' => Hash::make('!p@ssword123'),
-            'role' => 'admin',
+            'role' => 'superadmin',
         ], ['username']);
     }
 }
