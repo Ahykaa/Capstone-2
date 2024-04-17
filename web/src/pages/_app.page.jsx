@@ -1,17 +1,17 @@
-import '@/app/globals.css';
+import '@/app/globals.css'
 
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 
-import RootLayout from '@/app/layout';
-import Theme from '@/app/theme';
-import RouteGuard from '@/components/templates/RouteGuard';
-import ToastProvider from '@/components/templates/ToastProvider';
-import { store } from '@/hooks/store';
+import RootLayout from '@/app/layout'
+import Theme from '@/app/theme'
+import RouteGuard from '@/components/templates/RouteGuard'
+import ToastProvider from '@/components/templates/ToastProvider'
+import { store } from '@/hooks/store'
 
 export const metadata = {
   title: 'BC Flow ',
   description: 'BC Flow System',
-};
+}
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -26,7 +26,7 @@ const App = ({ Component, pageProps }) => {
         </RootLayout>
       </RouteGuard>
     </Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

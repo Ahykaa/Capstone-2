@@ -1,21 +1,21 @@
-import { Button } from 'flowbite-react';
+import { Button } from 'flowbite-react'
 
-import DatePicker from '@/components/organisms/DatePicker';
-import SelectInput from '@/components/organisms/SelectInput';
-import TextInput from '@/components/organisms/TextInput';
+import DatePicker from '@/components/organisms/DatePicker'
+import SelectInput from '@/components/organisms/SelectInput'
+import TextInput from '@/components/organisms/TextInput'
 
-import { useDepartments } from '@/hooks/redux/useDepartments';
-import TextAreaInput from '../organisms/TextAreaInput';
-import { requestOptions } from '@/hooks/const';
-import { useHooks } from '@/pages/orders/new/hooks';
-import CheckboxInput from '../organisms/Checkbox';
-import { useUnits } from '@/hooks/redux/useUnits';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
+import { useDepartments } from '@/hooks/redux/useDepartments'
+import TextAreaInput from '../organisms/TextAreaInput'
+import { requestOptions } from '@/hooks/const'
+import { useHooks } from '@/pages/orders/new/hooks'
+import CheckboxInput from '../organisms/Checkbox'
+import { useUnits } from '@/hooks/redux/useUnits'
+import { capitalizeFirstLetter } from '@/hooks/lib/util'
 
 const OrderForm = () => {
-  const { handleSubmit, formState } = useHooks();
-  const { departments } = useDepartments();
-  const { units } = useUnits();
+  const { handleSubmit, formState } = useHooks()
+  const { departments } = useDepartments()
+  const { units } = useUnits()
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col '>
@@ -149,7 +149,7 @@ const OrderForm = () => {
         </Button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default OrderForm;
+export default OrderForm

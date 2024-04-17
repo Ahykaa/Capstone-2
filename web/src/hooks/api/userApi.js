@@ -5,13 +5,13 @@ export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       providesTags: ['users'],
-      query: (page = 1) => ({ url: `/admin/users?page=${page}` }),
+      query: (page = 1) => ({ url: `/superadmin/users?page=${page}` }),
     }),
 
     createUser: builder.mutation({
       invalidatesTags: ['users'],
       query: (body) => ({
-        url: '/admin/users',
+        url: '/superadmin/users',
         method: 'POST',
         body,
       }),

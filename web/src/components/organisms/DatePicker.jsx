@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
-import { Datepicker } from 'flowbite-react';
-import { Controller } from 'react-hook-form';
+import dayjs from 'dayjs'
+import { Datepicker } from 'flowbite-react'
+import { Controller } from 'react-hook-form'
 
 const DatePicker = ({ name, control, placeholder, ...rest }) => {
   return (
@@ -19,7 +19,7 @@ const DatePicker = ({ name, control, placeholder, ...rest }) => {
         />
       )}
     />
-  );
-};
+  )
+}
 
-export default DatePicker;
+export default DatePicker

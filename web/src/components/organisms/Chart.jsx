@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import dynamic from 'next/dynamic';
+import React, { Component } from 'react'
+import dynamic from 'next/dynamic'
 
-const DynamicChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const DynamicChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 class Chart extends Component {
   render() {
-    const { options, series, type, width, name } = this.props;
+    const { options, series, type, width, name } = this.props
 
     return (
       <div className='mixed-chart border-black'>
@@ -17,8 +17,8 @@ class Chart extends Component {
           width={width}
         />
       </div>
-    );
+    )
   }
 }
 
-export default Chart;
+export default Chart

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const TotalBox = ({ totalAmount }) => {
   return (
@@ -18,7 +18,7 @@ const TotalBox = ({ totalAmount }) => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TotalBox;
+export default TotalBox

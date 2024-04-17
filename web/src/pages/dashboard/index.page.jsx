@@ -1,19 +1,17 @@
-import { FaRegChartBar } from 'react-icons/fa';
+import { FaRegChartBar } from 'react-icons/fa'
 
-// import CardItem from '@/components/organisms/Card';
+import PageHeader from '@/components/organisms/PageHeader'
+import Template from '@/components/templates/Template'
 
-import PageHeader from '@/components/organisms/PageHeader';
-import Template from '@/components/templates/Template';
-
-import SuperAdminDasboard from '@/components/templates/SuperAdminDashboard';
-import { useUser } from '@/hooks/redux/auth';
-// import StaffDashboard from '@/components/templates/StaffDashboard';
-import TemplateGSD from '@/components/templates/TemplateGSD';
-import GsdAdminDashboard from '@/components/templates/GsdAdminDashboard';
-import StaffDashboard from '@/components/templates/StaffDashboard';
+import SuperAdminDasboard from '@/components/templates/SuperAdminDashboard'
+import { useUser } from '@/hooks/redux/auth'
+import TemplateGSD from '@/components/templates/TemplateGSD'
+import GsdAdminDashboard from '@/components/templates/GsdAdminDashboard'
+import StaffDashboard from '@/components/templates/StaffDashboard'
+import TemplateStaff from '@/components/templates/TemplateStaff'
 
 const Dashboard = () => {
-  const { user } = useUser();
+  const { user } = useUser()
 
   const breadcrumbs = [
     {
@@ -21,28 +19,32 @@ const Dashboard = () => {
       title: 'Dashboard',
       icon: FaRegChartBar,
     },
-  ];
+  ]
 
   return (
     <div>
-      {user.role === 'admin' ? (
+      {user.role === 'superadmin' ?
         <Template>
           <PageHeader breadcrumbs={breadcrumbs} />
           <SuperAdminDasboard />
         </Template>
-      ) : user.role === 'subadmin' ? (
+      : user.role === 'subadmin' ?
         <TemplateGSD>
           <PageHeader breadcrumbs={breadcrumbs} />
           <GsdAdminDashboard />
         </TemplateGSD>
-      ) : (
-        <Template>
+      : user.role === 'admin' ?
+        <TemplateStaff>
           <PageHeader breadcrumbs={breadcrumbs} />
           <StaffDashboard />
-        </Template>
-      )}
+        </TemplateStaff>
+      : <TemplateStaff>
+          <PageHeader breadcrumbs={breadcrumbs} />
+          <StaffDashboard />
+        </TemplateStaff>
+      }
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

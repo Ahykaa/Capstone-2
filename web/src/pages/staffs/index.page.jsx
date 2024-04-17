@@ -6,18 +6,18 @@ import {
   TableHead,
   TableHeadCell,
   TableRow,
-} from 'flowbite-react';
-import Link from 'next/link';
-import React from 'react';
+} from 'flowbite-react'
+import Link from 'next/link'
+import React from 'react'
 
-import Loading from '@/components/atoms/Loading';
-import PageHeader from '@/components/organisms/PageHeader';
-import Pagination from '@/components/organisms/Pagination';
-import AdminGuard from '@/components/templates/AdminGuard';
-import Template from '@/components/templates/Template';
+import Loading from '@/components/atoms/Loading'
+import PageHeader from '@/components/organisms/PageHeader'
+import Pagination from '@/components/organisms/Pagination'
+import AdminGuard from '@/components/templates/AdminGuard'
+import Template from '@/components/templates/Template'
 
-import useHooks from './hooks';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
+import useHooks from './hooks'
+import { capitalizeFirstLetter } from '@/hooks/lib/util'
 
 const Dashboard = () => {
   const {
@@ -27,7 +27,7 @@ const Dashboard = () => {
     totalPages,
     currentPage,
     onPageChange,
-  } = useHooks();
+  } = useHooks()
 
   return (
     <Template>
@@ -42,10 +42,9 @@ const Dashboard = () => {
             </Link>
           }
         />
-        {isLoading ? (
+        {isLoading ?
           <Loading />
-        ) : (
-          <Table>
+        : <Table>
             <TableHead>
               <TableHeadCell>Name</TableHeadCell>
               <TableHeadCell>Username</TableHeadCell>
@@ -66,7 +65,7 @@ const Dashboard = () => {
                 ))}
             </TableBody>
           </Table>
-        )}
+        }
 
         <Pagination
           currentPage={currentPage}
@@ -75,7 +74,7 @@ const Dashboard = () => {
         />
       </AdminGuard>
     </Template>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

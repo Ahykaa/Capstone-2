@@ -1,11 +1,11 @@
-import Link from 'next/link';
+import Link from 'next/link'
 import {
   HiOutlineNewspaper,
   HiInformationCircle,
   HiTemplate,
-} from 'react-icons/hi';
-import { MdBookmarkAdd } from 'react-icons/md';
-import { GrTransaction } from 'react-icons/gr';
+} from 'react-icons/hi'
+import { MdBookmarkAdd } from 'react-icons/md'
+import { GrTransaction } from 'react-icons/gr'
 
 const links = [
   {
@@ -33,7 +33,7 @@ const links = [
     icon: <HiInformationCircle />,
     link: '#',
   },
-];
+]
 
 const SidebarGSD = () => {
   return (
@@ -53,7 +53,7 @@ const SidebarGSD = () => {
         ))}
       </ul>
     </aside>
-  );
-};
+  )
+}
 
-export default SidebarGSD;
+export default SidebarGSD
