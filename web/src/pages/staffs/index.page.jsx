@@ -6,18 +6,18 @@ import {
   TableHead,
   TableHeadCell,
   TableRow,
-} from 'flowbite-react'
-import Link from 'next/link'
-import React from 'react'
+} from 'flowbite-react';
+import Link from 'next/link';
+import React from 'react';
 
-import Loading from '@/components/atoms/Loading'
-import PageHeader from '@/components/organisms/PageHeader'
-import Pagination from '@/components/organisms/Pagination'
-import AdminGuard from '@/components/templates/AdminGuard'
-import Template from '@/components/templates/Template'
+import Loading from '@/components/atoms/Loading';
+import PageHeader from '@/components/organisms/PageHeader';
+import Pagination from '@/components/organisms/Pagination';
+import AdminGuard from '@/components/templates/AdminGuard';
+import Template from '@/components/templates/Template';
 
-import useHooks from './hooks'
-import { capitalizeFirstLetter } from '@/hooks/lib/util'
+import useHooks from './hooks';
+import { capitalizeFirstLetter } from '@/hooks/lib/util';
 
 const Dashboard = () => {
   const {
@@ -27,7 +27,7 @@ const Dashboard = () => {
     totalPages,
     currentPage,
     onPageChange,
-  } = useHooks()
+  } = useHooks();
 
   return (
     <Template>
@@ -42,13 +42,14 @@ const Dashboard = () => {
             </Link>
           }
         />
-        {isLoading ?
+        {isLoading ? (
           <Loading />
-        : <Table>
+        ) : (
+          <Table>
             <TableHead>
               <TableHeadCell>Name</TableHeadCell>
               <TableHeadCell>Username</TableHeadCell>
-              <TableHeadCell>Phone</TableHeadCell>
+              <TableHeadCell>Department</TableHeadCell>
               <TableHeadCell>Position</TableHeadCell>
               <TableHeadCell>Role</TableHeadCell>
             </TableHead>
@@ -58,14 +59,14 @@ const Dashboard = () => {
                   <TableRow key={user.id}>
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{user.username}</TableCell>
-                    <TableCell>{user.phone}</TableCell>
+                    <TableCell>{user.department}</TableCell>
                     <TableCell>{user.position}</TableCell>
                     <TableCell>{capitalizeFirstLetter(user.role)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
-        }
+        )}
 
         <Pagination
           currentPage={currentPage}
@@ -74,7 +75,7 @@ const Dashboard = () => {
         />
       </AdminGuard>
     </Template>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('department')->nullable();
             $table->string('position')->nullable();
             $table->enum('role', $roleEnum)->default($staff);
             $table->string('password');
