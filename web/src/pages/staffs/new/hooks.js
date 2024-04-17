@@ -12,10 +12,10 @@ const schema = yup.object({
   name: yup.string().required(errors.required),
   username: yup.string().min(4).required(errors.required),
   position: yup.string().nullable(errors.required),
-  phone: yup.string().nullable(),
+  department: yup.string().nullable(),
   role: yup
     .string()
-    .oneOf(['staff', 'admin', 'subadmin'])
+    .oneOf(['staff', 'admin', 'subadmin', 'subadmin1'])
     .required(errors.required),
 })
 

@@ -13,28 +13,38 @@ const useHooks = (orderId, user) => {
       return isUpdatingStatus ? 'Approving...' : 'Approved'
     if (user.role === 'admin')
       return isUpdatingStatus ? 'Approving...' : 'Approved for Checking'
+    if (user.role === 'subadmin1')
+      return isUpdatingStatus ? 'Approving...' : 'For Approval'
+    if (user.role === 'subadmin')
+      return isUpdatingStatus ? 'Approving...' : 'Pending'
     return isUpdatingStatus ? 'Approving...' : 'For Approval'
-  }
-  const handleError = (error) => {
-    console.error('An error occurred:', error)
   }
 
   const handleApprove = async () => {
     try {
       let newStatusId
 
-      if (order.status.id === 2 && user.role === 'superadmin') {
+      if (order.status.id === 4 && user.role === 'superadmin') {
         newStatusId = 5 // Approved
       } else if (order.status.id === 1 && user.role === 'admin') {
         newStatusId = 2 // Approved for Checking
+      } else if (order.status.id === 2 && user.role === 'subadmin1') {
+        newStatusId = 3 // For Approval
+      } else if (order.status.id === 3 && user.role === 'subadmin') {
+        newStatusId = 4 // Pending
       } else {
         return
       }
 
-      await updateOrderStatus({ orderId, statusId: newStatusId })
+      const updatedOrder = await updateOrderStatus({
+        orderId,
+        statusId: newStatusId,
+      })
 
       router.reload()
       router.push(`/orders/${orderId}`)
+
+      return updatedOrder // Return the updated order
     } catch (error) {
       handleError(error)
     }

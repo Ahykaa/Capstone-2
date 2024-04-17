@@ -71,7 +71,7 @@ class OrderController extends Controller
             $order->status_id = 5; // Approved
         } elseif (auth()->user()->role === 'admin') {
             $order->status_id = 2; // Approved for Checking
-        } elseif (auth()->user()->role === 'subadmin') {
+        } elseif (auth()->user()->role === 'subadmin1') {
             $order->status_id = 3; // For Approval
         } else {
             $order->status_id = 4; // Pending

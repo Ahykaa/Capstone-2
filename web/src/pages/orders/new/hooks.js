@@ -59,8 +59,6 @@ export function useHooks() {
     } catch (error) {
       handleError(error)
     }
-
-    console.log('Form Data:', formData)
   }
 
   return {

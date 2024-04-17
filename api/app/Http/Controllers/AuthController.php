@@ -17,7 +17,7 @@ class AuthController extends Controller
             'email' => 'nullable|unique:users',
             'password' => 'required|confirmed',
             'role' => 'in:staff,admin,subadmin,subadmin1,superadmin',
-            'phone' => 'nullable|string|size:11',
+            'department' => 'nullable|string',
             'position' => 'nullable|string|max:50'
         ]);
 
