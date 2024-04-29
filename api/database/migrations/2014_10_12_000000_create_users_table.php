@@ -16,15 +16,21 @@ return new class extends Migration
             $admin = 'admin';
             $subadmin = 'subadmin';
             $subadmin1 = 'subadmin1';
+            $subadmin2 = 'subadmin2';
+            $subadmin3 = 'subadmin3';
+            $subadmin4 = 'subadmin4';
             $superadmin = 'superadmin';
-            $roleEnum = [$staff, $admin,  $subadmin, $subadmin1, $superadmin];
+            $headadmin = 'headadmin';
+            $roleEnum = [$staff, $admin,  $subadmin, $subadmin1, $subadmin2, $subadmin3, $subadmin4, $superadmin, $headadmin];
 
             $table->id();
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('department')->nullable();
+            $table->foreignId('department_id')
+                ->constrained()
+                ->onUpdate('cascade');
             $table->string('position')->nullable();
             $table->enum('role', $roleEnum)->default($staff);
             $table->string('password');

@@ -1,58 +1,82 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeadCell,
   TableRow,
-} from 'flowbite-react'
-import { FaUserFriends } from 'react-icons/fa'
+} from 'flowbite-react';
+import Link from 'next/link';
+import React from 'react';
 
-import PageHeader from '@/components/organisms/PageHeader'
-import Template from '@/components/templates/Template'
-import { useGetUsersQuery } from '@/hooks/api/userApi'
+import Loading from '@/components/atoms/Loading';
+import PageHeader from '@/components/organisms/PageHeader';
+import Pagination from '@/components/organisms/Pagination';
+import AdminGuard from '@/components/templates/AdminGuard';
+import Template from '@/components/templates/Template';
+
+import useHooks from './hooks';
+import { capitalizeFirstLetter } from '@/hooks/lib/util';
 
 const Dashboard = () => {
-  const { data: users } = useGetUsersQuery()
-
-  const breadcrumbs = [
-    {
-      href: '#',
-      title: 'Users',
-      icon: FaUserFriends,
-    },
-  ]
+  const {
+    users,
+    isLoading,
+    breadcrumbs,
+    totalPages,
+    currentPage,
+    onPageChange,
+    getPositionLabel,
+  } = useHooks();
 
   return (
     <Template>
-      <PageHeader breadcrumbs={breadcrumbs} />
-      <div className='p-2'>
-        <Table>
-          <TableHead>
-            <TableHeadCell>ID</TableHeadCell>
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Username</TableHeadCell>
-            <TableHeadCell>Phone</TableHeadCell>
-            <TableHeadCell>Position</TableHeadCell>
-            <TableHeadCell>Role</TableHeadCell>
-          </TableHead>
-          <TableBody>
-            {users &&
-              users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.phone}</TableCell>
-                  <TableCell>{user.position}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
-    </Template>
-  )
-}
+      <AdminGuard>
+        <PageHeader
+          breadcrumbs={breadcrumbs}
+          right={
+            <Link href='/users/new'>
+              <Button size='xs' color='success'>
+                Create User
+              </Button>
+            </Link>
+          }
+        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Table>
+            <TableHead>
+              <TableHeadCell>Name</TableHeadCell>
+              <TableHeadCell>Username</TableHeadCell>
+              <TableHeadCell>Department</TableHeadCell>
+              <TableHeadCell>Position</TableHeadCell>
+              <TableHeadCell>Role</TableHeadCell>
+            </TableHead>
+            <TableBody>
+              {users &&
+                users.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.username}</TableCell>
+                    <TableCell>{user.department.label}</TableCell>
+                    <TableCell>{getPositionLabel(user.position)}</TableCell>
+                    <TableCell>{capitalizeFirstLetter(user.role)}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        )}
 
-export default Dashboard
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+          totalPages={totalPages}
+        />
+      </AdminGuard>
+    </Template>
+  );
+};
+
+export default Dashboard;

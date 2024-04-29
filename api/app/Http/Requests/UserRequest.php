@@ -24,9 +24,9 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|min:3',
             'username' => 'required|string|min:3|unique:users',
-            'department' => 'nullable|string',
+            'department_id' => 'required|exists:departments,id',
             'position' => 'nullable|string',
-            'role' => 'required|string|in:staff,admin,superadmin,subadmin,subadmin1',
+            'role' => 'required|string|in:staff,admin,subadmin,subadmin1,subadmin2,subadmin3,subadmin4,superadmin,headadmin',
         ];
     }
 }

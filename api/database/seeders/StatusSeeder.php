@@ -15,10 +15,14 @@ class StatusSeeder extends Seeder
     {
         DB::table('statuses')->upsert([
             ['id' => 1, 'label' => 'Created'],
-            ['id' => 2, 'label' => 'Approved for Checking'],
-            ['id' => 3, 'label' => 'For Approval'],
-            ['id' => 4, 'label' => 'Pending'],
-            ['id' => 5, 'label' => 'Approved'],
+            ['id' => 2, 'label' => 'Approved by Unit/Department Head '],
+            ['id' => 3, 'label' => 'Approved by Purchaser'],
+            ['id' => 4, 'label' => 'Approved by Property Custodian'],
+            ['id' => 5, 'label' => 'Approved by GSD'],
+            ['id' => 6, 'label' => 'Approved by Cash Management'],
+            ['id' => 7, 'label' => 'Approved by Director for Admin'],
+            ['id' => 8, 'label' => 'Approved by Director for Finance'],
+            ['id' => 9, 'label' => 'Aprroved'],
         ], ['label'], ['created_at', 'updated_at']);
     }
 }

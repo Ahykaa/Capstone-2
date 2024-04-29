@@ -36,13 +36,16 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreOrderRequest $request)
-    {
-
+    { 
+        $user = Auth::user();
+        
         $validatedData = $request->validated();
         $validatedData['user_id'] = Auth::id();
-
+        $validatedData['from'] = $user->name; 
+        $validatedData['department_id'] = $user->department_id;
         $validatedData['request_for'] = json_encode($validatedData['request_for']);
-
+        $amount = $validatedData['quantity'] * $validatedData['uniCost'];
+        $validatedData['amount'] = $amount;
         $order = Order::create($validatedData);
 
         return response()->json($order, 201);
@@ -67,14 +70,23 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         // Check user role and set status accordingly
-        if (auth()->user()->role === 'superadmin') {
-            $order->status_id = 5; // Approved
+        if (auth()->user()->role === 'headadmin') {
+            $order->status_id = 9; // Approved
         } elseif (auth()->user()->role === 'admin') {
             $order->status_id = 2; // Approved for Checking
         } elseif (auth()->user()->role === 'subadmin1') {
-            $order->status_id = 3; // For Approval
-        } else {
-            $order->status_id = 4; // Pending
+            $order->status_id = 3; // For approval by Purchaser
+        } elseif (auth()->user()->role === 'subadmin2') {
+            $order->status_id = 4; // For Approval by Property Custodian 
+        } elseif (auth()->user()->role === 'subadmin') {
+            $order->status_id = 5; // Pending by GSD 
+        } elseif (auth()->user()->role === 'subadmin3') {
+            $order->status_id = 6; // Pending by Cash Management 
+        } elseif (auth()->user()->role === 'subadmin4') {
+            $order->status_id = 7; // Pending by Director for Admin
+        } 
+        else {
+            $order->status_id = 8; // Pending by Director for Finance
         }
 
         $order->save();

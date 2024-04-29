@@ -12,7 +12,8 @@ const schema = yup.object({
   name: yup.string().required(errors.required),
   username: yup.string().min(4).required(errors.required),
   position: yup.string().nullable(errors.required),
-  department: yup.string().nullable(),
+  department_id: yup.string().required(errors.required),
+
   role: yup
     .string()
     .oneOf(['staff', 'admin', 'subadmin', 'subadmin1'])
@@ -41,7 +42,7 @@ export const useHooks = () => {
       addToast({
         message: message,
       })
-      router.push(`/staffs`)
+      router.push(`/users`)
     } catch (error) {
       handleError(error)
     }

@@ -1,6 +1,6 @@
-import Link from 'next/link'
-import { HiOutlineNewspaper, HiOutlineUsers, HiTemplate } from 'react-icons/hi'
-import { GrTransaction } from 'react-icons/gr'
+import Link from 'next/link';
+import { HiOutlineNewspaper, HiOutlineUsers, HiTemplate } from 'react-icons/hi';
+import { GrTransaction } from 'react-icons/gr';
 
 const links = [
   {
@@ -19,11 +19,11 @@ const links = [
     link: '/orders/new',
   },
   {
-    label: 'Staffs',
+    label: 'User Management',
     icon: <HiOutlineUsers />,
-    link: '/staffs',
+    link: '/users',
   },
-]
+];
 
 const Sidebar = () => {
   return (
@@ -43,7 +43,7 @@ const Sidebar = () => {
         ))}
       </ul>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

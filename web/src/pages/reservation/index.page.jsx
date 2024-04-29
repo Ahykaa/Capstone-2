@@ -1,17 +1,19 @@
-import DatePicker from '@/components/organisms/DatePicker'
-import TextInput from '@/components/organisms/TextInput'
-import TemplateGSD from '@/components/templates/TemplateGSD'
-import { useHooks } from './hooks'
-import CheckboxInput from '@/components/organisms/Checkbox'
-import { facilitieOptions, ownItems } from '@/hooks/const'
-import PageHeader from '@/components/organisms/PageHeader'
-import { MdOutlineBookmarkAdded } from 'react-icons/md'
-import SelectInput from '@/components/organisms/SelectInput'
-import TotalBox from '@/components/organisms/TotalBox'
-import { useState } from 'react'
+import DatePicker from '@/components/organisms/DatePicker';
+import TextInput from '@/components/organisms/TextInput';
+import TemplateGSD from '@/components/templates/TemplateGSD';
+import { useHooks } from './hooks';
+
+import { facilitieOptions, ownItems } from '@/hooks/const';
+import PageHeader from '@/components/organisms/PageHeader';
+import { MdOutlineBookmarkAdded } from 'react-icons/md';
+import SelectInput from '@/components/organisms/SelectInput';
+import TotalBox from '@/components/organisms/TotalBox';
+import { useState } from 'react';
+import CheckboxReserv from '@/components/organisms/CheckboxReserv';
+import TimePicker from '@/components/organisms/TimePicker';
 
 const Reservation = () => {
-  const { control } = useHooks()
+  const { control } = useHooks();
 
   const breadcrumbs = [
     {
@@ -19,8 +21,14 @@ const Reservation = () => {
       title: 'Reservation Create',
       icon: MdOutlineBookmarkAdded,
     },
-  ]
-  const [totalAmount] = useState(0)
+  ];
+  const [totalAmount] = useState(0);
+
+  const [selectedTime, setSelectedTime] = useState('00:00');
+
+  const handleTimeChange = (e) => {
+    setSelectedTime(e.target.value);
+  };
   return (
     <TemplateGSD>
       <PageHeader breadcrumbs={breadcrumbs} />
@@ -32,7 +40,7 @@ const Reservation = () => {
                 <span className='font-bold'>Facilities</span>
 
                 <div className='mt-4'>
-                  <CheckboxInput
+                  <CheckboxReserv
                     name='requestOptions'
                     className='grid grid-cols-5 gap-4'
                     options={facilitieOptions}
@@ -45,19 +53,24 @@ const Reservation = () => {
                 <div className='w-full'>
                   <DatePicker
                     label='Date of Application'
+                    placeholder='Date Prepared'
                     name=''
                     control={control}
                   />
                 </div>
+                <div className='w-full '>
+                  <TimePicker
+                    id='time'
+                    min='09:00'
+                    max='18:00'
+                    value={selectedTime}
+                    onChange={handleTimeChange}
+                  />
+                </div>
+              </div>
+              <div className='flex space-x-4 w-full'>
                 <TextInput
                   label='Company/Name'
-                  name='name'
-                  // {...formState}
-                  variant='outlined'
-                  color='success'
-                />
-                <TextInput
-                  label='Address'
                   name='name'
                   // {...formState}
                   variant='outlined'
@@ -73,12 +86,21 @@ const Reservation = () => {
               </div>
               <div className='flex space-x-4 w-full'>
                 <TextInput
+                  label='Address'
+                  name='name'
+                  // {...formState}
+                  variant='outlined'
+                  color='success'
+                />
+                <TextInput
                   label='Activity'
                   name='name'
                   // {...formState}
                   variant='outlined'
                   color='success'
                 />
+              </div>
+              <div className='flex space-x-4 w-full'>
                 <TextInput
                   label='Expected Number of Participants'
                   name='name'
@@ -87,15 +109,22 @@ const Reservation = () => {
                   color='success'
                 />
                 <div className='w-full'>
-                  <DatePicker label='Date of Event' name='' control={control} />
+                  <DatePicker
+                    label='Date of Event'
+                    name=''
+                    placeholder='Date of Event'
+                    control={control}
+                  />
                 </div>
-                <TextInput
-                  label='Time'
-                  name='name'
-                  // {...formState}
-                  variant='outlined'
-                  color='success'
-                />
+                <div className='w-full '>
+                  <TimePicker
+                    id='time'
+                    min='09:00'
+                    max='18:00'
+                    value={selectedTime}
+                    onChange={handleTimeChange}
+                  />
+                </div>
               </div>
               <div className='shadow-lg p-4 rounded-lg'>
                 <div className='flex space-x-4'>
@@ -136,6 +165,6 @@ const Reservation = () => {
         </div>
       </section>
     </TemplateGSD>
-  )
-}
-export default Reservation
+  );
+};
+export default Reservation;

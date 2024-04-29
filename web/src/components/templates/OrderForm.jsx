@@ -1,65 +1,34 @@
-import { Button } from 'flowbite-react'
-
-import DatePicker from '@/components/organisms/DatePicker'
-import SelectInput from '@/components/organisms/SelectInput'
-import TextInput from '@/components/organisms/TextInput'
-
-import { useDepartments } from '@/hooks/redux/useDepartments'
-import TextAreaInput from '../organisms/TextAreaInput'
-import { requestOptions } from '@/hooks/const'
-import { useHooks } from '@/pages/orders/new/hooks'
-import CheckboxInput from '../organisms/Checkbox'
-import { useUnits } from '@/hooks/redux/useUnits'
-import { capitalizeFirstLetter } from '@/hooks/lib/util'
+import React from 'react';
+import { Button } from 'flowbite-react';
+import DatePicker from '@/components/organisms/DatePicker';
+import SelectInput from '@/components/organisms/SelectInput';
+import TextInput from '@/components/organisms/TextInput';
+import TextAreaInput from '../organisms/TextAreaInput';
+import { requestOptions } from '@/hooks/const';
+import { useHooks } from '@/pages/orders/new/hooks';
+import CheckboxInput from '../organisms/Checkbox';
+import { useUnits } from '@/hooks/redux/useUnits';
+import { capitalizeFirstLetter } from '@/hooks/lib/util';
+import { HiPlus } from 'react-icons/hi';
 
 const OrderForm = () => {
-  const { handleSubmit, formState } = useHooks()
-  const { departments } = useDepartments()
-  const { units } = useUnits()
+  const { handleSubmit, formState } = useHooks();
+  const { units } = useUnits();
 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col '>
+    <form onSubmit={handleSubmit} className='flex flex-col'>
       <div className='flex flex-col space-y-4'>
         <div className='flex space-x-4 w-full'>
           <div className='w-full'>
             <DatePicker
-              label='Date'
+              label='Date Prepared'
               name='order_at'
-              placeholder='Date Prepared'
+              disabled
               {...formState}
             />
           </div>
           <div className='w-full'>
-            <DatePicker
-              label='Date'
-              name='date_needed'
-              placeholder='Date Needed'
-              {...formState}
-            />
-          </div>
-        </div>
-        <div className='flex space-x-4 w-full'>
-          <div className='w-full'>
-            <TextInput
-              label='From'
-              name='from'
-              {...formState}
-              variant='outlined'
-              color='success'
-            />
-          </div>
-          <div className='w-full'>
-            <SelectInput
-              name='department_id'
-              options={[
-                { value: '', label: 'Departments', isDisabled: true },
-                ...(departments?.map((department) => ({
-                  value: department.id,
-                  label: department.label,
-                })) || []),
-              ]}
-              {...formState}
-            />
+            <DatePicker label='Date Needed' name='date_needed' {...formState} />
           </div>
         </div>
         <span className='px-2 font-bold'>Request For</span>
@@ -67,9 +36,7 @@ const OrderForm = () => {
           name='request_for'
           options={requestOptions}
           {...formState}
-          onChange={formState.handleCheckboxChange}
         />
-
         <TextInput
           label='Specify if others'
           name='notes'
@@ -77,7 +44,6 @@ const OrderForm = () => {
           color='success'
           variant='outlined'
         />
-
         <div className='shadow-lg p-4 rounded-lg'>
           <div className='flex space-x-4'>
             <div className='w-1/6'>
@@ -128,6 +94,7 @@ const OrderForm = () => {
               <TextInput
                 label='Amount'
                 name='amount'
+                readOnly
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -144,12 +111,20 @@ const OrderForm = () => {
           </div>
         </div>
 
+        <button
+          type='button'
+          className='text-black-500 flex items-center justify-center w-1/4 mx-auto mt-4'
+          color='success'
+        >
+          <HiPlus className='inline-block mr-1' />
+          Add Entry
+        </button>
         <Button color='success' type='submit' className='flex w-1/4 mx-auto'>
           Submit
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default OrderForm
+export default OrderForm;
