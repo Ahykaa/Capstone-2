@@ -1,8 +1,10 @@
-import CardItem from '@/components/organisms/Card'
-import { dashboardApi } from '@/hooks/api/dashboardApi'
+import CardItem from '@/components/organisms/Card';
+import { dashboardApi } from '@/hooks/api/dashboardApi';
+import CalendarScheduler from '../organisms/CalendarScheduler';
+import Table from '../organisms/Table';
 
 const GsdAdminDashboard = () => {
-  const { data } = dashboardApi.useGetDashboardQuery()
+  const { data } = dashboardApi.useGetDashboardQuery();
 
   const cardData = [
     { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
@@ -13,7 +15,9 @@ const GsdAdminDashboard = () => {
     },
 
     { title: data?.total_amount ?? 0, description: 'Total Utilized Budget' },
-  ]
+  ];
+
+  const rows = [];
   return (
     <div className='mx-auto max-w-screen-lg mt-12'>
       <div className='grid grid-cols-4 gap-4'>
@@ -25,8 +29,17 @@ const GsdAdminDashboard = () => {
           />
         ))}
       </div>
+      <div className='grid grid-cols-2 gap-4'>
+        <div className='mt-8 w-full'>
+          <CalendarScheduler />
+        </div>
+        <div className='w-full'>
+          {/* <span>Booking Schedule</span>
+          <Table rows={rows} data={data} /> */}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default GsdAdminDashboard
+export default GsdAdminDashboard;

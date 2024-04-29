@@ -8,6 +8,45 @@ export const roles = [
   { value: 'subadmin', label: 'GSD admin' },
 ]
 
+export const positionOptions = [
+  {
+    value: '1',
+    label: 'User',
+  },
+  {
+    value: '2',
+    label: 'Unit / Department Head',
+  },
+  {
+    value: '3',
+    label: 'Puchaser',
+  },
+  {
+    value: '4',
+    label: 'Property Custodian',
+  },
+  {
+    value: '5',
+    label: 'GSD Unit Head',
+  },
+  {
+    value: '6',
+    label: 'Cash Management Unit Head',
+  },
+  {
+    value: '7',
+    label: 'Director for Admin',
+  },
+  {
+    value: '8',
+    label: 'Director for Finance',
+  },
+  {
+    value: '9',
+    label: 'President',
+  },
+]
+
 export const requestOptions = [
   {
     value: 'check',

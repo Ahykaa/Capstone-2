@@ -126,7 +126,35 @@ const Order = () => {
             </section>
           )}
         </TemplateGSD>
-      ) : user.role === 'subadmin1' ? (
+      ) : user.role === 'subadmin1' || user.role === 'subadmin2' ? (
+        <TemplateStaff>
+          <PageHeader breadcrumbs={breadcrumbs} />
+          {isLoading || !order ? (
+            <Loading />
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
+              <div className='flex flex-col'>
+                <OrderDetails />
+              </div>
+              <div className='flex flex-col mt-4'>
+                <div className='flex space-x-4'>
+                  <Button
+                    color='success'
+                    className='flex w-1/4 mx-auto mt-4'
+                    type='button' // Ensure type is set to 'button' to prevent form submission
+                    onClick={handleApprove} // Call handleApprove function on button click
+                    disabled={isUpdatingStatus} // Disable the button while status is updating
+                  >
+                    {getButtonLabel()}
+                  </Button>
+                </div>
+              </div>
+            </section>
+          )}
+        </TemplateStaff>
+      ) : user.role === 'subadmin3' ||
+        user.role === 'subadmin4' ||
+        user.role === 'headadmin' ? (
         <TemplateStaff>
           <PageHeader breadcrumbs={breadcrumbs} />
           {isLoading || !order ? (

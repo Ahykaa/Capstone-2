@@ -12,7 +12,7 @@ import { HiOutlineInformationCircle } from 'react-icons/hi';
 import useHooks from '@/pages/orders/[orderId]/hooks';
 import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/redux/auth';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
+import { capitalizeFirstLetter, formatAsMoney } from '@/hooks/lib/util';
 
 const OrderDetails = () => {
   const router = useRouter();
@@ -20,6 +20,7 @@ const OrderDetails = () => {
 
   const { orderId } = router.query;
   const { order } = useHooks(orderId, user);
+
   return (
     <div className='flex flex-col space-y-4'>
       <div className='flex space-x-4 w-full'>
@@ -83,8 +84,8 @@ const OrderDetails = () => {
             value={capitalizeFirstLetter(order.unit.label)}
           />
           <RowItem label='Description' value={order.description} />
-          <RowItem label='Unit Cost' value={order.uniCost} />
-          <RowItem label='Amount' value={order.amount} />
+          <RowItem label='Unit Cost' value={formatAsMoney(order.uniCost)} />
+          <RowItem label='Amount' value={formatAsMoney(order.amount)} />
         </div>
         <RowItem label='Remarks' value={order.remarks} />
       </div>

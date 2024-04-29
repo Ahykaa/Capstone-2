@@ -9,19 +9,22 @@ import Template from '@/components/templates/Template';
 
 import { useHooks } from './hooks';
 import SelectInput from '@/components/organisms/SelectInput';
-import { roles } from '@/hooks/const';
+import { positionOptions, roles } from '@/hooks/const';
+import { useDepartments } from '@/hooks/redux/useDepartments';
 
 const AddStaff = () => {
   const { formState, handleSubmit } = useHooks();
+  const { departments } = useDepartments();
+
   const breadcrumbs = [
     {
-      href: '/staffs',
-      title: 'Staffs',
+      href: '/users',
+      title: 'Users',
       icon: FaUserFriends,
     },
     {
       href: '#',
-      title: 'Staff Create',
+      title: 'User Create',
     },
   ];
 
@@ -48,25 +51,40 @@ const AddStaff = () => {
             variant='outlined'
             color='success'
           />
-          <TextInput
-            label='Department'
-            name='department'
+          <SelectInput
+            name='department_id'
+            className='mb-2'
+            options={[
+              { value: '', label: 'Departments', isDisabled: true },
+              ...(departments?.map((department) => ({
+                value: department.id,
+                label: department.label,
+              })) || []),
+            ]}
             {...formState}
-            variant='outlined'
-            color='success'
-          />
-          <TextInput
-            label='Position'
-            name='position'
-            {...formState}
-            variant='outlined'
-            color='success'
           />
 
           <SelectInput
-            label='Account Type'
+            name='position'
+            options={[
+              { label: 'Position', value: '' },
+              ...positionOptions.map((option) => ({
+                value: option.value,
+                label: option.label,
+              })),
+            ]}
+            {...formState}
+          />
+
+          <SelectInput
             name='role'
-            options={roles}
+            options={[
+              { label: 'Account Type', value: '' },
+              ...roles.map((option) => ({
+                value: option.value,
+                label: option.label,
+              })),
+            ]}
             {...formState}
           />
 

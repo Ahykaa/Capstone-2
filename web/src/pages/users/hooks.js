@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { FaUserFriends } from 'react-icons/fa'
 
 import { useUsers } from '@/hooks/redux/useUsers'
+import { positionOptions } from '@/hooks/const'
 
 const useHooks = () => {
   const router = useRouter()
@@ -15,10 +16,14 @@ const useHooks = () => {
   const breadcrumbs = [
     {
       href: '#',
-      title: 'Staffs',
+      title: 'Users',
       icon: FaUserFriends,
     },
   ]
+  const getPositionLabel = (value) => {
+    const position = positionOptions.find((option) => option.value === value)
+    return position ? position.label : ''
+  }
 
   return {
     users,
@@ -27,6 +32,7 @@ const useHooks = () => {
     currentPage: router.query.page || 1,
     onPageChange,
     breadcrumbs,
+    getPositionLabel,
   }
 }
 

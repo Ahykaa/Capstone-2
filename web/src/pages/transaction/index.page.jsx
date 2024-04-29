@@ -26,6 +26,19 @@ const Transaction = () => {
   } = useHooks();
   const { user } = useUser();
 
+  const roleTemplates = {
+    superadmin: Template,
+    admin: TemplateStaff,
+    subadmin: TemplateGSD,
+    subadmin1: TemplateStaff,
+    subadmin2: TemplateStaff,
+    subadmin3: TemplateStaff,
+    subadmin4: TemplateStaff,
+    headadmin: TemplateStaff,
+  };
+
+  const RoleTemplate = roleTemplates[user.role] || TemplateStaff;
+
   const getAction = (row) => {
     return (
       <div className='flex'>
@@ -50,6 +63,11 @@ const Transaction = () => {
       render: (row) => formatDate(row.date_needed),
     },
     {
+      key: 'department',
+      header: 'Department',
+      render: (row) => row.department_id,
+    },
+    {
       key: 'description',
       header: 'Description',
       render: (row) => row.description,
@@ -71,124 +89,28 @@ const Transaction = () => {
     },
   ];
   return (
-    <div>
-      {user.role === 'superadmin' ? (
-        <Template>
-          <section>
-            <PageHeader breadcrumbs={breadcrumbs} />
-            <div className='flex pb-4 space-x-4'>
-              <TextInput
-                name='keyword'
-                label='Search Description'
-                className='w-80'
-                {...formState}
-                variant='outlined'
-                color='success'
-              />
-            </div>
-            {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
-          </section>
-
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
+    <RoleTemplate>
+      <section>
+        <PageHeader breadcrumbs={breadcrumbs} />
+        <div className='flex pb-4 space-x-4'>
+          <TextInput
+            name='keyword'
+            label='Search Description'
+            className='w-80'
+            {...formState}
+            variant='outlined'
+            color='success'
           />
-        </Template>
-      ) : user.role === 'admin' ? (
-        <TemplateStaff>
-          <section>
-            <PageHeader breadcrumbs={breadcrumbs} />
-            <div className='flex pb-4 space-x-4'>
-              <TextInput
-                name='keyword'
-                label='Search Description'
-                className='w-80'
-                {...formState}
-                variant='outlined'
-                color='success'
-              />
-            </div>
-            {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
-          </section>
+        </div>
+        {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
+      </section>
 
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
-          />
-        </TemplateStaff>
-      ) : user.role === 'subadmin' ? (
-        <TemplateGSD>
-          <section>
-            <PageHeader breadcrumbs={breadcrumbs} />
-            <div className='flex pb-4 space-x-4'>
-              <TextInput
-                name='keyword'
-                label='Search Description'
-                className='w-80'
-                {...formState}
-                variant='outlined'
-                color='success'
-              />
-            </div>
-            {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
-          </section>
-
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
-          />
-        </TemplateGSD>
-      ) : user.role === 'subadmin1' ? (
-        <TemplateStaff>
-          <section>
-            <PageHeader breadcrumbs={breadcrumbs} />
-            <div className='flex pb-4 space-x-4'>
-              <TextInput
-                name='keyword'
-                label='Search Description'
-                className='w-80'
-                {...formState}
-                variant='outlined'
-                color='success'
-              />
-            </div>
-            {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
-          </section>
-
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
-          />
-        </TemplateStaff>
-      ) : (
-        <TemplateStaff>
-          <section>
-            <PageHeader breadcrumbs={breadcrumbs} />
-            <div className='flex pb-4 space-x-4'>
-              <TextInput
-                name='keyword'
-                label='Search Description'
-                className='w-80'
-                {...formState}
-                variant='outlined'
-                color='success'
-              />
-            </div>
-            {isLoading ? <Loading /> : <Table rows={rows} data={orders.data} />}
-          </section>
-
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
-          />
-        </TemplateStaff>
-      )}
-    </div>
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        totalPages={totalPages}
+      />
+    </RoleTemplate>
   );
 };
 
