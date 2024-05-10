@@ -45,8 +45,6 @@ const useHooks = () => {
     },
   ]
 
-  console.log('Data', reservations)
-
   return {
     reservations,
     isLoading,
