@@ -24,3 +24,12 @@ export const formatAsMoney = (value) => {
       .replace(/\d(?=(\d{3})+\.)/g, '$&,')
   )
 }
+
+export const formatTime = (timeString) => {
+  const time = new Date(`1970-01-01T${timeString}`)
+  return time.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
+}

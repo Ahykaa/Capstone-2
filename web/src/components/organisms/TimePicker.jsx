@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const TimePicker = ({ id, min, max, value, onChange }) => {
   return (
@@ -16,7 +16,7 @@ const TimePicker = ({ id, min, max, value, onChange }) => {
         />
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default TimePicker;
+export default TimePicker

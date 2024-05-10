@@ -3,15 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\StoreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RequestForController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/departments', [DepartmentController::class, 'index']);
     Route::get('/units', [UnitController::class, 'index']);
     Route::get('/stauses', [StatusController::class, 'index']);
+    Route::get('/requestFor', [RequestForController::class, 'index']);
 
+    
     Route::prefix('auth')
         ->controller(AuthController::class)
         ->group(function () {
@@ -53,9 +56,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::post('/{id}', 'store');
         });
 
-    // Route::group(['middleware' => ['restrictRole:superadmin,staff,subadmin,admin,subadmin1']], function () {
-    //     Route::resource('orders', OrderController::class);
-    // });
     Route::resource('orders', OrderController::class);
     Route::group(['middleware' => ['restrictRole:superadmin,staff,admin,subadmin1,subadmin']], function () {
         Route::resource('transaction', TransactionController::class);
@@ -64,4 +64,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/dashboard', [DashboardController::class, 'show']);
         Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
     });
+    Route::group(['middleware' => ['restrictRole:subadmin']], function () {
+    Route::resource('reservations', ReservationController::class);
+});
+
 });

@@ -1,48 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const CalendarScheduler = () => {
   // Get the current date
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
+  const currentDate = new Date()
+  const currentMonth = currentDate.getMonth()
+  const currentYear = currentDate.getFullYear()
 
   // Create state for the selected date
-  const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [selectedDate, setSelectedDate] = useState(currentDate)
 
   // Function to get the days in a month
   const getDaysInMonth = (month, year) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
+    return new Date(year, month + 1, 0).getDate()
+  }
 
   // Function to get the starting day of the month
   const getStartingDayOfMonth = (month, year) => {
-    return new Date(year, month, 1).getDay();
-  };
+    return new Date(year, month, 1).getDay()
+  }
 
   // Function to handle date selection
   const handleDateClick = (date) => {
-    setSelectedDate(date);
+    setSelectedDate(date)
     // You can add your logic here to handle the selected date
-  };
+  }
 
   // Render calendar days
   const renderCalendarDays = () => {
-    const daysInMonth = getDaysInMonth(currentMonth, currentYear);
-    const startingDay = getStartingDayOfMonth(currentMonth, currentYear);
+    const daysInMonth = getDaysInMonth(currentMonth, currentYear)
+    const startingDay = getStartingDayOfMonth(currentMonth, currentYear)
 
-    let calendarDays = [];
+    let calendarDays = []
 
     for (let i = 0; i < startingDay; i++) {
-      calendarDays.push(<div key={`empty-${i}`} className='hidden' />);
+      calendarDays.push(<div key={`empty-${i}`} className='hidden' />)
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const date = new Date(currentYear, currentMonth, i);
+      const date = new Date(currentYear, currentMonth, i)
       const classNames = `cursor-pointer p-2 rounded-lg ${
-        date.toDateString() === selectedDate.toDateString()
-          ? 'bg-blue-500 text-white'
-          : 'hover:bg-blue-100'
-      }`;
+        date.toDateString() === selectedDate.toDateString() ?
+          'bg-blue-500 text-white'
+        : 'hover:bg-blue-100'
+      }`
       calendarDays.push(
         <div
           key={i}
@@ -50,12 +50,12 @@ const CalendarScheduler = () => {
           onClick={() => handleDateClick(date)}
         >
           {i}
-        </div>
-      );
+        </div>,
+      )
     }
 
-    return calendarDays;
-  };
+    return calendarDays
+  }
 
   return (
     <div className='p-4 bg-white shadow-md rounded-lg'>
@@ -76,7 +76,7 @@ const CalendarScheduler = () => {
         {renderCalendarDays()}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CalendarScheduler;
+export default CalendarScheduler

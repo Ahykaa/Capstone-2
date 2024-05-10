@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import RowItem from '../organisms/RowItem';
+import dayjs from 'dayjs'
+import RowItem from '../organisms/RowItem'
 
 import {
   FaCalendarAlt,
@@ -7,19 +7,19 @@ import {
   FaLayerGroup,
   FaCheckSquare,
   FaBars,
-} from 'react-icons/fa';
-import { HiOutlineInformationCircle } from 'react-icons/hi';
-import useHooks from '@/pages/orders/[orderId]/hooks';
-import { useRouter } from 'next/router';
-import { useUser } from '@/hooks/redux/auth';
-import { capitalizeFirstLetter, formatAsMoney } from '@/hooks/lib/util';
+} from 'react-icons/fa'
+import { HiOutlineInformationCircle } from 'react-icons/hi'
+import useHooks from '@/pages/orders/[orderId]/hooks'
+import { useRouter } from 'next/router'
+import { useUser } from '@/hooks/redux/auth'
+import { capitalizeFirstLetter, formatAsMoney } from '@/hooks/lib/util'
 
 const OrderDetails = () => {
-  const router = useRouter();
-  const { user } = useUser();
+  const router = useRouter()
+  const { user } = useUser()
 
-  const { orderId } = router.query;
-  const { order } = useHooks(orderId, user);
+  const { orderId } = router.query
+  const { order } = useHooks(orderId, user)
 
   return (
     <div className='flex flex-col space-y-4'>
@@ -64,7 +64,7 @@ const OrderDetails = () => {
         <div className='w-full'>
           <RowItem
             label='Request For'
-            value={order.request_for}
+            value={order.request_fors_id}
             icon={<FaCheckSquare />}
           />
         </div>
@@ -90,7 +90,7 @@ const OrderDetails = () => {
         <RowItem label='Remarks' value={order.remarks} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderDetails;
+export default OrderDetails

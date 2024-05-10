@@ -14,7 +14,7 @@ import { useEffect } from 'react'
 const schema = yup.object({
   order_at: yup.date().required(),
   date_needed: yup.date().required(),
-  request_for: yup.array(),
+  request_fors_id: yup.string().required(errors.required),
   notes: yup.string(),
   status_id: yup.string().required(errors.required),
   quantity: yup.number().required().typeError(errors.required),

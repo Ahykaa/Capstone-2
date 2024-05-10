@@ -1,19 +1,19 @@
-import React from 'react';
-import { Button } from 'flowbite-react';
-import DatePicker from '@/components/organisms/DatePicker';
-import SelectInput from '@/components/organisms/SelectInput';
-import TextInput from '@/components/organisms/TextInput';
-import TextAreaInput from '../organisms/TextAreaInput';
-import { requestOptions } from '@/hooks/const';
-import { useHooks } from '@/pages/orders/new/hooks';
-import CheckboxInput from '../organisms/Checkbox';
-import { useUnits } from '@/hooks/redux/useUnits';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
-import { HiPlus } from 'react-icons/hi';
+import React from 'react'
+import { Button } from 'flowbite-react'
+import DatePicker from '@/components/organisms/DatePicker'
+import SelectInput from '@/components/organisms/SelectInput'
+import TextInput from '@/components/organisms/TextInput'
+import TextAreaInput from '../organisms/TextAreaInput'
+import { useHooks } from '@/pages/orders/new/hooks'
+import { useUnits } from '@/hooks/redux/useUnits'
+import { capitalizeFirstLetter } from '@/hooks/lib/util'
+import { HiPlus } from 'react-icons/hi'
+import { useRequestFor } from '@/hooks/redux/useRequestFor'
 
 const OrderForm = () => {
-  const { handleSubmit, formState } = useHooks();
-  const { units } = useUnits();
+  const { handleSubmit, formState } = useHooks()
+  const { units } = useUnits()
+  const { requestFor } = useRequestFor()
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col'>
@@ -31,20 +31,37 @@ const OrderForm = () => {
             <DatePicker label='Date Needed' name='date_needed' {...formState} />
           </div>
         </div>
-        <span className='px-2 font-bold'>Request For</span>
-        <CheckboxInput
-          name='request_for'
-          options={requestOptions}
-          {...formState}
-        />
-        <TextInput
-          label='Specify if others'
-          name='notes'
-          {...formState}
-          color='success'
-          variant='outlined'
-        />
-        <div className='shadow-lg p-4 rounded-lg'>
+
+        <div className='shadow-lg p-4 rounded-lg g-4'>
+          {/* <span className='px-2 font-regular mb-2'>Request </span> */}
+          <div className='flex space-x-4 w-full'>
+            <div className='w-full mb-4'>
+              <SelectInput
+                name='request_fors_id'
+                options={[
+                  {
+                    value: '',
+                    label: capitalizeFirstLetter('Request For'),
+                    isDisabled: true,
+                  },
+                  ...(requestFor?.map((requestfor) => ({
+                    value: requestfor.id,
+                    label: capitalizeFirstLetter(requestfor.label),
+                  })) || []),
+                ]}
+                {...formState}
+              />
+            </div>
+            <div className='w-full mb-4'>
+              <TextInput
+                label='Specify if others'
+                name='notes'
+                {...formState}
+                color='success'
+                variant='outlined'
+              />
+            </div>
+          </div>
           <div className='flex space-x-4'>
             <div className='w-1/6'>
               <TextInput
@@ -124,7 +141,7 @@ const OrderForm = () => {
         </Button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default OrderForm;
+export default OrderForm

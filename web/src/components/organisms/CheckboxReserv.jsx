@@ -1,5 +1,5 @@
-import React from 'react';
-import { Label, Checkbox } from 'flowbite-react';
+import React from 'react'
+import { Label, Checkbox } from 'flowbite-react'
 
 const CheckboxReserv = ({
   errors,
@@ -9,8 +9,8 @@ const CheckboxReserv = ({
   options = [],
   ...rest
 }) => {
-  const formRegister = name && register && { ...register(name) };
-  const error = errors?.[name]?.message || null;
+  const formRegister = name && register && { ...register(name) }
+  const error = errors?.[name]?.message || null
 
   return (
     <div className='flex flex-col space-y-3'>
@@ -31,7 +31,7 @@ const CheckboxReserv = ({
       </div>
       {error && <span className='text-xs text-red-700'>{error}</span>}
     </div>
-  );
-};
+  )
+}
 
-export default CheckboxReserv;
+export default CheckboxReserv

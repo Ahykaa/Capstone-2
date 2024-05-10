@@ -9,7 +9,7 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::with('department', 'unit', 'status')->paginate(10);
+        $orders = Order::with('department', 'unit', 'status', 'requestFor')->paginate(10);
         return response()->json(['orders' => $orders]);
     }
 }
