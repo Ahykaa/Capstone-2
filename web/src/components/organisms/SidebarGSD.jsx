@@ -26,10 +26,10 @@ const links = [
   {
     label: 'Reservation',
     icon: <MdBookmarkAdd />,
-    link: '/reservation',
+    link: '/reservations',
   },
   {
-    label: 'Control Panel',
+    label: 'Item Charges',
     icon: <HiInformationCircle />,
     link: '#',
   },

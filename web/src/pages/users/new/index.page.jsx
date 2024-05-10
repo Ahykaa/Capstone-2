@@ -1,20 +1,20 @@
-import { Button } from 'flowbite-react';
-import React from 'react';
-import { FaUserFriends } from 'react-icons/fa';
+import { Button } from 'flowbite-react'
+import React from 'react'
+import { FaUserFriends } from 'react-icons/fa'
 
-import PageHeader from '@/components/organisms/PageHeader';
-import TextInput from '@/components/organisms/TextInput';
-import AdminGuard from '@/components/templates/AdminGuard';
-import Template from '@/components/templates/Template';
+import PageHeader from '@/components/organisms/PageHeader'
+import TextInput from '@/components/organisms/TextInput'
+import AdminGuard from '@/components/templates/AdminGuard'
+import Template from '@/components/templates/Template'
 
-import { useHooks } from './hooks';
-import SelectInput from '@/components/organisms/SelectInput';
-import { positionOptions, roles } from '@/hooks/const';
-import { useDepartments } from '@/hooks/redux/useDepartments';
+import { useHooks } from './hooks'
+import SelectInput from '@/components/organisms/SelectInput'
+import { positionOptions, roles } from '@/hooks/const'
+import { useDepartments } from '@/hooks/redux/useDepartments'
 
 const AddStaff = () => {
-  const { formState, handleSubmit } = useHooks();
-  const { departments } = useDepartments();
+  const { formState, handleSubmit } = useHooks()
+  const { departments } = useDepartments()
 
   const breadcrumbs = [
     {
@@ -26,7 +26,7 @@ const AddStaff = () => {
       href: '#',
       title: 'User Create',
     },
-  ];
+  ]
 
   return (
     <Template>
@@ -96,7 +96,7 @@ const AddStaff = () => {
         </form>
       </AdminGuard>
     </Template>
-  );
-};
+  )
+}
 
-export default AddStaff;
+export default AddStaff

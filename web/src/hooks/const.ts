@@ -113,13 +113,6 @@ export const facilitieOptions = [
 ]
 export const ownItems = [
   {
-    value: 0,
-    label: 'Select Items',
-    disabled: true,
-    selected: true,
-    hidden: true,
-  },
-  {
     value: 1,
     label: 'Venue Charge (w/o lights)',
   },

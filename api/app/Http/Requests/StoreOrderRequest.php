@@ -24,8 +24,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'from' => 'required|string',
             'department_id' => 'required|exists:departments,id',
-            'request_for' => 'required|array',
-            'request_for.*' => 'string',
+            'request_fors_id' => 'required|exists:request_fors,id',
             'notes' => 'nullable|string',
             'status_id' => 'required|exists:statuses,id',
             'quantity' => 'required|integer',

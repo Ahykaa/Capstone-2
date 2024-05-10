@@ -43,7 +43,6 @@ class OrderController extends Controller
         $validatedData['user_id'] = Auth::id();
         $validatedData['from'] = $user->name; 
         $validatedData['department_id'] = $user->department_id;
-        $validatedData['request_for'] = json_encode($validatedData['request_for']);
         $amount = $validatedData['quantity'] * $validatedData['uniCost'];
         $validatedData['amount'] = $amount;
         $order = Order::create($validatedData);
@@ -56,7 +55,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::with('department', 'unit', 'status')->findOrFail($id);
+        $order = Order::with('department', 'unit', 'status', 'requestFor')->findOrFail($id);
         return response()->json(['order' => $order]);
     }
 
