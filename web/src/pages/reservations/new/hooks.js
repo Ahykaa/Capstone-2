@@ -53,12 +53,11 @@ export function useHooks() {
     data.event_date = dayjs(data.event_date).format('YYYY-MM-DD HH:mm:ss')
     data.facilities = data.facilities.join(', ')
     try {
-      console.log('data', data) // Log form data
       const { message } = await createReservationMutation(data).unwrap()
       addToast({
         message: message,
       })
-      router.push(`/dashboard`)
+      router.push(`/reservations`)
     } catch (error) {
       handleError(error)
     }
