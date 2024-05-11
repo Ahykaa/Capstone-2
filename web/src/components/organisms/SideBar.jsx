@@ -23,6 +23,11 @@ const links = [
     icon: <HiOutlineUsers />,
     link: '/users',
   },
+  {
+    label: 'Master List',
+    icon: <HiOutlineUsers />,
+    link: '/management',
+  },
 ]
 
 const Sidebar = () => {
