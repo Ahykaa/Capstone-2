@@ -31,7 +31,7 @@ const links = [
   {
     label: 'Item Charges',
     icon: <HiInformationCircle />,
-    link: '#',
+    link: '/management/charges',
   },
 ]
 
