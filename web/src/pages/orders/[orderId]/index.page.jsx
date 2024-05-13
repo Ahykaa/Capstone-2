@@ -18,8 +18,14 @@ const Order = () => {
   const router = useRouter()
   const { user } = useUser()
   const { orderId } = router.query
-  const { order, isLoading, handleApprove, isUpdatingStatus, getButtonLabel } =
-    useHooks(orderId, user)
+  const {
+    order,
+    isLoading,
+    isApprovable,
+    isUpdatingStatus,
+    handleApprove,
+    getButtonLabel,
+  } = useHooks(orderId, user)
 
   const breadcrumbs = [
     {
@@ -51,7 +57,7 @@ const Order = () => {
                     className='flex w-1/4 mx-auto mt-4'
                     type='button'
                     onClick={handleApprove}
-                    disabled={isUpdatingStatus}
+                    disabled={!isApprovable() || isUpdatingStatus}
                   >
                     {getButtonLabel()}
                   </Button>
@@ -76,7 +82,7 @@ const Order = () => {
                     className='flex w-1/4 mx-auto mt-4'
                     type='button' // Ensure type is set to 'button' to prevent form submission
                     onClick={handleApprove} // Call handleApprove function on button click
-                    disabled={isUpdatingStatus} // Disable the button while status is updating
+                    disabled={!isApprovable() || isUpdatingStatus}
                   >
                     {getButtonLabel()}
                   </Button>
@@ -101,7 +107,7 @@ const Order = () => {
                     className='flex w-1/4 mx-auto mt-4'
                     type='button' // Ensure type is set to 'button' to prevent form submission
                     onClick={handleApprove} // Call handleApprove function on button click
-                    disabled={isUpdatingStatus} // Disable the button while status is updating
+                    disabled={!isApprovable() || isUpdatingStatus}
                   >
                     {getButtonLabel()}
                   </Button>
@@ -126,7 +132,7 @@ const Order = () => {
                     className='flex w-1/4 mx-auto mt-4'
                     type='button' // Ensure type is set to 'button' to prevent form submission
                     onClick={handleApprove} // Call handleApprove function on button click
-                    disabled={isUpdatingStatus} // Disable the button while status is updating
+                    disabled={!isApprovable() || isUpdatingStatus}
                   >
                     {getButtonLabel()}
                   </Button>
@@ -155,7 +161,7 @@ const Order = () => {
                     className='flex w-1/4 mx-auto mt-4'
                     type='button' // Ensure type is set to 'button' to prevent form submission
                     onClick={handleApprove} // Call handleApprove function on button click
-                    disabled={isUpdatingStatus} // Disable the button while status is updating
+                    disabled={!isApprovable() || isUpdatingStatus}
                   >
                     {getButtonLabel()}
                   </Button>

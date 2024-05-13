@@ -8,44 +8,63 @@ const useHooks = (orderId, user) => {
   const [updateOrderStatus, { isLoading: isUpdatingStatus }] =
     useUpdateOrderMutation()
 
+  const isApprovable = () => {
+    if (user.role === 'headadmin' && order.status.id === 8) {
+      return true
+    } else if (user.role === 'admin' && order.status.id === 1) {
+      return true
+    } else if (user.role === 'subadmin1' && order.status.id === 2) {
+      return true
+    } else if (user.role === 'subadmin2' && order.status.id === 3) {
+      return true
+    } else if (user.role === 'subadmin' && order.status.id === 4) {
+      return true
+    } else if (user.role === 'subadmin3' && order.status.id === 5) {
+      return true
+    } else if (user.role === 'subadmin4' && order.status.id === 6) {
+      return true
+    } else if (user.role === 'superadmin' && order.status.id === 7) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const getButtonLabel = () => {
-    if (user.role === 'headadmin')
-      return isUpdatingStatus ? 'Approving...' : 'Approved'
-    if (
-      user.role === 'admin' ||
-      user.role === 'subadmin1' ||
-      user.role === 'subadmin2' ||
-      user.role === 'subadmin' ||
-      user.role === 'subadmin3' ||
-      user.role === 'subadmin4' ||
-      user.role === 'superadmin' ||
-      user.role === 'headadmin'
-    )
-      return isUpdatingStatus ? 'Approving...' : 'Approved'
+    return isUpdatingStatus ? 'Approving...' : 'Approved'
   }
 
   const handleApprove = async () => {
     try {
       let newStatusId
 
-      if (order.status.id === 8 && user.role === 'headadmin') {
-        newStatusId = 9 // Approved
-      } else if (order.status.id === 1 && user.role === 'admin') {
-        newStatusId = 2 // Approved for Checking
-      } else if (order.status.id === 2 && user.role === 'subadmin1') {
-        newStatusId = 3 // For Approval by Purchaser
-      } else if (order.status.id === 3 && user.role === 'subadmin2') {
-        newStatusId = 4 // For Approval by Property Custodian
-      } else if (order.status.id === 4 && user.role === 'subadmin') {
-        newStatusId = 5 // Pending by GSD
-      } else if (order.status.id === 5 && user.role === 'subadmin3') {
-        newStatusId = 6 // Pending by Cash Management
-      } else if (order.status.id === 6 && user.role === 'subadmin4') {
-        newStatusId = 7 // Pending by Director for Admin
-      } else if (order.status.id === 7 && user.role === 'superadmin') {
-        newStatusId = 8 // Pending by Director for Finance
-      } else {
-        return
+      switch (user.role) {
+        case 'headadmin':
+          newStatusId = 9 // Approved
+          break
+        case 'admin':
+          newStatusId = 2 // Approved for Checking
+          break
+        case 'subadmin1':
+          newStatusId = 3 // For Approval by Purchaser
+          break
+        case 'subadmin2':
+          newStatusId = 4 // For Approval by Property Custodian
+          break
+        case 'subadmin':
+          newStatusId = 5 // Pending by GSD
+          break
+        case 'subadmin3':
+          newStatusId = 6 // Pending by Cash Management
+          break
+        case 'subadmin4':
+          newStatusId = 7 // Pending by Director for Admin
+          break
+        case 'superadmin':
+          newStatusId = 8 // Pending by Director for Finance
+          break
+        default:
+          return
       }
 
       const updatedOrder = await updateOrderStatus({
@@ -65,6 +84,7 @@ const useHooks = (orderId, user) => {
   return {
     order,
     isLoading,
+    isApprovable,
     getButtonLabel,
     handleApprove,
   }
