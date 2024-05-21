@@ -27,14 +27,17 @@ class StoreOrderRequest extends FormRequest
             'request_fors_id' => 'required|exists:request_fors,id',
             'notes' => 'nullable|string',
             'status_id' => 'required|exists:statuses,id',
-            'quantity' => 'required|integer',
-            'unit_id' => 'required|exists:units,id',
-            'description' => 'required|string',
-            'uniCost' => 'required|numeric',
-            'amount' => 'required|numeric',
-            'remarks' => 'nullable|string',
             'order_at' => 'nullable|date',
             'date_needed' => 'required|date',
+            'entries' => 'required|array', // Ensure entries is an array
+
+            // Validation rules for each order entry
+            'entries.*.quantity' => 'required|integer',
+            'entries.*.unit_id' => 'required|exists:units,id',
+            'entries.*.description' => 'required|string',
+            'entries.*.uniCost' => 'required|numeric',
+            'entries.*.amount' => 'required|numeric',
+            'entries.*.remarks' => 'nullable|string',
         ];
     }
 }

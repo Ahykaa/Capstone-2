@@ -7,12 +7,12 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\OrderEntriesController;
 use App\Http\Controllers\RequestForController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UnitController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -28,18 +28,18 @@ use App\Http\Controllers\UnitController;
 Route::get('/ping', function () {
     return 'ping test';
 });
-Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-   
     Route::get('/departments', [DepartmentController::class, 'index']);
     Route::get('/units', [UnitController::class, 'index']);
-    Route::get('/stauses', [StatusController::class, 'index']);
+    Route::get('/statuses', [StatusController::class, 'index']);  // Fixed typo here
     Route::get('/requestFor', [RequestForController::class, 'index']);
+    Route::get('/order_entries', [OrderEntriesController::class, 'index']);
+    Route::get('/order_entries/{id}', [OrderEntriesController::class, 'show']);
 
-    
     Route::prefix('auth')
         ->controller(AuthController::class)
         ->group(function () {
@@ -57,15 +57,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
 
     Route::resource('orders', OrderController::class);
+
     Route::group(['middleware' => ['restrictRole:superadmin,staff,admin,subadmin1,subadmin']], function () {
         Route::resource('transaction', TransactionController::class);
     });
+
     Route::group(['middleware' => ['restrictRole:superadmin'], 'prefix' => 'superadmin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'show']);
         Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
     });
+
     Route::group(['middleware' => ['restrictRole:subadmin']], function () {
-    Route::resource('reservations', ReservationController::class);
-});
+        Route::resource('reservations', ReservationController::class);
+    });
 
 });

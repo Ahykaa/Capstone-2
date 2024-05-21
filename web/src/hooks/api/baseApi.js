@@ -16,6 +16,7 @@ export const baseApi = createApi({
     'users',
     'requestFor',
     'reservations',
+    'order_entries',
   ],
   overrideExisting: true,
   baseQuery: fetchBaseQuery({

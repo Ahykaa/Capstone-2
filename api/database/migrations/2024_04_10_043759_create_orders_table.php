@@ -26,16 +26,8 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->text('notes')->nullable();
             $table->foreignId('status_id')
-            ->constrained()
-            ->onUpdate('cascade');
-            $table->integer('quantity');
-            $table->foreignId('unit_id')
                 ->constrained()
                 ->onUpdate('cascade');
-            $table->string('description')->nullable();
-            $table->decimal('uniCost')->default(0);
-            $table->decimal('amount');
-            $table->text('remarks')->nullable();
             $table->dateTime('order_at')->default(now());
             $table->dateTime('date_needed');
             $table->timestamps();

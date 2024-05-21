@@ -1,37 +1,36 @@
 import { useUpdateOrderMutation } from '@/hooks/api/orderApi'
+import { useOrderEntries } from '@/hooks/redux/useOrderEntries'
 import { useOrder } from '@/hooks/redux/useOrders'
 import { useRouter } from 'next/router'
 
 const useHooks = (orderId, user) => {
   const router = useRouter()
-  const { order, isLoading } = useOrder(orderId)
+  const { order } = useOrder(orderId)
+  const { order_entries } = useOrderEntries(orderId)
+
   const [updateOrderStatus, { isLoading: isUpdatingStatus }] =
     useUpdateOrderMutation()
 
   const isApprovable = () => {
-    if (user.role === 'headadmin' && order.status.id === 8) {
-      return true
-    } else if (user.role === 'admin' && order.status.id === 1) {
-      return true
-    } else if (user.role === 'subadmin1' && order.status.id === 2) {
-      return true
-    } else if (user.role === 'subadmin2' && order.status.id === 3) {
-      return true
-    } else if (user.role === 'subadmin' && order.status.id === 4) {
-      return true
-    } else if (user.role === 'subadmin3' && order.status.id === 5) {
-      return true
-    } else if (user.role === 'subadmin4' && order.status.id === 6) {
-      return true
-    } else if (user.role === 'superadmin' && order.status.id === 7) {
-      return true
-    } else {
-      return false
+    if (!order || !order.status) return false
+    const approvableStatuses = {
+      headadmin: 8,
+      admin: 1,
+      subadmin1: 2,
+      subadmin2: 3,
+      subadmin: 4,
+      subadmin3: 5,
+      subadmin4: 6,
+      superadmin: 7,
     }
+    return (
+      user.role in approvableStatuses &&
+      order.status.id === approvableStatuses[user.role]
+    )
   }
 
   const getButtonLabel = () => {
-    return isUpdatingStatus ? 'Approving...' : 'Approved'
+    return isUpdatingStatus ? 'Approving...' : 'Approve'
   }
 
   const handleApprove = async () => {
@@ -67,15 +66,12 @@ const useHooks = (orderId, user) => {
           return
       }
 
-      const updatedOrder = await updateOrderStatus({
+      await updateOrderStatus({
         orderId,
         statusId: newStatusId,
       })
 
-      router.reload()
-      router.push(`/orders/${orderId}`)
-
-      return updatedOrder // Return the updated order
+      router.push(`/orders/${order.id}`)
     } catch (error) {
       handleError(error)
     }
@@ -83,7 +79,7 @@ const useHooks = (orderId, user) => {
 
   return {
     order,
-    isLoading,
+    order_entries,
     isApprovable,
     getButtonLabel,
     handleApprove,

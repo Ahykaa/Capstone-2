@@ -1,23 +1,23 @@
-import { useRouter } from 'next/router'
-import { FaList } from 'react-icons/fa'
+import { useRouter } from 'next/router';
+import { FaList } from 'react-icons/fa';
 
-import Loading from '@/components/atoms/Loading'
-import PageHeader from '@/components/organisms/PageHeader'
+import Loading from '@/components/atoms/Loading';
+import PageHeader from '@/components/organisms/PageHeader';
 
-import Template from '@/components/templates/Template'
+import Template from '@/components/templates/Template';
 
-import useHooks from './hooks'
+import useHooks from './hooks';
 
-import { useUser } from '@/hooks/redux/auth'
-import TemplateGSD from '@/components/templates/TemplateGSD'
-import { Button } from 'flowbite-react'
-import OrderDetails from '@/components/templates/OrderDetails'
-import TemplateStaff from '@/components/templates/TemplateStaff'
+import { useUser } from '@/hooks/redux/auth';
+import TemplateGSD from '@/components/templates/TemplateGSD';
+import { Button } from 'flowbite-react';
+import OrderDetails from '@/components/templates/OrderDetails';
+import TemplateStaff from '@/components/templates/TemplateStaff';
 
 const Order = () => {
-  const router = useRouter()
-  const { user } = useUser()
-  const { orderId } = router.query
+  const router = useRouter();
+  const { user } = useUser();
+  const { orderId } = router.query;
   const {
     order,
     isLoading,
@@ -25,7 +25,7 @@ const Order = () => {
     isUpdatingStatus,
     handleApprove,
     getButtonLabel,
-  } = useHooks(orderId, user)
+  } = useHooks(orderId, user);
 
   const breadcrumbs = [
     {
@@ -37,18 +37,19 @@ const Order = () => {
       href: '#',
       title: 'Transaction Detail',
     },
-  ]
+  ];
 
   return (
     <div>
-      {user.role === 'superadmin' ?
+      {user.role === 'superadmin' ? (
         <Template>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
               <div className='flex flex-col mt-4'>
                 <div className='flex space-x-4'>
@@ -64,16 +65,17 @@ const Order = () => {
                 </div>
               </div>
             </section>
-          }
+          )}
         </Template>
-      : user.role === 'admin' ?
+      ) : user.role === 'admin' ? (
         <Template>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
               <div className='flex flex-col mt-4'>
                 <div className='flex space-x-4'>
@@ -89,16 +91,17 @@ const Order = () => {
                 </div>
               </div>
             </section>
-          }
+          )}
         </Template>
-      : user.role === 'subadmin' ?
+      ) : user.role === 'subadmin' ? (
         <TemplateGSD>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
               <div className='flex flex-col mt-4'>
                 <div className='flex space-x-4'>
@@ -114,16 +117,17 @@ const Order = () => {
                 </div>
               </div>
             </section>
-          }
+          )}
         </TemplateGSD>
-      : user.role === 'subadmin1' || user.role === 'subadmin2' ?
+      ) : user.role === 'subadmin1' || user.role === 'subadmin2' ? (
         <TemplateStaff>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
               <div className='flex flex-col mt-4'>
                 <div className='flex space-x-4'>
@@ -139,20 +143,19 @@ const Order = () => {
                 </div>
               </div>
             </section>
-          }
+          )}
         </TemplateStaff>
-      : (
-        user.role === 'subadmin3' ||
+      ) : user.role === 'subadmin3' ||
         user.role === 'subadmin4' ||
-        user.role === 'headadmin'
-      ) ?
+        user.role === 'headadmin' ? (
         <TemplateStaff>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
               <div className='flex flex-col mt-4'>
                 <div className='flex space-x-4'>
@@ -168,22 +171,24 @@ const Order = () => {
                 </div>
               </div>
             </section>
-          }
+          )}
         </TemplateStaff>
-      : <TemplateStaff>
+      ) : (
+        <TemplateStaff>
           <PageHeader breadcrumbs={breadcrumbs} />
-          {isLoading || !order ?
+          {isLoading || !order ? (
             <Loading />
-          : <section className='container mx-auto px-8 py-8'>
+          ) : (
+            <section className='container mx-auto px-8 py-8'>
               <div className='flex flex-col'>
-                <OrderDetails />
+                <OrderDetails orderId={orderId} />
               </div>
             </section>
-          }
+          )}
         </TemplateStaff>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Order
+export default Order;
