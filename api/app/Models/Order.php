@@ -39,4 +39,9 @@ class Order extends Model
     {
         return $this->belongsTo(RequestFor::class);
     }
+    
+    public function orderEntries()
+    {
+        return $this->hasMany(OrderEntry::class);
+    }
 }

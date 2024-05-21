@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Category;
 use App\Models\Order;
-use App\Models\OrderImage;
+use App\Models\OrderEntry;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,28 +36,51 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreOrderRequest $request)
-    { 
+    {
         $user = Auth::user();
-        
+
         $validatedData = $request->validated();
         $validatedData['user_id'] = Auth::id();
-        $validatedData['from'] = $user->name; 
+        $validatedData['from'] = $user->name;
         $validatedData['department_id'] = $user->department_id;
-        $amount = $validatedData['quantity'] * $validatedData['uniCost'];
-        $validatedData['amount'] = $amount;
+
+        // Separate the entries from the main order data
+        $entries = $validatedData['entries'];
+        unset($validatedData['entries']); // Remove entries from the main order data
+
+        // Create the order
         $order = Order::create($validatedData);
 
-        return response()->json($order, 201);
+        // Create order entries
+        foreach ($entries as $entryData) {
+            $remarks = $entryData['remarks'] ?? null; // Get the remarks if present, otherwise set it to null
+
+            $orderEntry = new OrderEntry([
+                'quantity' => $entryData['quantity'],
+                'unit_id' => $entryData['unit_id'],
+                'description' => $entryData['description'],
+                'uniCost' => $entryData['uniCost'],
+                'amount' => $entryData['amount'],
+                'remarks' => $remarks, // Use the remarks obtained above
+            ]);
+
+            $order->orderEntries()->save($orderEntry); // Associate the order entry with the order
+        }
+
+        return response()->json([ 'order' => $order]);
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $order = Order::with('department', 'unit', 'status', 'requestFor')->findOrFail($id);
+        $order = Order::with('department', 'unit', 'status', 'requestFor', 'orderEntries')->findOrFail($id);
         return response()->json(['order' => $order]);
     }
+    
+    
 
 
     /**
@@ -83,8 +106,7 @@ class OrderController extends Controller
             $order->status_id = 6; // Pending by Cash Management 
         } elseif (auth()->user()->role === 'subadmin4') {
             $order->status_id = 7; // Pending by Director for Admin
-        } 
-        else {
+        } else {
             $order->status_id = 8; // Pending by Director for Finance
         }
 

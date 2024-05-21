@@ -17,12 +17,16 @@ const schema = yup.object({
   request_fors_id: yup.string().required(errors.required),
   notes: yup.string(),
   status_id: yup.string().required(errors.required),
-  quantity: yup.number().required().typeError(errors.required),
-  unit_id: yup.string().required(errors.required),
-  description: yup.string().required(errors.required),
-  uniCost: yup.number().default(0).typeError(errors.required),
-  amount: yup.number().required(),
-  remarks: yup.string(),
+  entries: yup.array().of(
+    yup.object().shape({
+      quantity: yup.number().required(errors.required),
+      unit_id: yup.string().required(errors.required),
+      description: yup.string().required(errors.required),
+      uniCost: yup.number().required(errors.required),
+      amount: yup.number().required(errors.required),
+      remarks: yup.string(),
+    }),
+  ),
 })
 
 export function useHooks() {
@@ -35,12 +39,9 @@ export function useHooks() {
     watch,
   } = useForm({
     defaultValues: {
-      order_at: new Date().toISOString().split('T')[0], // Set order_at to today's date
-      quantity: 1,
-      downpayment: 0,
-      amount: 0,
+      order_at: new Date().toISOString().split('T')[0],
+      entries: [{ quantity: 1, uniCost: 0, amount: 0 }], // Initialize with one entry
       status_id: '1',
-      uniCost: 0,
     },
     resolver: yupResolver(schema),
   })
@@ -51,13 +52,15 @@ export function useHooks() {
   const [createOrderMutation] = orderApi.useCreateOrderMutation()
   const { user } = useUser()
 
-  const quantity = watch('quantity')
-  const uniCost = watch('uniCost')
+  const entries = watch('entries')
 
   const calculateAmount = async () => {
     try {
-      const amount = quantity * uniCost
-      setValue('amount', amount)
+      const updatedEntries = entries.map((entry) => ({
+        ...entry,
+        amount: entry.quantity * entry.uniCost,
+      }))
+      setValue('entries', updatedEntries)
     } catch (error) {
       handleError(error)
     }
@@ -66,7 +69,7 @@ export function useHooks() {
   useEffect(() => {
     // Calculate amount when quantity or unit cost changes
     calculateAmount()
-  })
+  }, [entries]) // Add missing dependency
 
   const onSubmit = async (formData) => {
     formData.order_at = dayjs(formData.order_at).format('YYYY-MM-DD HH:mm:ss')
@@ -74,11 +77,12 @@ export function useHooks() {
     formData.from = user.name
     formData.department_id = user.department_id
     try {
-      const order = await createOrderMutation(formData).unwrap()
+      const response = await createOrderMutation(formData).unwrap()
+      console.log('Created order:', response) // Log the response object
       addToast({
         message: 'Created order successfully',
       })
-      router.push(`/orders/${order.id}`)
+      router.push(`/orders/${response.order.id}`) // Use response.order.id to get the correct ID
     } catch (error) {
       handleError(error)
     }
