@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { useReservation } from '@/hooks/redux/useReservation'
+import { useReservations } from '@/hooks/redux/useReservation'
 
 const schema = yup.object({
   keyword: yup.string().nullable(),
@@ -29,7 +29,7 @@ const useHooks = () => {
     resolver: yupResolver(schema),
   })
 
-  const { reservations, isLoading } = useReservation({ page, ...watch() })
+  const { reservations, isLoading } = useReservations({ page, ...watch() })
 
   const totalPages = reservations.last_page || 1
 
@@ -39,7 +39,7 @@ const useHooks = () => {
 
   const breadcrumbs = [
     {
-      href: '#',
+      href: '/reservations',
       title: 'Reservations',
       icon: FaList,
     },

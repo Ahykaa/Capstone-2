@@ -32,4 +32,9 @@ class ReservationController extends Controller
         $reservation = Reservation::create($validatedData);
         return response()->json($reservation, 201);
     }
+    public function show($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        return response()->json(['reservation' => $reservation]);
+    }
 }

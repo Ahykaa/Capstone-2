@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user } = useUser()
   return (
     <nav className='p-3 px-8 flex justify-between items-center bg-green-100'>
-      <Link href='/' className='font-bold flex items-center'>
+      <Link href='/dashboard' className='font-bold flex items-center'>
         <Image src='/bc-seal.png' width={30} height={30} alt='logo' />
         <span className='px-2'>BC Flow System</span>
       </Link>

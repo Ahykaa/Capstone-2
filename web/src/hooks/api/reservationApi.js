@@ -5,7 +5,7 @@ export const reservationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getReservation: builder.query({
       providesTags: ['reservations'],
-      query: (params) => ({ url: `reservations`, params }),
+      query: (params) => ({ url: 'reservations', params }),
     }),
 
     createReservation: builder.mutation({
@@ -16,9 +16,19 @@ export const reservationApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+
+    getReservationById: builder.query({
+      providesTags: (reservationId) => [
+        { type: 'reservations', id: reservationId },
+      ],
+      query: (reservationId) => ({ url: `/reservations/${reservationId}` }),
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useCreateReservationMutation, useGetReservationQuery } =
-  reservationApi
+export const {
+  useCreateReservationMutation,
+  useGetReservationQuery,
+  useGetReservationByIdQuery,
+} = reservationApi

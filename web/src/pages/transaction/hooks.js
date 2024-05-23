@@ -40,7 +40,7 @@ const useHooks = () => {
   const breadcrumbs = [
     {
       href: '/transaction',
-      title: 'Transaction',
+      title: 'Transactions',
       icon: FaList,
     },
   ]

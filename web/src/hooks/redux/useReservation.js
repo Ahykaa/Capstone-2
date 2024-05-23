@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { reservationApi } from '../api/reservationApi'
 
-export const useReservation = (params) => {
+export const useReservations = (params) => {
   const { data, error, isError, isLoading } =
     reservationApi.useGetReservationQuery(params)
 
@@ -10,6 +10,20 @@ export const useReservation = (params) => {
 
   return {
     reservations,
+    error,
+    isError,
+    isLoading,
+  }
+}
+
+export const useReservation = (reservationId) => {
+  const { data, error, isError, isLoading } =
+    reservationApi.useGetReservationByIdQuery(reservationId)
+
+  const reservation = useMemo(() => data?.reservation || null, [data])
+
+  return {
+    reservation,
     error,
     isError,
     isLoading,
