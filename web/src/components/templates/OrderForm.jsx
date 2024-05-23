@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { Button } from 'flowbite-react';
-import DatePicker from '@/components/organisms/DatePicker';
-import SelectInput from '@/components/organisms/SelectInput';
-import TextInput from '@/components/organisms/TextInput';
-import TextAreaInput from '../organisms/TextAreaInput';
-import { useHooks } from '@/pages/orders/new/hooks';
-import { useUnits } from '@/hooks/redux/useUnits';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
-import { HiPlus } from 'react-icons/hi';
-import { useRequestFor } from '@/hooks/redux/useRequestFor';
+import React, { useState } from 'react'
+import { Button } from 'flowbite-react'
+import DatePicker from '@/components/organisms/DatePicker'
+import SelectInput from '@/components/organisms/SelectInput'
+import TextInput from '@/components/organisms/TextInput'
+import TextAreaInput from '../organisms/TextAreaInput'
+import { useHooks } from '@/pages/orders/new/hooks'
+import { useUnits } from '@/hooks/redux/useUnits'
+import { capitalizeFirstLetter } from '@/hooks/lib/util'
+import { HiPlus } from 'react-icons/hi'
+import { useRequestFor } from '@/hooks/redux/useRequestFor'
 
 const OrderForm = () => {
-  const { handleSubmit, formState } = useHooks();
-  const { units } = useUnits();
-  const { requestFor } = useRequestFor();
-  const [entries, setEntries] = useState([{ id: Date.now() }]); // Initialize with one entry
+  const { handleSubmit, formState } = useHooks()
+  const { units } = useUnits()
+  const { requestFor } = useRequestFor()
+  const [entries, setEntries] = useState([{ id: Date.now() }]) // Initialize with one entry
 
   const addEntry = () => {
-    setEntries([...entries, { id: Date.now() }]);
-  };
+    setEntries([...entries, { id: Date.now() }])
+  }
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col'>
@@ -148,7 +148,7 @@ const OrderForm = () => {
         </Button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default OrderForm;
+export default OrderForm

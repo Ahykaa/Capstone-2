@@ -25,7 +25,7 @@ const Reservation = () => {
 
   const breadcrumbs = [
     {
-      href: '/reservation',
+      href: '/reservations',
       title: 'Reservations',
       icon: FaList,
     },

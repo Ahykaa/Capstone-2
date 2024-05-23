@@ -78,7 +78,7 @@ export function useHooks() {
     formData.department_id = user.department_id
     try {
       const response = await createOrderMutation(formData).unwrap()
-      console.log('Created order:', response) // Log the response object
+
       addToast({
         message: 'Created order successfully',
       })

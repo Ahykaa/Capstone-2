@@ -24,6 +24,7 @@ class UnitSeeder extends Seeder
             ['id' => 8, 'label' => 'meter'],
             ['id' => 9, 'label' => 'liter'],
             ['id' => 10, 'label' => 'gallon'],
+            ['id' => 11, 'label' => 'rim'],
         ], ['label'], ['created_at', 'updated_at']);
     }
 }

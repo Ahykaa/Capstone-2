@@ -1,19 +1,19 @@
-import Link from 'next/link';
-import { CiViewList } from 'react-icons/ci';
+import Link from 'next/link'
+import { CiViewList } from 'react-icons/ci'
 
-import Loading from '@/components/atoms/Loading';
-import PageHeader from '@/components/organisms/PageHeader';
-import Pagination from '@/components/organisms/Pagination';
-import Table from '@/components/organisms/Table';
-import Template from '@/components/templates/Template';
-import { formatDate } from '@/hooks/lib/util';
+import Loading from '@/components/atoms/Loading'
+import PageHeader from '@/components/organisms/PageHeader'
+import Pagination from '@/components/organisms/Pagination'
+import Table from '@/components/organisms/Table'
+import Template from '@/components/templates/Template'
+import { formatDate } from '@/hooks/lib/util'
 
-import useHooks from './hooks';
-import TextInput from '@/components/organisms/TextInput';
-import { useUser } from '@/hooks/redux/auth';
-import TemplateGSD from '@/components/templates/TemplateGSD';
-import TemplateStaff from '@/components/templates/TemplateStaff';
-import { useDepartments } from '@/hooks/redux/useDepartments'; // Import the useDepartments hook
+import useHooks from './hooks'
+import TextInput from '@/components/organisms/TextInput'
+import { useUser } from '@/hooks/redux/auth'
+import TemplateGSD from '@/components/templates/TemplateGSD'
+import TemplateStaff from '@/components/templates/TemplateStaff'
+import { useDepartments } from '@/hooks/redux/useDepartments' // Import the useDepartments hook
 
 const Transaction = () => {
   const {
@@ -24,17 +24,17 @@ const Transaction = () => {
     currentPage,
     onPageChange,
     formState,
-  } = useHooks();
-  const { user } = useUser();
+  } = useHooks()
+  const { user } = useUser()
 
   // Use the useDepartments hook to fetch department data
-  const { departments, isLoading: isDepartmentsLoading } = useDepartments();
+  const { departments, isLoading: isDepartmentsLoading } = useDepartments()
 
   // Create a mapping from department ID to department label
   const departmentMap = departments.reduce((map, dept) => {
-    map[dept.id] = dept.label;
-    return map;
-  }, {});
+    map[dept.id] = dept.label
+    return map
+  }, {})
 
   const roleTemplates = {
     superadmin: Template,
@@ -45,9 +45,9 @@ const Transaction = () => {
     subadmin3: TemplateStaff,
     subadmin4: TemplateStaff,
     headadmin: TemplateStaff,
-  };
+  }
 
-  const RoleTemplate = roleTemplates[user.role] || TemplateStaff;
+  const RoleTemplate = roleTemplates[user.role] || TemplateStaff
 
   const getAction = (row) => {
     return (
@@ -58,8 +58,8 @@ const Transaction = () => {
           </Link>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const rows = [
     {
@@ -97,10 +97,10 @@ const Transaction = () => {
       header: 'Actions',
       render: getAction,
     },
-  ];
+  ]
 
   if (isLoading || isDepartmentsLoading) {
-    return <Loading />;
+    return <Loading />
   }
 
   return (
@@ -126,7 +126,7 @@ const Transaction = () => {
         totalPages={totalPages}
       />
     </RoleTemplate>
-  );
-};
+  )
+}
 
-export default Transaction;
+export default Transaction

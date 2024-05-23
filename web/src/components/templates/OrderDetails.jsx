@@ -1,41 +1,34 @@
-import dayjs from 'dayjs';
-import RowItem from '../organisms/RowItem';
+import dayjs from 'dayjs'
+import RowItem from '../organisms/RowItem'
 import {
   FaCalendarAlt,
   FaUser,
   FaLayerGroup,
   FaCheckSquare,
   FaBars,
-} from 'react-icons/fa';
-import { HiOutlineInformationCircle } from 'react-icons/hi';
-import useHooks from '@/pages/orders/[orderId]/hooks';
-import { useRouter } from 'next/router';
-import { useUser } from '@/hooks/redux/auth';
-import { useRequestFor } from '@/hooks/redux/useRequestFor';
-import { useUnits } from '@/hooks/redux/useUnits';
-import { capitalizeFirstLetter } from '@/hooks/lib/util';
+} from 'react-icons/fa'
+import { HiOutlineInformationCircle } from 'react-icons/hi'
+import useHooks from '@/pages/orders/[orderId]/hooks'
+import { useRouter } from 'next/router'
+import { useUser } from '@/hooks/redux/auth'
+import { useRequestFor } from '@/hooks/redux/useRequestFor'
+import { useUnits } from '@/hooks/redux/useUnits'
+import { capitalizeFirstLetter } from '@/hooks/lib/util'
 
 const OrderDetails = () => {
-  const router = useRouter();
-  const { user } = useUser();
-  const { orderId } = router.query;
+  const router = useRouter()
+  const { user } = useUser()
+  const { orderId } = router.query
 
-  const {
-    order,
-    order_entries,
-    isApprovable,
-    getButtonLabel,
-    handleApprove,
-  } = useHooks(orderId, user);
+  const { order, order_entries } = useHooks(orderId, user)
 
-  const { requestFor } = useRequestFor();
-  const { units } = useUnits();
+  const { requestFor } = useRequestFor()
+  const { units } = useUnits()
 
   const requestForLabel =
-    requestFor.find((rf) => rf.id === order.request_fors_id)?.label ||
-    'Unknown';
+    requestFor.find((rf) => rf.id === order.request_fors_id)?.label || 'Unknown'
 
-  if (!order || !order_entries || !units) return <div>Loading...</div>;
+  if (!order || !order_entries || !units) return <div>Loading...</div>
 
   return (
     <div className='flex flex-col space-y-4'>
@@ -93,15 +86,10 @@ const OrderDetails = () => {
 
       <div>
         <h3>Order Entries</h3>
-        {order_entries && order_entries.length > 0 ? (
+        {order_entries && order_entries.length > 0 ?
           order_entries.map((entry, index) => {
             const unitLabel =
-              units.find((u) => u.id === entry.unit_id)?.label || 'Unknown';
-
-            // Debug log for unit label
-            console.log(
-              `Entry ${index} unit_id: ${entry.unit_id}, unitLabel: ${unitLabel}`
-            );
+              units.find((u) => u.id === entry.unit_id)?.label || 'Unknown'
 
             return (
               <div key={index} className='shadow-lg p-4 rounded-lg space-y-4'>
@@ -129,20 +117,12 @@ const OrderDetails = () => {
                   <RowItem label='Remarks' value={entry.remarks} />
                 </div>
               </div>
-            );
+            )
           })
-        ) : (
-          <p>No order entries available</p>
-        )}
+        : <p>No order entries available</p>}
       </div>
-
-      {isApprovable() && (
-        <button onClick={handleApprove} className='btn btn-primary'>
-          {getButtonLabel()}
-        </button>
-      )}
     </div>
-  );
-};
+  )
+}
 
-export default OrderDetails;
+export default OrderDetails

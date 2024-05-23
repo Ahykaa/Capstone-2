@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/departments', [DepartmentController::class, 'index']);
     Route::get('/units', [UnitController::class, 'index']);
-    Route::get('/statuses', [StatusController::class, 'index']);  // Fixed typo here
+    Route::get('/statuses', [StatusController::class, 'index']); 
     Route::get('/requestFor', [RequestForController::class, 'index']);
     Route::get('/order_entries', [OrderEntriesController::class, 'index']);
     Route::get('/order_entries/{id}', [OrderEntriesController::class, 'show']);

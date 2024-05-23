@@ -9,6 +9,7 @@ import useHooks from './hooks'
 import { capitalizeFirstLetter, formatDate, formatTime } from '@/hooks/lib/util'
 import Pagination from '@/components/organisms/Pagination'
 import { facilitieOptions } from '@/hooks/const'
+import { CiViewList } from 'react-icons/ci'
 
 const Reservation = () => {
   const {
@@ -20,6 +21,17 @@ const Reservation = () => {
     onPageChange,
   } = useHooks()
 
+  const getAction = (row) => {
+    return (
+      <div className='flex'>
+        <div className='text-blue-500 text-xl'>
+          <Link href={`/reservations/${row.id}`}>
+            <CiViewList />
+          </Link>
+        </div>
+      </div>
+    )
+  }
   const rows = [
     {
       key: 'event_date',
@@ -51,6 +63,11 @@ const Reservation = () => {
       key: 'representative',
       header: 'Representative',
       render: (row) => row.representative,
+    },
+    {
+      key: 'actions',
+      header: 'Actions',
+      render: getAction,
     },
   ]
 
