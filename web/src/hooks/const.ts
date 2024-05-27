@@ -111,7 +111,7 @@ export const facilitieOptions = [
     label: 'Others',
   },
 ]
-export const ownItems = [
+export const particulars = [
   {
     value: 1,
     label: 'Venue Charge (w/o lights)',

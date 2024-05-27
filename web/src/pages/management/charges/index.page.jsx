@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PageHeader from '@/components/organisms/PageHeader'
 import TemplateGSD from '@/components/templates/TemplateGSD'
-import { facilitieOptions, ownItems } from '@/hooks/const'
+import { facilitieOptions, particulars } from '@/hooks/const'
 import { Button, Card, TextInput } from 'flowbite-react'
 import BreadCrumbs from '@/components/atoms/BreadCrumbs'
 import Pagination from '@/components/organisms/Pagination'
@@ -21,9 +21,9 @@ function Charges() {
     facilitiesStartIndex,
     facilitiesEndIndex,
   )
-  const paginatedOwnItems = ownItems.slice(itemsStartIndex, itemsEndIndex)
+  const paginatedOwnItems = particulars.slice(itemsStartIndex, itemsEndIndex)
   const totalPagesFacilities = Math.ceil(facilitieOptions.length / itemsPerPage)
-  const totalPagesItems = Math.ceil(ownItems.length / itemsPerPage)
+  const totalPagesItems = Math.ceil(particulars.length / itemsPerPage)
 
   const handleFacilitiesPageChange = (pageNumber) => {
     setFacilitiesCurrentPage(pageNumber)
@@ -45,39 +45,39 @@ function Charges() {
                 <h3 className='text-lg font-semibold mb-1'>Facilities</h3>
               </center>
               <table>
-                  <tr>
-                    <td className='flex'>
-                      <TextInput placeholder='Facility' />
+                <tr>
+                  <td className='flex'>
+                    <TextInput placeholder='Facility' />
+                  </td>
+                  <td>
+                    <TextInput placeholder='Rate' />
+                  </td>
+                  <td className='px-2 py-2'>
+                    <Button color='success' size='xs' type='button'>
+                      Add
+                    </Button>
+                  </td>
+                </tr>
+              </table>
+              <h5 className='text-md font-semibold'>List of Facilities</h5>
+              <table>
+                {paginatedFacilitieOptions.map((item) => (
+                  <tr key={item.value} className='border-b'>
+                    <td className='flex text-sm py-2'>{item.label}</td>
+                    <td className='px-2'> = </td>
+                    <td className='px-2 py-1 text-right'>
+                      <h2>&#8369; 9,999.00</h2>
                     </td>
-                    <td>
-                      <TextInput placeholder='Rate' />
-                    </td>
-                    <td className='px-2 py-2'>
+                    <td className='px-1 py-1 flex justify-end items-center space-x-1'>
                       <Button color='success' size='xs' type='button'>
-                        Add
+                        Edit
                       </Button>
                     </td>
+                    <td className='w-px h-4'>
+                      <DeleteModal />
+                    </td>
                   </tr>
-                </table>
-                <h5 className='text-md font-semibold'>List of Facilities</h5>
-                <table>
-                  {paginatedFacilitieOptions.map((item) => (
-                    <tr key={item.value} className='border-b'>
-                      <td className='flex text-sm py-2'>{item.label}</td>
-                      <td className='px-2'> = </td>
-                      <td className='px-2 py-1 text-right'>
-                        <h2>&#8369; 9,999.00</h2>
-                      </td>
-                      <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='success' size='xs' type='button'>
-                        Edit
-                        </Button>
-                      </td>
-                      <td className='w-px h-4'>
-                        <DeleteModal />
-                      </td>
-                    </tr>
-                  ))}
+                ))}
               </table>
               <Pagination
                 currentPage={facilitiesCurrentPage}
@@ -105,21 +105,21 @@ function Charges() {
                     </Button>
                   </td>
                 </tr>
-                </table>
-                <h5 className='text-md font-semibold'>List of Items</h5>
-                <table>
+              </table>
+              <h5 className='text-md font-semibold'>List of Items</h5>
+              <table>
                 {paginatedOwnItems.map((item) => (
                   <tr key={item.value} className='border-b'>
                     <td className='flex text-sm py-2'>{item.label}</td>
                     <td className='px-2'> = </td>
                     <td className='px-2 py-1 text-right'>
-                        <h2>&#8369; 9,999.00</h2>
-                      </td>
-                      <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='success' size='xs' type='button'>
+                      <h2>&#8369; 9,999.00</h2>
+                    </td>
+                    <td className='px-1 py-1 flex justify-end items-center space-x-1'>
+                      <Button color='success' size='xs' type='button'>
                         Edit
-                        </Button>
-                      </td>
+                      </Button>
+                    </td>
                     <td className='w-px h-4'>
                       <DeleteModal />
                     </td>

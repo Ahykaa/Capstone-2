@@ -20,10 +20,10 @@ class OrderController extends Controller
         $perPage = $request->perPage ?? 20;
         $keyword = $request->keyword;
 
-        $orders = Order::with('status')
+        $orders = Order::with('status', 'requestFor')
             ->when($keyword != 'null', function ($q) use ($keyword) {
                 return $q->where('date_needed', 'LIKE', "%{$keyword}%")
-                    ->orWhere('description', 'LIKE', "%{$keyword}%");;
+                    ->orWhere('requestFor', 'LIKE', "%{$keyword}%");;
             })
             ->orderBy('created_at', 'DESC')
             ->paginate($perPage);

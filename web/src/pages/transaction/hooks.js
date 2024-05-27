@@ -36,7 +36,6 @@ const useHooks = () => {
   const onPageChange = (page) => {
     router.push({ pathname: '/orders', query: { page } })
   }
-
   const breadcrumbs = [
     {
       href: '/transaction',

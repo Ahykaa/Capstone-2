@@ -16,6 +16,18 @@ const GsdAdminDashboard = () => {
     { title: data?.total_amount ?? 0, description: 'Total Utilized Budget' },
   ]
 
+  const events = [
+    // Sample events data
+    {
+      title: 'Orientation',
+      start: '2024-05-17T09:00:00',
+    },
+    {
+      title: 'Pictorial',
+      start: '2024-05-20T18:00:00',
+    },
+  ]
+
   return (
     <div className='mx-auto max-w-screen-lg mt-12'>
       <div className='grid grid-cols-4 gap-4'>
@@ -27,9 +39,9 @@ const GsdAdminDashboard = () => {
           />
         ))}
       </div>
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='grid grid-cols-2 gap-4 w-full'>
         <div className='mt-8 w-full'>
-          <CalendarScheduler />
+          <CalendarScheduler events={events} />
         </div>
       </div>
     </div>

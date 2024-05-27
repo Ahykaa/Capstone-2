@@ -3,7 +3,7 @@ import TextInput from '@/components/organisms/TextInput'
 import TemplateGSD from '@/components/templates/TemplateGSD'
 import { useHooks } from './hooks'
 
-import { facilitieOptions, ownItems } from '@/hooks/const'
+import { facilitieOptions, particulars } from '@/hooks/const'
 import PageHeader from '@/components/organisms/PageHeader'
 import { MdOutlineBookmarkAdded } from 'react-icons/md'
 import SelectInput from '@/components/organisms/SelectInput'
@@ -13,6 +13,7 @@ import CheckboxReserv from '@/components/organisms/CheckboxReserv'
 import TimePicker from '@/components/organisms/TimePicker'
 import { Button } from 'flowbite-react'
 import { FaList } from 'react-icons/fa'
+import TextAreaInput from '@/components/organisms/TextAreaInput'
 
 const Reservation = () => {
   const { formState, handleSubmit } = useHooks()
@@ -126,7 +127,7 @@ const Reservation = () => {
                   />
                 </div>
                 <div className='w-full '>
-                  {/* <TimePicker
+                  <TimePicker
                     id='time'
                     min='09:00'
                     max='18:00'
@@ -134,18 +135,26 @@ const Reservation = () => {
                     {...formState}
                     value={selectedTime}
                     onChange={handleTimeChange}
-                  /> */}
+                  />
                 </div>
+              </div>
+              <div className='flex space-x-4 w-full'>
+                <TextAreaInput
+                  label='Own Items'
+                  name='ownItems'
+                  placeHolder='Own Items'
+                  {...formState}
+                />
               </div>
               <div className='shadow-lg p-4 rounded-lg text-center'>
                 <span className='font-bold g-4'>Charges</span>
                 <div className='flex space-x-4'>
                   <div className='w-1/2'>
                     <SelectInput
-                      name='ownItems'
+                      name='particulars'
                       options={[
                         { value: 0, label: 'Select Items', disabled: true },
-                        ...ownItems,
+                        ...particulars,
                       ]}
                       {...formState}
                     />
