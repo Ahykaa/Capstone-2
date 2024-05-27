@@ -7,9 +7,17 @@ export const departmentApi = baseApi.injectEndpoints({
       query: () => ({ url: '/departments' }),
       providesTags: ['departments'],
     }),
-    // Add other order-related endpoints as needed...
+    updateDepartment: build.mutation({
+      invalidatesTags: ['departments'],
+      query: ({ departmentId, budget }) => ({
+        url: `/departments/${departmentId}`,
+        method: 'PUT',
+        body: { budget },
+      }),
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useGetDepartmentQuery } = departmentApi
+export const { useGetDepartmentQuery, useUpdateDepartmentMutation } =
+  departmentApi
