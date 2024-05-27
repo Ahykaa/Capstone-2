@@ -34,6 +34,7 @@ class StoreReservationRequest extends FormRequest
             'quantity' => 'required|integer',
             'event_time' => 'required|date_format:H:i:s',
             'ownItems' => 'required|string',
+            'particulars' => 'required|string',
             'rate' => 'required|numeric',
             'amount' => 'required|numeric',
         ];

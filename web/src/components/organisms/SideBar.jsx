@@ -24,7 +24,7 @@ const links = [
     link: '/users',
   },
   {
-    label: 'Master List',
+    label: 'Departmental Budget',
     icon: <HiOutlineUsers />,
     link: '/management',
   },

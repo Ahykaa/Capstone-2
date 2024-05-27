@@ -8,7 +8,7 @@ import DeleteModal from '@/components/organisms/DeleteModal'
 import SelectInput from '@/components/organisms/SelectInput'
 import { useDepartments } from '@/hooks/redux/useDepartments'
 
-const Management = () =>{
+const Management = () => {
   const { departments } = useDepartments()
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(1)
@@ -21,7 +21,6 @@ const Management = () =>{
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
   }
-
 
   return (
     <Template>
@@ -47,19 +46,21 @@ const Management = () =>{
                   </td>
                 </tr>
               </table>
-              <h5 className='text-md font-semibold mb-1'>List of Departments</h5>
+              <h5 className='text-md font-semibold mb-1'>
+                List of Departments
+              </h5>
               <table>
                 <tbody>
                   {paginatedDepartments.map((department) => (
                     <tr key={department.id} className='border-b'>
-                      <td className='px-4 py-1'>
-                        {department.label}
-                      </td>
+                      <td className='px-4 py-1'>{department.label}</td>
                       <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='success' size='xs' type='button'>
+                        <Button color='blue' size='xs' type='button'>
                           Edit
                         </Button>
-                        <DeleteModal />
+                        <Button color='success' size='xs' type='button'>
+                          Save
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -80,16 +81,16 @@ const Management = () =>{
               <table>
                 <tr>
                   <td>
-                  <SelectInput
-                    name='department_id'
-                    options={[
-                      { value: '', label: 'Departments', isDisabled: true },
-                      ...(departments?.map((department) => ({
-                        value: department.id,
-                        label: department.label,
-                      })) || []),
-                    ]}
-                  />
+                    <SelectInput
+                      name='department_id'
+                      options={[
+                        { value: '', label: 'Departments', isDisabled: true },
+                        ...(departments?.map((department) => ({
+                          value: department.id,
+                          label: department.label,
+                        })) || []),
+                      ]}
+                    />
                   </td>
                   <td>
                     <TextInput placeholder='Budget' />
@@ -108,20 +109,20 @@ const Management = () =>{
                 <tbody>
                   {paginatedDepartments.map((department) => (
                     <tr key={department.id} className='border-b'>
-                      <td className='px-2 py-1'>
-                        {department.label}
-                      </td>
+                      <td className='px-2 py-1'>{department.label}</td>
                       <td> = </td>
                       <td className='px-2 py-1 text-right'>
-                        <h2>&#8369; 999,999.00</h2> {/* pesos sign */}
+                        <h2>&#8369; </h2> {/* pesos sign */}
                       </td>
                       <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='success' size='xs' type='button'>
-                        Edit
+                        <Button color='blue' size='xs' type='button'>
+                          Edit
                         </Button>
                       </td>
                       <td className='w-px h-4'>
-                        <DeleteModal />
+                        <Button color='success' size='xs' type='button'>
+                          Save
+                        </Button>
                       </td>
                     </tr>
                   ))}

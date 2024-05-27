@@ -14,6 +14,7 @@ import { useUser } from '@/hooks/redux/auth'
 import TemplateGSD from '@/components/templates/TemplateGSD'
 import TemplateStaff from '@/components/templates/TemplateStaff'
 import { useDepartments } from '@/hooks/redux/useDepartments' // Import the useDepartments hook
+import { useRequestFor } from '@/hooks/redux/useRequestFor'
 
 const Transaction = () => {
   const {
@@ -27,14 +28,21 @@ const Transaction = () => {
   } = useHooks()
   const { user } = useUser()
 
-  // Use the useDepartments hook to fetch department data
   const { departments, isLoading: isDepartmentsLoading } = useDepartments()
+  const { requestFor } = useRequestFor()
 
-  // Create a mapping from department ID to department label
   const departmentMap = departments.reduce((map, dept) => {
     map[dept.id] = dept.label
     return map
   }, {})
+
+  const requestForMap =
+    requestFor ?
+      requestFor.reduce((map, reqFor) => {
+        map[reqFor.id] = reqFor.label
+        return map
+      }, {})
+    : {}
 
   const roleTemplates = {
     superadmin: Template,
@@ -57,6 +65,7 @@ const Transaction = () => {
             <CiViewList />
           </Link>
         </div>
+        View
       </div>
     )
   }
@@ -75,16 +84,16 @@ const Transaction = () => {
     {
       key: 'department',
       header: 'Department',
-      render: (row) => departmentMap[row.department_id] || 'Unknown', // Map department_id to label
+      render: (row) => departmentMap[row.department_id] || 'Unknown',
     },
     {
-      key: 'description',
-      header: 'Description',
-      render: (row) => row.description,
+      key: 'requestFor',
+      header: 'Request For',
+      render: (row) => requestForMap[row.request_fors_id] || 'Unknown',
     },
     {
       key: 'amount',
-      header: 'Amount',
+      header: 'Total Amount',
       render: (row) => row.amount,
     },
     {

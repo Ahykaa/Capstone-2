@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { FaList } from 'react-icons/fa'
 import useHooks from './hooks'
 import Loading from '@/components/atoms/Loading'
+import dayjs from 'dayjs'
 
 const Reservation = () => {
   const router = useRouter()
@@ -34,7 +35,10 @@ const Reservation = () => {
               <RowItem label='Facilities' value={reservation.facilities} />
             </div>
             <div className='w-full'>
-              <RowItem label='Date Prepared' value={reservation.resev_at} />
+              <RowItem
+                label='Date Prepared'
+                value={dayjs(reservation.reserv_at).format('MMM DD, YYYY')}
+              />
             </div>
             <div className='w-full'>
               <RowItem label='Time Prepared' value={reservation.time_at} />
@@ -67,7 +71,10 @@ const Reservation = () => {
               />
             </div>
             <div className='w-full'>
-              <RowItem label='Event Date' value={reservation.event_date} />
+              <RowItem
+                label='Event Date'
+                value={dayjs(reservation.event_date).format('MMM DD, YYYY')}
+              />
             </div>
             <div className='w-full'>
               <RowItem label='Event Time' value={reservation.event_time} />
@@ -75,7 +82,10 @@ const Reservation = () => {
           </div>
           <div className='flex space-x-4'>
             <div className='w-full'>
-              <RowItem label='Owned Items (To be used during the activity)' />
+              <RowItem
+                label='Owned Items (To be used during the activity)'
+                value={reservation.ownItems}
+              />
             </div>
           </div>
 
@@ -83,7 +93,7 @@ const Reservation = () => {
             <span className='font-bold g-4'>Charges</span>
             <div className='flex space-x-4'>
               <div className='w-1/2'>
-                <RowItem label='Particulars' value={reservation.ownItems} />
+                <RowItem label='Particulars' value={reservation.particulars} />
               </div>
               <div className='w-1/2'>
                 <RowItem label='Quantity' value={reservation.quantity} />

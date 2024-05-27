@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const CalendarScheduler = () => {
+const CalendarScheduler = ({ events }) => {
   // Get the current date
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth()
@@ -57,6 +57,16 @@ const CalendarScheduler = () => {
     return calendarDays
   }
 
+  // Render events
+  const renderEvents = () => {
+    return events.map((event, index) => (
+      <div key={index} className='bg-gray-200 p-2 rounded-lg mb-2'>
+        <div className='font-bold'>{event.title}</div>
+        <div>{new Date(event.start).toLocaleString()}</div>
+      </div>
+    ))
+  }
+
   return (
     <div className='p-4 bg-white shadow-md rounded-lg'>
       <div className='text-center mb-4'>
@@ -74,6 +84,12 @@ const CalendarScheduler = () => {
         <div className='text-center'>Fri</div>
         <div className='text-center'>Sat</div>
         {renderCalendarDays()}
+      </div>
+
+      {/* Display events */}
+      <div className='mt-4'>
+        <h3 className='text-lg font-bold mb-2'>Schedule:</h3>
+        {renderEvents()}
       </div>
     </div>
   )

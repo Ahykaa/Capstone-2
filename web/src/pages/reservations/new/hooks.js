@@ -1,4 +1,3 @@
-// hooks.js
 import { reservationApi } from '@/hooks/api/reservationApi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
@@ -20,6 +19,7 @@ const schema = yup.object({
   event_date: yup.date(),
   event_time: yup.string(), // Change to string, as TimePicker returns string
   ownItems: yup.string(),
+  particulars: yup.string(),
   quantity: yup.number(),
   rate: yup.number(),
   amount: yup.number(),
@@ -39,6 +39,7 @@ export function useHooks() {
       reserv_at: new Date().toISOString().split('T')[0],
       event_date: new Date().toISOString().split('T')[0],
       event_time: '10:00:00',
+      time_at: '10:00:00',
     },
     resolver: yupResolver(schema),
   })

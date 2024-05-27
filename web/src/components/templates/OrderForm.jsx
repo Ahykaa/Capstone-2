@@ -83,7 +83,7 @@ const OrderForm = () => {
                   options={[
                     {
                       value: '',
-                      label: capitalizeFirstLetter('Unit'),
+                      label: capitalizeFirstLetter('Select Unit'),
                       isDisabled: true,
                     },
                     ...(units?.map((unit) => ({

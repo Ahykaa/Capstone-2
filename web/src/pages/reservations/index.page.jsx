@@ -47,7 +47,6 @@ const Reservation = () => {
       key: 'facilities',
       header: 'Facilities',
       render: (row) => {
-        // Find the facility object with the matching value
         const facility = facilitieOptions.find(
           (option) => option.value === row.facilities,
         )
