@@ -33,7 +33,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::get('/departments', [DepartmentController::class, 'index']);
+    // Route::get('/departments', [DepartmentController::class, 'index']);
     Route::get('/units', [UnitController::class, 'index']);
     Route::get('/statuses', [StatusController::class, 'index']); 
     Route::get('/requestFor', [RequestForController::class, 'index']);
@@ -57,6 +57,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
 
     Route::resource('orders', OrderController::class);
+    Route::put('/departments/{id}', [DepartmentController::class, 'update']);
+
+    Route::resource('departments', DepartmentController::class);
+
 
     Route::group(['middleware' => ['restrictRole:superadmin,staff,admin,subadmin1,subadmin']], function () {
         Route::resource('transaction', TransactionController::class);

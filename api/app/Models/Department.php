@@ -10,6 +10,7 @@ class Department extends Model
     use HasFactory;
     protected $fillable = [
         'label',
+        'budget'
     ];
     
     public function orders()

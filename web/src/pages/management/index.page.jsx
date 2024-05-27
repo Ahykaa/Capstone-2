@@ -1,26 +1,44 @@
-import React, { useState, useEffect } from 'react'
-import PageHeader from '@/components/organisms/PageHeader'
-import Template from '@/components/templates/Template'
-import { Button, Card, TextInput } from 'flowbite-react'
-import BreadCrumbs from '@/components/atoms/BreadCrumbs'
-import Pagination from '@/components/organisms/Pagination'
-import DeleteModal from '@/components/organisms/DeleteModal'
-import SelectInput from '@/components/organisms/SelectInput'
-import { useDepartments } from '@/hooks/redux/useDepartments'
+import React, { useState } from 'react';
+import PageHeader from '@/components/organisms/PageHeader';
+import Template from '@/components/templates/Template';
+import { Button, Card, TextInput } from 'flowbite-react';
+import BreadCrumbs from '@/components/atoms/BreadCrumbs';
+import Pagination from '@/components/organisms/Pagination';
+import SelectInput from '@/components/organisms/SelectInput';
+import { useDepartments } from '@/hooks/redux/useDepartments';
+import { useHooks } from './hooks';
 
 const Management = () => {
-  const { departments } = useDepartments()
-  const itemsPerPage = 10
-  const [currentPage, setCurrentPage] = useState(1)
+  const { departments } = useDepartments();
+  const { updateDepartmentBudget } = useHooks();
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [budget, setBudget] = useState('');
 
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const paginatedDepartments = departments.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(departments.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedDepartments = departments.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(departments.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
+    setCurrentPage(pageNumber);
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
+
+  const handleBudgetChange = (e) => {
+    setBudget(e.target.value);
+  };
+
+  const handleAddBudget = () => {
+    if (selectedDepartment && budget) {
+      updateDepartmentBudget(selectedDepartment, budget);
+      setBudget('');
+    }
+  };
 
   return (
     <Template>
@@ -54,14 +72,6 @@ const Management = () => {
                   {paginatedDepartments.map((department) => (
                     <tr key={department.id} className='border-b'>
                       <td className='px-4 py-1'>{department.label}</td>
-                      <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='blue' size='xs' type='button'>
-                          Edit
-                        </Button>
-                        <Button color='success' size='xs' type='button'>
-                          Save
-                        </Button>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -83,6 +93,8 @@ const Management = () => {
                   <td>
                     <SelectInput
                       name='department_id'
+                      value={selectedDepartment}
+                      onChange={handleSelectChange}
                       options={[
                         { value: '', label: 'Departments', isDisabled: true },
                         ...(departments?.map((department) => ({
@@ -93,10 +105,19 @@ const Management = () => {
                     />
                   </td>
                   <td>
-                    <TextInput placeholder='Budget' />
+                    <TextInput
+                      placeholder='Budget'
+                      value={budget}
+                      onChange={handleBudgetChange}
+                    />
                   </td>
                   <td>
-                    <Button color='success' size='xs' type='button'>
+                    <Button
+                      color='success'
+                      size='xs'
+                      type='button'
+                      onClick={handleAddBudget}
+                    >
                       Add
                     </Button>
                   </td>
@@ -112,17 +133,8 @@ const Management = () => {
                       <td className='px-2 py-1'>{department.label}</td>
                       <td> = </td>
                       <td className='px-2 py-1 text-right'>
-                        <h2>&#8369; </h2> {/* pesos sign */}
-                      </td>
-                      <td className='px-1 py-1 flex justify-end items-center space-x-1'>
-                        <Button color='blue' size='xs' type='button'>
-                          Edit
-                        </Button>
-                      </td>
-                      <td className='w-px h-4'>
-                        <Button color='success' size='xs' type='button'>
-                          Save
-                        </Button>
+                        <h2>&#8369; {department.budget} </h2>
+                        {/* pesos sign */}
                       </td>
                     </tr>
                   ))}
@@ -138,6 +150,7 @@ const Management = () => {
         </div>
       </div>
     </Template>
-  )
-}
-export default Management
+  );
+};
+
+export default Management;
