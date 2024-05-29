@@ -157,3 +157,49 @@ export const particulars = [
     label: 'Security',
   },
 ]
+
+export const statusOptions = [
+  {
+    value: 0,
+    label: 'Status',
+    disabled: true,
+    selected: true,
+    hidden: true,
+  },
+  {
+    value: '1',
+    label: 'Created',
+  },
+  {
+    value: '2',
+    label: 'Approved by Unit/Department Head',
+  },
+  {
+    value: '3',
+    label: 'Approved by Purchaser',
+  },
+  {
+    value: '4',
+    label: 'Approved by Property Custodian',
+  },
+  {
+    value: '5',
+    label: 'Approved by GSD',
+  },
+  {
+    value: '6',
+    label: 'Approved by Cash Management',
+  },
+  {
+    value: '7',
+    label: 'Approved by Director for Admin',
+  },
+  {
+    value: '8',
+    label: 'Approved by Director for Finance',
+  },
+  {
+    value: '9',
+    label: 'Approved',
+  },
+]

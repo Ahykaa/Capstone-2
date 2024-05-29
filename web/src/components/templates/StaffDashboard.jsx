@@ -3,6 +3,7 @@ import { useDepartments } from '@/hooks/redux/useDepartments';
 import { useUser } from '@/hooks/redux/auth';
 
 import CardItem from '@/components/organisms/Card';
+import { formatAsMoney } from '@/hooks/lib/util';
 
 const StaffDashboard = () => {
   const { departments } = useDepartments();
@@ -15,8 +16,7 @@ const StaffDashboard = () => {
   const cardData = [
     { title: userDepartment?.budgets ?? 0, description: 'Approved' },
     { title: userDepartment?.budgets ?? 0, description: 'Pending' },
-    { title: userDepartment?.budget ?? 0, description: 'Total Budget' },
-
+    { title: formatAsMoney(userDepartment?.budget ?? 0), description: 'Total Budget' },
     {
       title: userDepartment?.budgets ?? 0,
       description: 'Total Utilized Budget',

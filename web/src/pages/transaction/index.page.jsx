@@ -16,6 +16,8 @@ import TemplateStaff from '@/components/templates/TemplateStaff'
 import { useDepartments } from '@/hooks/redux/useDepartments' // Import the useDepartments hook
 import { useRequestFor } from '@/hooks/redux/useRequestFor'
 import SelectInput from '@/components/organisms/SelectInput'
+import { statuses } from '@/hooks/lib/statuses'
+import { statusOptions } from '@/hooks/const'
 
 const Transaction = () => {
   const {
@@ -126,15 +128,7 @@ const Transaction = () => {
             variant='outlined'
             color='success'
           />
-          <SelectInput  className='w-80' options={[
-                    {
-                      
-                      value: '',
-                      label: capitalizeFirstLetter('Status'),
-                      isDisabled: true,
-                    },
-                   
-                  ]}/>
+          <SelectInput name='status' className='w-80' options={statusOptions} {...formState} />
         </div>
         <Table rows={rows} data={orders.data} />
       </section>
@@ -147,5 +141,4 @@ const Transaction = () => {
     </RoleTemplate>
   )
 }
-
 export default Transaction

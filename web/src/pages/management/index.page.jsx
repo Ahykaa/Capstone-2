@@ -7,6 +7,7 @@ import Pagination from '@/components/organisms/Pagination';
 import SelectInput from '@/components/organisms/SelectInput';
 import { useDepartments } from '@/hooks/redux/useDepartments';
 import { useHooks } from './hooks';
+import { formatAsMoney } from '@/hooks/lib/util';
 
 const Management = () => {
   const { departments } = useDepartments();
@@ -133,7 +134,7 @@ const Management = () => {
                       <td className='px-2 py-1'>{department.label}</td>
                       <td> = </td>
                       <td className='px-2 py-1 text-right'>
-                        <h2>&#8369; {department.budget} </h2>
+                      <h2>{formatAsMoney(department.budget)}</h2>
                         {/* pesos sign */}
                       </td>
                     </tr>

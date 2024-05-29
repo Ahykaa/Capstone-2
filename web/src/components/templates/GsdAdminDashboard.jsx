@@ -3,6 +3,7 @@ import { dashboardApi } from '@/hooks/api/dashboardApi';
 import CalendarScheduler from '../organisms/CalendarScheduler';
 import { useDepartments } from '@/hooks/redux/useDepartments';
 import { useUser } from '@/hooks/redux/auth';
+import { formatAsMoney } from '@/hooks/lib/util';
 
 const GsdAdminDashboard = () => {
   const { data } = dashboardApi.useGetDashboardQuery();
@@ -16,12 +17,9 @@ const GsdAdminDashboard = () => {
   const cardData = [
     { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
     { title: data?.status_counts?.open ?? 0, description: 'Pending' },
-    {
-      title: userDepartment?.budget ?? 0,
-      description: 'Total Budget',
-    },
+    { title: formatAsMoney(userDepartment?.budget ?? 0), description: 'Total Budget' },
+    { title: formatAsMoney(userDepartment?.budget ?? 0), description: 'Total Utilized Budget' },
 
-    { title: data?.total_amount ?? 0, description: 'Total Utilized Budget' },
   ];
 
   const events = [
