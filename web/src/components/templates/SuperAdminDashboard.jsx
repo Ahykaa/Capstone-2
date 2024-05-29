@@ -2,6 +2,7 @@ import CardItem from '@/components/organisms/Card';
 import Chart from '../organisms/Chart';
 import { useDepartments } from '@/hooks/redux/useDepartments';
 import { useUser } from '@/hooks/redux/auth';
+import { formatAsMoney } from '@/hooks/lib/util';
 
 const SuperAdminDasboard = () => {
   const { departments } = useDepartments();
@@ -19,7 +20,7 @@ const SuperAdminDasboard = () => {
       title: userDepartment?.budget ?? 0,
       description: 'Pending',
     },
-    { title: userDepartment?.budget ?? 0, description: 'Total Budget' },
+    { title: formatAsMoney(userDepartment?.budget ?? 0), description: 'Total Budget' },
     {
       title: userDepartment?.budget ?? 0,
       description: 'Total Utilized Budget',
