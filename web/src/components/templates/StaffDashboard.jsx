@@ -13,12 +13,12 @@ const StaffDashboard = () => {
     (dept) => dept.id === user.department_id
   );
   const cardData = [
-    { title: userDepartment?.budget ?? 0, description: 'Approved' },
-    { title: userDepartment?.budget ?? 0, description: 'Pending' },
+    { title: userDepartment?.budgets ?? 0, description: 'Approved' },
+    { title: userDepartment?.budgets ?? 0, description: 'Pending' },
     { title: userDepartment?.budget ?? 0, description: 'Total Budget' },
 
     {
-      title: userDepartment?.budget ?? 0,
+      title: userDepartment?.budgets ?? 0,
       description: 'Total Utilized Budget',
     },
   ];
