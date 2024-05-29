@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import { useUser } from '@/hooks/redux/auth'
 import { useRequestFor } from '@/hooks/redux/useRequestFor'
 import { useUnits } from '@/hooks/redux/useUnits'
-import { capitalizeFirstLetter } from '@/hooks/lib/util'
+import { capitalizeFirstLetter, formatAsMoney } from '@/hooks/lib/util'
 
 const OrderDetails = () => {
   const router = useRouter()
@@ -107,10 +107,10 @@ const OrderDetails = () => {
                     <RowItem label='Description' value={entry.description} />
                   </div>
                   <div className='w-1/6'>
-                    <RowItem label='Unit Cost' value={entry.uniCost} />
+                    <RowItem label='Unit Cost' value={formatAsMoney(entry.uniCost)} />
                   </div>
                   <div className='w-1/6'>
-                    <RowItem label='Amount' value={entry.amount} />
+                    <RowItem label='Amount' value={formatAsMoney(entry.amount)} />
                   </div>
                 </div>
                 <div className='w-full mt-4'>

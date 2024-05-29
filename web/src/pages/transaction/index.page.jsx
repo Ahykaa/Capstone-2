@@ -6,7 +6,7 @@ import PageHeader from '@/components/organisms/PageHeader'
 import Pagination from '@/components/organisms/Pagination'
 import Table from '@/components/organisms/Table'
 import Template from '@/components/templates/Template'
-import { formatDate } from '@/hooks/lib/util'
+import { capitalizeFirstLetter, formatDate } from '@/hooks/lib/util'
 
 import useHooks from './hooks'
 import TextInput from '@/components/organisms/TextInput'
@@ -15,6 +15,7 @@ import TemplateGSD from '@/components/templates/TemplateGSD'
 import TemplateStaff from '@/components/templates/TemplateStaff'
 import { useDepartments } from '@/hooks/redux/useDepartments' // Import the useDepartments hook
 import { useRequestFor } from '@/hooks/redux/useRequestFor'
+import SelectInput from '@/components/organisms/SelectInput'
 
 const Transaction = () => {
   const {
@@ -125,6 +126,15 @@ const Transaction = () => {
             variant='outlined'
             color='success'
           />
+          <SelectInput  className='w-80' options={[
+                    {
+                      
+                      value: '',
+                      label: capitalizeFirstLetter('Status'),
+                      isDisabled: true,
+                    },
+                   
+                  ]}/>
         </div>
         <Table rows={rows} data={orders.data} />
       </section>
