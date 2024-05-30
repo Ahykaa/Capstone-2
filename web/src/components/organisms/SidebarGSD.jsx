@@ -5,7 +5,6 @@ import {
   HiTemplate,
 } from 'react-icons/hi'
 import { MdBookmarkAdd } from 'react-icons/md'
-import { GrTransaction } from 'react-icons/gr'
 
 const links = [
   {

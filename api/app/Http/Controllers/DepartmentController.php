@@ -12,7 +12,25 @@ class DepartmentController extends Controller
         $departments = Department::all();
         return response()->json(['departments' => $departments]);
     }
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'label' => 'required|string|max:255',
+            // Add any other fields you want to validate for the department
+        ]);
 
+        // Create a new department with a budget set to 0
+        $department = new Department();
+        $department->label = $request->input('label');
+        $department->budget = 0;
+        // Set any other fields for the department
+
+        $department->save();
+
+        // Return a success response
+        return response()->json(['message' => 'Department created successfully', 'department' => $department]);
+    }
     public function update(Request $request, $id)
     {
         // Validate the incoming request data
