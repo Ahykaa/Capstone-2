@@ -3,9 +3,14 @@ export const roles = [
     value: 'staff',
     label: 'Staff',
   },
-  { value: 'admin', label: 'Unit / Department Head' },
-  { value: 'subadmin1', label: 'Purchaser' },
-  { value: 'subadmin', label: 'GSD admin' },
+  { value: 'admin', label: 'admin' },
+  { value: 'subadmin', label: 'subadmin' },
+  { value: 'subadmin1', label: 'subadmin1' },
+  { value: 'subadmin2', label: 'subadmin2' },
+  { value: 'subadmin3', label: 'subadmin3' },
+  { value: 'subadmin4', label: 'subadmin4' },
+  { value: 'headadmin', label: 'headadmin' },
+
 ]
 
 export const positionOptions = [
