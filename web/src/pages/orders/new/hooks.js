@@ -3,13 +3,13 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import { useEffect, useCallback } from 'react'
 
 import { errors } from '@/constants/formErrors'
 import { orderApi } from '@/hooks/api/orderApi'
 import { useHandleError } from '@/hooks/useHandleError'
 import { useToast } from '@/hooks/useToast'
 import { useUser } from '@/hooks/redux/auth'
-import { useEffect } from 'react'
 
 const schema = yup.object({
   order_at: yup.date().required(),
@@ -54,7 +54,7 @@ export function useHooks() {
 
   const entries = watch('entries')
 
-  const calculateAmount = async () => {
+  const calculateAmount = useCallback(async () => {
     try {
       const updatedEntries = entries.map((entry) => ({
         ...entry,
@@ -64,7 +64,7 @@ export function useHooks() {
     } catch (error) {
       handleError(error)
     }
-  }
+  }, [entries, setValue, handleError])
 
   useEffect(() => {
     calculateAmount()
