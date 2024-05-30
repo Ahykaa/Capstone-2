@@ -16,11 +16,15 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $perPage = $request->perPage ?? 20;
         $keyword = $request->keyword;
         $status = $request->status;
-        
+
         $orders = Order::with('department', 'status')
+            ->when($user->role == 'staff', function ($q) use ($user) {
+                return $q->where('department_id', $user->department_id);
+            })
             ->when($keyword && $keyword != 'null', function ($q) use ($keyword) {
                 return $q->whereHas('department', function ($query) use ($keyword) {
                     $query->where('label', 'LIKE', "%{$keyword}%");
@@ -29,12 +33,13 @@ class OrderController extends Controller
             ->when($status, function ($q) use ($status) {
                 return $q->where('status_id', $status);
             })
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('date_needed', 'ASC')
             ->paginate($perPage);
-    
+
         return response()->json(['orders' => $orders]);
     }
-    
+
+
     /**
      * Store a newly created resource in storage.
      */

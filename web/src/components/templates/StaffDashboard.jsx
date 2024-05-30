@@ -21,7 +21,7 @@ const StaffDashboard = () => {
       description: 'Total Budget',
     },
     {
-      title: userDepartment?.budgets ?? 0,
+      title: formatAsMoney(userDepartment?.budgets ?? 0),
       description: 'Total Utilized Budget',
     },
   ]
