@@ -79,7 +79,7 @@ const AddStaff = () => {
           <SelectInput
             name='role'
             options={[
-              { label: 'Account Type', value: '' },
+              { label: 'Role', value: '' },
               ...roles.map((option) => ({
                 value: option.value,
                 label: option.label,
