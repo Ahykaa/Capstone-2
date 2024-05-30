@@ -7,7 +7,6 @@ import Pagination from '@/components/organisms/Pagination'
 import Table from '@/components/organisms/Table'
 import Template from '@/components/templates/Template'
 import {
-  capitalizeFirstLetter,
   formatAsMoney,
   formatDate,
 } from '@/hooks/lib/util'
@@ -17,10 +16,9 @@ import TextInput from '@/components/organisms/TextInput'
 import { useUser } from '@/hooks/redux/auth'
 import TemplateGSD from '@/components/templates/TemplateGSD'
 import TemplateStaff from '@/components/templates/TemplateStaff'
-import { useDepartments } from '@/hooks/redux/useDepartments' // Import the useDepartments hook
+import { useDepartments } from '@/hooks/redux/useDepartments'
 import { useRequestFor } from '@/hooks/redux/useRequestFor'
 import SelectInput from '@/components/organisms/SelectInput'
-import { statuses } from '@/hooks/lib/statuses'
 import { statusOptions } from '@/hooks/const'
 import { Button } from 'flowbite-react'
 

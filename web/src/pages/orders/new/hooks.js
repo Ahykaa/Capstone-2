@@ -68,7 +68,7 @@ export function useHooks() {
 
   useEffect(() => {
     calculateAmount()
-  }, [entries]) 
+  }, [calculateAmount]);
 
   const onSubmit = async (formData) => {
     formData.order_at = dayjs(formData.order_at).format('YYYY-MM-DD HH:mm:ss')
