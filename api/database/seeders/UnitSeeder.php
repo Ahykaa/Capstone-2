@@ -14,7 +14,7 @@ class UnitSeeder extends Seeder
     public function run(): void
     {
         DB::table('units')->upsert([
-            ['id' => 1, 'label' => 'pieces'],
+            ['id' => 1, 'label' => 'piece'],
             ['id' => 2, 'label' => 'dozen'],
             ['id' => 3, 'label' => 'pair'],
             ['id' => 4, 'label' => 'pack'],

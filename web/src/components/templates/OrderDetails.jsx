@@ -86,7 +86,7 @@ const OrderDetails = () => {
 
       <div>
         <h3>Order Entries</h3>
-        {order_entries && order_entries.length > 0 ?
+        {order_entries.length > 0 ?
           order_entries.map((entry, index) => {
             const unitLabel =
               units.find((u) => u.id === entry.unit_id)?.label || 'Unknown'
@@ -107,10 +107,16 @@ const OrderDetails = () => {
                     <RowItem label='Description' value={entry.description} />
                   </div>
                   <div className='w-1/6'>
-                    <RowItem label='Unit Cost' value={formatAsMoney(entry.uniCost)} />
+                    <RowItem
+                      label='Unit Cost'
+                      value={formatAsMoney(entry.uniCost)}
+                    />
                   </div>
                   <div className='w-1/6'>
-                    <RowItem label='Amount' value={formatAsMoney(entry.amount)} />
+                    <RowItem
+                      label='Amount'
+                      value={formatAsMoney(entry.amount)}
+                    />
                   </div>
                 </div>
                 <div className='w-full mt-4'>
@@ -119,7 +125,14 @@ const OrderDetails = () => {
               </div>
             )
           })
-        : <p>No order entries available</p>}
+        : <div>No order entries available</div>}
+        <div className='flex justify-end mt-4'>
+          <RowItem
+            label='Total Amount'
+            value={formatAsMoney(order.total_amount)}
+            className='font-bold'
+          />
+        </div>
       </div>
     </div>
   )

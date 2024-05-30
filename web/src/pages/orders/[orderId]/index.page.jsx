@@ -29,13 +29,13 @@ const Order = () => {
 
   const breadcrumbs = [
     {
-      href: '/transaction',
-      title: 'Transactions',
+      href: '/orders',
+      title: 'Requests',
       icon: FaList,
     },
     {
       href: '#',
-      title: 'Transaction Detail',
+      title: 'Request Detail',
     },
   ]
 
