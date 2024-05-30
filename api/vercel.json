@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "web/next.config.js",
-        "use": "@vercel/next"
+        "src": "api/index.php",
+        "use": "@vercel/php"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/web/$1"
+        "dest": "/api/index.php"
       }
     ]
   }
