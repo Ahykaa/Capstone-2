@@ -67,9 +67,8 @@ export function useHooks() {
   }
 
   useEffect(() => {
-    // Calculate amount when quantity or unit cost changes
     calculateAmount()
-  }, [entries]) // Add missing dependency
+  }, [entries]) 
 
   const onSubmit = async (formData) => {
     formData.order_at = dayjs(formData.order_at).format('YYYY-MM-DD HH:mm:ss')

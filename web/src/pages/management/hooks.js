@@ -11,7 +11,7 @@ export const useHooks = () => {
       await updateDepartment({ departmentId, budget }).unwrap()
       router.reload()
     } catch (error) {
-      console.error('Failed to update budget:', error)
+      handleError(error)
     }
   }
 
@@ -20,7 +20,7 @@ export const useHooks = () => {
       await addDepartment({ label }).unwrap()
       router.reload()
     } catch (error) {
-      console.error('Failed to add department:', error)
+      handleError(error)
     }
   }
 

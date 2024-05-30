@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { HiOutlineNewspaper, HiTemplate } from 'react-icons/hi'
-import { GrTransaction } from 'react-icons/gr'
 
 const links = [
   {
