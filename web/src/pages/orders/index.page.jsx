@@ -6,7 +6,11 @@ import PageHeader from '@/components/organisms/PageHeader'
 import Pagination from '@/components/organisms/Pagination'
 import Table from '@/components/organisms/Table'
 import Template from '@/components/templates/Template'
-import { capitalizeFirstLetter, formatDate } from '@/hooks/lib/util'
+import {
+  capitalizeFirstLetter,
+  formatAsMoney,
+  formatDate,
+} from '@/hooks/lib/util'
 
 import useHooks from './hooks'
 import TextInput from '@/components/organisms/TextInput'
@@ -18,8 +22,9 @@ import { useRequestFor } from '@/hooks/redux/useRequestFor'
 import SelectInput from '@/components/organisms/SelectInput'
 import { statuses } from '@/hooks/lib/statuses'
 import { statusOptions } from '@/hooks/const'
+import { Button } from 'flowbite-react'
 
-const Transaction = () => {
+const Order = () => {
   const {
     orders,
     isLoading,
@@ -97,7 +102,7 @@ const Transaction = () => {
     {
       key: 'amount',
       header: 'Total Amount',
-      render: (row) => row.amount,
+      render: (row) => formatAsMoney(row.total_amount),
     },
     {
       key: 'status',
@@ -118,11 +123,20 @@ const Transaction = () => {
   return (
     <RoleTemplate>
       <section>
-        <PageHeader breadcrumbs={breadcrumbs} />
+        <PageHeader
+          breadcrumbs={breadcrumbs}
+          right={
+            <Link href='/orders/new'>
+              <Button size='xs' color='success' href='/orders/new'>
+                Create Request
+              </Button>
+            </Link>
+          }
+        />
         <div className='flex pb-4 space-x-4'>
           <TextInput
             name='keyword'
-            label='Search Description'
+            label='Search Department'
             className='w-80'
             {...formState}
             variant='outlined'
@@ -146,4 +160,4 @@ const Transaction = () => {
     </RoleTemplate>
   )
 }
-export default Transaction
+export default Order

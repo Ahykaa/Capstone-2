@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
-use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderEntry;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrderController extends Controller
 {
@@ -19,19 +18,23 @@ class OrderController extends Controller
     {
         $perPage = $request->perPage ?? 20;
         $keyword = $request->keyword;
-
-        $orders = Order::with('status', 'requestFor')
-            ->when($keyword != 'null', function ($q) use ($keyword) {
-                return $q->where('date_needed', 'LIKE', "%{$keyword}%")
-                    ->orWhere('requestFor', 'LIKE', "%{$keyword}%");;
+        $status = $request->status;
+        
+        $orders = Order::with('department', 'status')
+            ->when($keyword && $keyword != 'null', function ($q) use ($keyword) {
+                return $q->whereHas('department', function ($query) use ($keyword) {
+                    $query->where('label', 'LIKE', "%{$keyword}%");
+                });
+            })
+            ->when($status, function ($q) use ($status) {
+                return $q->where('status_id', $status);
             })
             ->orderBy('created_at', 'DESC')
             ->paginate($perPage);
-
+    
         return response()->json(['orders' => $orders]);
     }
-
-
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -47,6 +50,14 @@ class OrderController extends Controller
         // Separate the entries from the main order data
         $entries = $validatedData['entries'];
         unset($validatedData['entries']); // Remove entries from the main order data
+
+        // Calculate the total amount
+        $totalAmount = array_reduce($entries, function ($carry, $entry) {
+            return $carry + $entry['amount'];
+        }, 0);
+
+        // Add the calculated total amount to the validated data
+        $validatedData['total_amount'] = $totalAmount;
 
         // Create the order
         $order = Order::create($validatedData);
@@ -67,7 +78,7 @@ class OrderController extends Controller
             $order->orderEntries()->save($orderEntry); // Associate the order entry with the order
         }
 
-        return response()->json([ 'order' => $order]);
+        return response()->json(['order' => $order]);
     }
 
 
@@ -79,8 +90,8 @@ class OrderController extends Controller
         $order = Order::with('department', 'unit', 'status', 'requestFor', 'orderEntries')->findOrFail($id);
         return response()->json(['order' => $order]);
     }
-    
-    
+
+
 
 
     /**

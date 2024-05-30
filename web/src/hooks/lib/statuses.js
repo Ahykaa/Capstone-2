@@ -8,6 +8,4 @@ export const statuses = [
   'Approved by Director for Admin',
   'Approved by Director for Finance',
   'Aprroved',
-];
-
-
+]

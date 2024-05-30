@@ -1,17 +1,17 @@
-import CardItem from '@/components/organisms/Card';
-import Chart from '../organisms/Chart';
-import { useDepartments } from '@/hooks/redux/useDepartments';
-import { useUser } from '@/hooks/redux/auth';
-import { formatAsMoney } from '@/hooks/lib/util';
+import CardItem from '@/components/organisms/Card'
+import Chart from '../organisms/Chart'
+import { useDepartments } from '@/hooks/redux/useDepartments'
+import { useUser } from '@/hooks/redux/auth'
+import { formatAsMoney } from '@/hooks/lib/util'
 
 const SuperAdminDasboard = () => {
-  const { departments } = useDepartments();
-  const { user } = useUser();
+  const { departments } = useDepartments()
+  const { user } = useUser()
 
   // Filter department based on user's department_id
   const userDepartment = departments.find(
-    (dept) => dept.id === user.department_id
-  );
+    (dept) => dept.id === user.department_id,
+  )
 
   // Prepare card data
   const cardData = [
@@ -20,12 +20,15 @@ const SuperAdminDasboard = () => {
       title: userDepartment?.budget ?? 0,
       description: 'Pending',
     },
-    { title: formatAsMoney(userDepartment?.budget ?? 0), description: 'Total Budget' },
+    {
+      title: formatAsMoney(userDepartment?.budget ?? 0),
+      description: 'Total Budget',
+    },
     {
       title: userDepartment?.budget ?? 0,
       description: 'Total Utilized Budget',
     },
-  ];
+  ]
 
   // Prepare chart data (you can use this if you want to display budgets of all departments in the chart)
   const chartOptions = {
@@ -35,13 +38,13 @@ const SuperAdminDasboard = () => {
     xaxis: {
       categories: departments.map((dept) => dept.label),
     },
-  };
+  }
   const chartSeries = [
     {
       name: 'series-1',
       data: departments.map((dept) => dept.budget),
     },
-  ];
+  ]
 
   return (
     <div className='mx-auto max-w-screen-lg '>
@@ -64,7 +67,7 @@ const SuperAdminDasboard = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SuperAdminDasboard;
+export default SuperAdminDasboard

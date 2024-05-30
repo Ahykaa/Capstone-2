@@ -27,6 +27,7 @@ class StoreOrderRequest extends FormRequest
             'request_fors_id' => 'required|exists:request_fors,id',
             'notes' => 'nullable|string',
             'status_id' => 'required|exists:statuses,id',
+            'total_amount' => 'nullable|numeric',
             'order_at' => 'nullable|date',
             'date_needed' => 'required|date',
             'entries' => 'required|array', // Ensure entries is an array

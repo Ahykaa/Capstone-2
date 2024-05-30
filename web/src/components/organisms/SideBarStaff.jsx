@@ -9,14 +9,9 @@ const links = [
     link: '/dashboard',
   },
   {
-    label: 'Transaction',
-    icon: <GrTransaction />,
-    link: '/transaction',
-  },
-  {
     label: 'Request',
     icon: <HiOutlineNewspaper />,
-    link: '/orders/new',
+    link: '/orders',
   },
 ]
 

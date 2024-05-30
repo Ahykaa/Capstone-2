@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import PageHeader from '@/components/organisms/PageHeader';
-import Template from '@/components/templates/Template';
-import { Button, Card, TextInput } from 'flowbite-react';
-import BreadCrumbs from '@/components/atoms/BreadCrumbs';
-import Pagination from '@/components/organisms/Pagination';
-import SelectInput from '@/components/organisms/SelectInput';
-import { useDepartments } from '@/hooks/redux/useDepartments';
-import { useHooks } from './hooks';
-import { formatAsMoney } from '@/hooks/lib/util';
+import React, { useState } from 'react'
+import PageHeader from '@/components/organisms/PageHeader'
+import Template from '@/components/templates/Template'
+import { Button, Card, TextInput } from 'flowbite-react'
+import BreadCrumbs from '@/components/atoms/BreadCrumbs'
+import Pagination from '@/components/organisms/Pagination'
+import SelectInput from '@/components/organisms/SelectInput'
+import { useDepartments } from '@/hooks/redux/useDepartments'
+import { useHooks } from './hooks'
+import { formatAsMoney } from '@/hooks/lib/util'
 
 const Management = () => {
-  const { departments } = useDepartments();
-  const { updateDepartmentBudget } = useHooks();
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const [budget, setBudget] = useState('');
+  const { departments } = useDepartments()
+  const { updateDepartmentBudget } = useHooks()
+  const itemsPerPage = 10
+  const [currentPage, setCurrentPage] = useState(1)
+  const [selectedDepartment, setSelectedDepartment] = useState('')
+  const [budget, setBudget] = useState('')
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedDepartments = departments.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(departments.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedDepartments = departments.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(departments.length / itemsPerPage)
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+    setCurrentPage(pageNumber)
+  }
 
   const handleSelectChange = (e) => {
-    setSelectedDepartment(e.target.value);
-  };
+    setSelectedDepartment(e.target.value)
+  }
 
   const handleBudgetChange = (e) => {
-    setBudget(e.target.value);
-  };
+    setBudget(e.target.value)
+  }
 
   const handleAddBudget = () => {
     if (selectedDepartment && budget) {
-      updateDepartmentBudget(selectedDepartment, budget);
-      setBudget('');
+      updateDepartmentBudget(selectedDepartment, budget)
+      setBudget('')
     }
-  };
+  }
 
   return (
     <Template>
@@ -134,7 +134,7 @@ const Management = () => {
                       <td className='px-2 py-1'>{department.label}</td>
                       <td> = </td>
                       <td className='px-2 py-1 text-right'>
-                      <h2>{formatAsMoney(department.budget)}</h2>
+                        <h2>{formatAsMoney(department.budget)}</h2>
                         {/* pesos sign */}
                       </td>
                     </tr>
@@ -151,7 +151,7 @@ const Management = () => {
         </div>
       </div>
     </Template>
-  );
-};
+  )
+}
 
-export default Management;
+export default Management
