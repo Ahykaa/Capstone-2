@@ -11,11 +11,12 @@ import { formatAsMoney } from '@/hooks/lib/util'
 
 const Management = () => {
   const { departments } = useDepartments()
-  const { updateDepartmentBudget } = useHooks()
+  const { updateDepartmentBudget, addNewDepartment } = useHooks()
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedDepartment, setSelectedDepartment] = useState('')
   const [budget, setBudget] = useState('')
+  const [newDepartmentName, setNewDepartmentName] = useState('')
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -41,6 +42,17 @@ const Management = () => {
     }
   }
 
+  const handleNewDepartmentNameChange = (e) => {
+    setNewDepartmentName(e.target.value)
+  }
+
+  const handleAddDepartment = () => {
+    if (newDepartmentName) {
+      addNewDepartment(newDepartmentName)
+      setNewDepartmentName('')
+    }
+  }
+
   return (
     <Template>
       <PageHeader>
@@ -56,10 +68,20 @@ const Management = () => {
               <table>
                 <tr>
                   <td>
-                    <TextInput placeholder='Department' />
+                    <TextInput 
+                      name='label'
+                      placeholder='Department' 
+                      value={newDepartmentName}
+                      onChange={handleNewDepartmentNameChange}
+                    />
                   </td>
                   <td>
-                    <Button color='success' size='xs' type='button'>
+                    <Button 
+                      color='success' 
+                      size='xs' 
+                      type='button'
+                      onClick={handleAddDepartment}
+                    >
                       Add
                     </Button>
                   </td>
