@@ -10,7 +10,6 @@ export const roles = [
   { value: 'subadmin3', label: 'subadmin3' },
   { value: 'subadmin4', label: 'subadmin4' },
   { value: 'headadmin', label: 'headadmin' },
-
 ]
 
 export const positionOptions = [

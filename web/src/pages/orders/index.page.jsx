@@ -6,10 +6,7 @@ import PageHeader from '@/components/organisms/PageHeader'
 import Pagination from '@/components/organisms/Pagination'
 import Table from '@/components/organisms/Table'
 import Template from '@/components/templates/Template'
-import {
-  formatAsMoney,
-  formatDate,
-} from '@/hooks/lib/util'
+import { formatAsMoney, formatDate } from '@/hooks/lib/util'
 
 import useHooks from './hooks'
 import TextInput from '@/components/organisms/TextInput'

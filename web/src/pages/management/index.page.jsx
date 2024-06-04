@@ -68,17 +68,17 @@ const Management = () => {
               <table>
                 <tr>
                   <td>
-                    <TextInput 
+                    <TextInput
                       name='label'
-                      placeholder='Department' 
+                      placeholder='Department'
                       value={newDepartmentName}
                       onChange={handleNewDepartmentNameChange}
                     />
                   </td>
                   <td>
-                    <Button 
-                      color='success' 
-                      size='xs' 
+                    <Button
+                      color='success'
+                      size='xs'
                       type='button'
                       onClick={handleAddDepartment}
                     >
