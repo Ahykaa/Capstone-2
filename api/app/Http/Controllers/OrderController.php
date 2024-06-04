@@ -22,7 +22,7 @@ class OrderController extends Controller
         $status = $request->status;
 
         $orders = Order::with('department', 'status')
-            ->when($user->role == 'staff', function ($q) use ($user) {
+            ->when(in_array($user->role, ['admin', 'staff']), function ($q) use ($user) {
                 return $q->where('department_id', $user->department_id);
             })
             ->when($keyword && $keyword != 'null', function ($q) use ($keyword) {
