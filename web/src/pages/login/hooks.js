@@ -30,6 +30,7 @@ export function useHooks() {
     try {
       const { token } = await loginMutation(data).unwrap()
       login(token)
+
       router.push('/dashboard')
     } catch (error) {
       handleError(error)

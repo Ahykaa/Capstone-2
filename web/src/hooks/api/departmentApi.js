@@ -27,4 +27,8 @@ export const departmentApi = baseApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useGetDepartmentQuery, useUpdateDepartmentMutation, useAddDepartmentMutation } = departmentApi
+export const {
+  useGetDepartmentQuery,
+  useUpdateDepartmentMutation,
+  useAddDepartmentMutation,
+} = departmentApi

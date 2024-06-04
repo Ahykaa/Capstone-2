@@ -1,4 +1,7 @@
-import { useUpdateDepartmentMutation, useAddDepartmentMutation } from '@/hooks/api/departmentApi'
+import {
+  useUpdateDepartmentMutation,
+  useAddDepartmentMutation,
+} from '@/hooks/api/departmentApi'
 import { useRouter } from 'next/router'
 
 export const useHooks = () => {

@@ -25,7 +25,7 @@ const SuperAdminDasboard = () => {
       description: 'Total Budget',
     },
     {
-      title: userDepartment?.budget ?? 0,
+      title: formatAsMoney(userDepartment?.budgets ?? 0),
       description: 'Total Utilized Budget',
     },
   ]
