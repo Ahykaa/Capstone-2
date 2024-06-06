@@ -3,26 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
 
     public function show(Request $request)
-    {
-        $query = Order::query();
+{
+    $orders = Order::query()->get();
+    $statusCounts = $orders->groupBy('status')->map->count();
+    $totalAmount = $orders->sum('amount');
+    
+    $reservationsData = Reservation::select('event_date', 'event_time', 'representative')->get();
 
-        if ($request->filled(['start_date', 'end_date'])) {
-            $query->whereBetween('order_at', [$request->start_date, $request->end_date]);
-        }
+    return [
+        'status_counts' => $statusCounts,
+        'total_amount' => $totalAmount,
+        'reservations_data' => $reservationsData,
+    ];
+}
 
-        $orders = $query->get();
-        $statusCounts = $orders->groupBy('status')->map->count();
-        $totalAmount = $orders->sum('amount');
-
-        return [
-            'status_counts' => $statusCounts,
-            'total_amount' => $totalAmount,
-        ];
-    }
 }

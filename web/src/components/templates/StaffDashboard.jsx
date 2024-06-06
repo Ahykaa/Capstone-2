@@ -26,7 +26,7 @@ const StaffDashboard = () => {
     },
   ]
   return (
-    <div className='mx-auto max-w-screen-lg mt-12'>
+    <div className='mx-auto max-w-screen-lg'>
       <div className='grid grid-cols-4 gap-4'>
         {cardData.map((card, index) => (
           <CardItem

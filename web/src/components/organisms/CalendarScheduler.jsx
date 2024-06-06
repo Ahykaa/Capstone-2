@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 
-const CalendarScheduler = ({ events }) => {
-  // Get the current date
-  const currentDate = new Date()
-  const currentMonth = currentDate.getMonth()
-  const currentYear = currentDate.getFullYear()
+const CalendarScheduler = () => {
+  // Initialize state for the current date
+  const today = new Date()
 
-  // Create state for the selected date
-  const [selectedDate, setSelectedDate] = useState(currentDate)
+  // State to manage the currently viewed month and year
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth())
+  const [currentYear, setCurrentYear] = useState(today.getFullYear())
+
+  // State for the selected date
+  const [selectedDate, setSelectedDate] = useState(today)
 
   // Function to get the days in a month
   const getDaysInMonth = (month, year) => {
@@ -22,7 +25,28 @@ const CalendarScheduler = ({ events }) => {
   // Function to handle date selection
   const handleDateClick = (date) => {
     setSelectedDate(date)
-    // You can add your logic here to handle the selected date
+    // Add your logic here to handle the selected date
+  }
+
+  // Function to handle month navigation
+  const handlePreviousMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth === 0) {
+        setCurrentYear((prevYear) => prevYear - 1)
+        return 11
+      }
+      return prevMonth - 1
+    })
+  }
+
+  const handleNextMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      if (prevMonth === 11) {
+        setCurrentYear((prevYear) => prevYear + 1)
+        return 0
+      }
+      return prevMonth + 1
+    })
   }
 
   // Render calendar days
@@ -33,16 +57,17 @@ const CalendarScheduler = ({ events }) => {
     let calendarDays = []
 
     for (let i = 0; i < startingDay; i++) {
-      calendarDays.push(<div key={`empty-${i}`} className='hidden' />)
+      calendarDays.push(<div key={`empty-${i}`} className='p-2' />)
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentYear, currentMonth, i)
-      const classNames = `cursor-pointer p-2 rounded-lg ${
-        date.toDateString() === selectedDate.toDateString() ?
-          'bg-blue-500 text-white'
-        : 'hover:bg-blue-100'
-      }`
+      const isSelected = date.toDateString() === selectedDate.toDateString()
+      const isToday = date.toDateString() === today.toDateString()
+      const classNames = `cursor-pointer p-2 rounded-lg text-center ${
+        isSelected ? 'bg-green-500 text-white' : 'hover:bg-green-100'
+      } ${isToday ? 'border-2 border-green-500' : ''}`
+
       calendarDays.push(
         <div
           key={i}
@@ -57,23 +82,23 @@ const CalendarScheduler = ({ events }) => {
     return calendarDays
   }
 
-  // Render events
-  const renderEvents = () => {
-    return events.map((event, index) => (
-      <div key={index} className='bg-gray-200 p-2 rounded-lg mb-2'>
-        <div className='font-bold'>{event.title}</div>
-        <div>{new Date(event.start).toLocaleString()}</div>
-      </div>
-    ))
-  }
-
   return (
-    <div className='p-4 bg-white shadow-md rounded-lg'>
-      <div className='text-center mb-4'>
+    <div className='p-4 bg-white shadow-lg rounded-lg'>
+      <div className='flex justify-center items-center mb-4'>
+        <HiChevronLeft
+          onClick={handlePreviousMonth}
+          className='cursor-pointer text-2xl mr-4'
+        />
         <h2 className='text-lg font-bold'>
-          {currentDate.toLocaleString('default', { month: 'long' })}{' '}
+          {new Date(currentYear, currentMonth).toLocaleString('default', {
+            month: 'long',
+          })}{' '}
           {currentYear}
         </h2>
+        <HiChevronRight
+          onClick={handleNextMonth}
+          className='cursor-pointer text-2xl ml-4'
+        />
       </div>
       <div className='grid grid-cols-7 gap-2'>
         <div className='text-center'>Sun</div>
@@ -84,12 +109,6 @@ const CalendarScheduler = ({ events }) => {
         <div className='text-center'>Fri</div>
         <div className='text-center'>Sat</div>
         {renderCalendarDays()}
-      </div>
-
-      {/* Display events */}
-      <div className='mt-4'>
-        <h3 className='text-lg font-bold mb-2'>Schedule:</h3>
-        {renderEvents()}
       </div>
     </div>
   )
