@@ -3,7 +3,11 @@ import { dashboardApi } from '@/hooks/api/dashboardApi'
 import CalendarScheduler from '../organisms/CalendarScheduler'
 import { useDepartments } from '@/hooks/redux/useDepartments'
 import { useUser } from '@/hooks/redux/auth'
-import { formatAsMoney } from '@/hooks/lib/util'
+import { formatAsMoney, formatDate, formatTime } from '@/hooks/lib/util'
+import Table from '../organisms/Table'
+import { facilitieOptions } from '@/hooks/const'
+import { useReservations } from '@/hooks/redux/useReservation'
+import Loading from '../atoms/Loading'
 
 const GsdAdminDashboard = () => {
   const { data } = dashboardApi.useGetDashboardQuery()
@@ -22,37 +26,63 @@ const GsdAdminDashboard = () => {
       description: 'Total Budget',
     },
     {
-      title: formatAsMoney(userDepartment?.budget ?? 0),
+      title: formatAsMoney(userDepartment?.budgets ?? 0),
       description: 'Total Utilized Budget',
     },
   ]
 
-  const events = [
-    // Sample events data
+  const rows = [
     {
-      title: 'Orientation',
-      start: '2024-05-17T09:00:00',
+      key: 'event_date',
+      header: 'Event Date',
+      render: (row) => formatDate(row.event_date),
     },
     {
-      title: 'Pictorial',
-      start: '2024-05-20T18:00:00',
+      key: 'event_time',
+      header: 'Event Time',
+      render: (row) => formatTime(row.event_time),
+    },
+    {
+      key: 'facilities',
+      header: 'Facilities',
+      render: (row) => {
+        const facility = facilitieOptions.find(
+          (option) => option.value === row.facilities,
+        )
+        return facility ? facility.label : 'Unknown'
+      },
+    },
+    {
+      key: 'representative',
+      header: 'Representative',
+      render: (row) => row.representative,
     },
   ]
 
+  const { reservations, isLoading } = useReservations()
+
   return (
-    <div className='mx-auto max-w-screen-lg mt-12'>
-      <div className='grid grid-cols-4 gap-4'>
-        {cardData.map((card, index) => (
-          <CardItem
-            key={index}
-            title={card.title}
-            description={card.description}
-          />
-        ))}
+    <div>
+      <div className='mx-auto max-w-screen-lg'>
+        <div className='grid grid-cols-4 gap-4'>
+          {cardData.map((card, index) => (
+            <CardItem
+              key={index}
+              title={card.title}
+              description={card.description}
+            />
+          ))}
+        </div>
       </div>
-      <div className='grid grid-cols-2 gap-4 w-full'>
-        <div className='mt-8 w-full'>
-          <CalendarScheduler events={events} />
+      <div className='flex mt-8'>
+        <div className='w-1/2 p-4'>
+          <CalendarScheduler />
+        </div>
+        <div className='w-1/2 shadow-lg p-4 rounded-lg text-center'>
+          <span className='font-bold'>Reservations Schedule</span>
+          {isLoading ?
+            <Loading />
+          : <Table rows={rows} data={reservations.data} />}
         </div>
       </div>
     </div>

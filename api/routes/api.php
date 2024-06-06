@@ -60,14 +60,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/departments/{id}', [DepartmentController::class, 'update']);
 
     Route::resource('departments', DepartmentController::class);
-
+    Route::get('/dashboard', [DashboardController::class, 'show']);
 
     Route::group(['middleware' => ['restrictRole:superadmin,staff,admin,subadmin1,subadmin']], function () {
         Route::resource('transaction', TransactionController::class);
     });
 
     Route::group(['middleware' => ['restrictRole:superadmin'], 'prefix' => 'superadmin'], function () {
-        Route::get('/dashboard', [DashboardController::class, 'show']);
+      
         Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
     });
 
