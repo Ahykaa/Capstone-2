@@ -1,10 +1,12 @@
 import CardItem from '@/components/organisms/Card'
 import Chart from '../organisms/Chart'
+import { dashboardApi } from '@/hooks/api/dashboardApi'
 import { useDepartments } from '@/hooks/redux/useDepartments'
 import { useUser } from '@/hooks/redux/auth'
 import { formatAsMoney } from '@/hooks/lib/util'
 
 const SuperAdminDasboard = () => {
+  const { data } = dashboardApi.useGetDashboardQuery()
   const { departments } = useDepartments()
   const { user } = useUser()
 
@@ -15,11 +17,8 @@ const SuperAdminDasboard = () => {
 
   // Prepare card data
   const cardData = [
-    { title: userDepartment?.budget ?? 0, description: 'Approved' },
-    {
-      title: userDepartment?.budget ?? 0,
-      description: 'Pending',
-    },
+    { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
+    { title: data?.status_counts?.open ?? 0, description: 'Pending' },
     {
       title: formatAsMoney(userDepartment?.budget ?? 0),
       description: 'Total Budget',
