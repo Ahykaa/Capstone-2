@@ -63,7 +63,6 @@ export function useHooks() {
     reservationApi.useCreateReservationMutation()
 
   const onSubmit = async (formData) => {
-    console.log('form data:', formData) // Log the form data before any modifications
     formData.reserv_at = dayjs(formData.reserv_at).format('YYYY-MM-DD HH:mm:ss')
     formData.event_date = dayjs(formData.event_date).format('YYYY-MM-DD')
     formData.event_time += ':00' // Append seconds to event_time
@@ -71,20 +70,16 @@ export function useHooks() {
 
 
     try {
-      const response = await createReservationMutation(formData).unwrap()
-      console.log('API Response:', response)
-      if (response && response.reservation && response.reservation.id) {
-        addToast({
-          message: 'Created reservation successfully',
-        })
-        router.push(`/reservations/${response.reservation.id}`) // Redirect to the reservation ID
-      } else {
-        handleError(new Error('Invalid response format'))
-      }
-    } catch (error) {
+      const { message } = await createReservationMutation(formData).unwrap()
+
+      addToast({
+        message: message,
+      })
+      router.push(`/reservations`)
+    }catch (error) {
       handleError(error)
     }
-  }    
+  }
 
   return {
     handleSubmit: handleSubmit(onSubmit),
