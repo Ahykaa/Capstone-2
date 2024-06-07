@@ -9,20 +9,35 @@ import dayjs from 'dayjs'
 
 const schema = yup.object({
   facilities: yup.array().of(yup.string()),
-  reserv_at: yup.date(),
-  time_at: yup.string(), // Change to string, as TimePicker returns string
-  company_name: yup.string(),
-  representative: yup.string(),
-  address: yup.string(),
-  activity: yup.string(),
-  no_participants: yup.number(),
-  event_date: yup.date(),
-  event_time: yup.string(), // Change to string, as TimePicker returns string
-  ownItems: yup.string(),
-  particulars: yup.string(),
-  quantity: yup.number(),
-  rate: yup.number(),
-  amount: yup.number(),
+  reserv_at: yup.date().nullable(),
+  time_at: yup
+    .string()
+    .nullable()
+    .matches(/^\d{2}:\d{2}$/, 'Time must be in HH:mm format'),
+  company_name: yup.string().required('Company name is required'),
+  representative: yup.string().required('Representative is required'),
+  address: yup.string().required('Address is required'),
+  activity: yup.string().required('Activity is required'),
+  no_participants: yup
+    .number()
+    .required('Number of participants is required')
+    .typeError('Must be a number'),
+  event_date: yup.date().required('Event date is required'),
+  event_time: yup
+    .string()
+    .required('Event time is required')
+    .matches(/^\d{2}:\d{2}$/, 'Time must be in HH:mm format'),
+  ownItems: yup.string().required('Own items are required'),
+  particulars: yup.string().required('Particulars are required'),
+  quantity: yup
+    .number()
+    .required('Quantity is required')
+    .typeError('Must be a number'),
+  rate: yup.number().required('Rate is required').typeError('Must be a number'),
+  amount: yup
+    .number()
+    .required('Amount is required')
+    .typeError('Must be a number'),
 })
 
 export function useHooks() {
@@ -31,15 +46,15 @@ export function useHooks() {
   const { handleError } = useHandleError()
   const {
     register,
-    formState: { errors },
+    formState: { errors: formErrors },
     handleSubmit,
     control,
   } = useForm({
     defaultValues: {
       reserv_at: new Date().toISOString().split('T')[0],
       event_date: new Date().toISOString().split('T')[0],
-      event_time: '10:00:00',
-      time_at: '10:00:00',
+      event_time: '00:00', // Initialize event_time with a default value
+      time_at: '00:00', // Initialize time_at with a default value
     },
     resolver: yupResolver(schema),
   })
@@ -47,18 +62,23 @@ export function useHooks() {
   const [createReservationMutation] =
     reservationApi.useCreateReservationMutation()
 
-  const onSubmit = async (data) => {
-    const currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
-    data.reserv_at = currentTime
+  const onSubmit = async (formData) => {
+    formData.reserv_at = dayjs(formData.reserv_at).format('YYYY-MM-DD HH:mm:ss')
+    formData.event_date = dayjs(formData.event_date).format('YYYY-MM-DD')
+    formData.event_time += ':00' // Append seconds to event_time
+    formData.time_at += ':00' // Append seconds to time_at
 
-    data.event_date = dayjs(data.event_date).format('YYYY-MM-DD HH:mm:ss')
-    data.facilities = data.facilities.join(', ')
     try {
-      const { message } = await createReservationMutation(data).unwrap()
-      addToast({
-        message: message,
-      })
-      router.push(`/reservations`)
+      const response = await createReservationMutation(formData).unwrap()
+
+      if (response && response.reservation && response.reservation.id) {
+        addToast({
+          message: 'Created reservation successfully',
+        })
+        router.push(`/reservations/${response.reservation.id}`) // Redirect to the reservation ID
+      } else {
+        handleError(new Error('Invalid response format'))
+      }
     } catch (error) {
       handleError(error)
     }
@@ -67,7 +87,7 @@ export function useHooks() {
   return {
     handleSubmit: handleSubmit(onSubmit),
     formState: {
-      errors,
+      errors: formErrors,
       register,
       control,
     },

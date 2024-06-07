@@ -6,6 +6,7 @@ import { FaList } from 'react-icons/fa'
 import useHooks from './hooks'
 import Loading from '@/components/atoms/Loading'
 import dayjs from 'dayjs'
+import { formatTime } from '@/hooks/lib/util'
 
 const Reservation = () => {
   const router = useRouter()
@@ -41,7 +42,10 @@ const Reservation = () => {
               />
             </div>
             <div className='w-full'>
-              <RowItem label='Time Prepared' value={reservation.time_at} />
+              <RowItem
+                label='Time Prepared'
+                value={formatTime(reservation.time_at)}
+              />
             </div>
           </div>
           <div className='flex space-x-4'>
@@ -77,7 +81,10 @@ const Reservation = () => {
               />
             </div>
             <div className='w-full'>
-              <RowItem label='Event Time' value={reservation.event_time} />
+              <RowItem
+                label='Event Time'
+                value={formatTime(reservation.event_time)}
+              />
             </div>
           </div>
           <div className='flex space-x-4'>
