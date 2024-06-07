@@ -7,7 +7,6 @@ import { facilitieOptions, particulars } from '@/hooks/const'
 import PageHeader from '@/components/organisms/PageHeader'
 import { MdOutlineBookmarkAdded } from 'react-icons/md'
 import SelectInput from '@/components/organisms/SelectInput'
-import CheckboxReserv from '@/components/organisms/CheckboxReserv'
 import TimePicker from '@/components/organisms/TimePicker'
 import { Button } from 'flowbite-react'
 import { FaList } from 'react-icons/fa'
@@ -35,20 +34,16 @@ const Reservation = () => {
       <section className='bg-white dark:bg-gray-900'>
         <div className='container mx-auto px-8 py-1'>
           <form onSubmit={handleSubmit} className='flex flex-col space-y-4'>
-            <div className='shadow-lg p-4 rounded-lg text-center'>
-              <span className='font-bold'>Facilities</span>
-              <div className='mt-4'>
-                <CheckboxReserv
+            <div className='flex space-x-4 w-full'>
+              <div className='w-full mb-4'>
+                <SelectInput
                   name='facilities'
-                  className='grid grid-cols-5 gap-4'
+                  className='w-60'
                   options={facilitieOptions}
-                  control={control}
                   {...formState}
                 />
               </div>
-            </div>
-            <div className='flex space-x-4 w-full'>
-              <div className='w-full'>
+              <div className='w-full mb-4'>
                 <DatePicker
                   placeholder='Date Prepared'
                   name='reserv_at'
@@ -57,7 +52,7 @@ const Reservation = () => {
                   {...formState}
                 />
               </div>
-              <div className='w-full'>
+              <div className='w-full mb-4'>
                 <TimePicker name='time_at' control={control} {...formState} />
               </div>
             </div>

@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/useToast'
 import dayjs from 'dayjs'
 
 const schema = yup.object({
-  facilities: yup.array().of(yup.string()),
+  facilities: yup.string(),
   reserv_at: yup.date().nullable(),
   time_at: yup
     .string()
@@ -63,14 +63,16 @@ export function useHooks() {
     reservationApi.useCreateReservationMutation()
 
   const onSubmit = async (formData) => {
+    console.log('form data:', formData) // Log the form data before any modifications
     formData.reserv_at = dayjs(formData.reserv_at).format('YYYY-MM-DD HH:mm:ss')
     formData.event_date = dayjs(formData.event_date).format('YYYY-MM-DD')
     formData.event_time += ':00' // Append seconds to event_time
     formData.time_at += ':00' // Append seconds to time_at
 
+
     try {
       const response = await createReservationMutation(formData).unwrap()
-
+      console.log('API Response:', response)
       if (response && response.reservation && response.reservation.id) {
         addToast({
           message: 'Created reservation successfully',
@@ -82,7 +84,7 @@ export function useHooks() {
     } catch (error) {
       handleError(error)
     }
-  }
+  }    
 
   return {
     handleSubmit: handleSubmit(onSubmit),
