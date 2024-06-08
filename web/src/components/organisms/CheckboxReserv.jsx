@@ -1,6 +1,6 @@
 import React from 'react'
 import { Label, Checkbox } from 'flowbite-react'
-import { useController } from 'react-hook-form'; 
+import { useController } from 'react-hook-form'
 
 const CheckboxReserv = ({
   control,
@@ -13,8 +13,8 @@ const CheckboxReserv = ({
   const { field } = useController({
     name,
     control,
-  });
-  const error = errors?.[name]?.message || null;
+  })
+  const error = errors?.[name]?.message || null
 
   return (
     <div className='flex flex-col space-y-3'>
@@ -35,7 +35,7 @@ const CheckboxReserv = ({
       </div>
       {error && <span className='text-xs text-red-700'>{error}</span>}
     </div>
-  );
-};
+  )
+}
 
-export default CheckboxReserv;
+export default CheckboxReserv

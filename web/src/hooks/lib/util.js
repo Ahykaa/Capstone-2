@@ -1,3 +1,5 @@
+import { facilitieOptions } from '../const'
+
 export const capitalizeFirstLetter = (string) => {
   if (string == null || typeof string !== 'string') {
     return ''
@@ -32,4 +34,18 @@ export const formatTime = (timeString) => {
     minute: 'numeric',
     hour12: true,
   })
+}
+
+export const getFacilityLabels = (facilityValues) => {
+  if (!Array.isArray(facilityValues)) {
+    facilityValues = [facilityValues]
+  }
+
+  return facilityValues
+    .map((value) => {
+      const facility = facilitieOptions.find((f) => f.value === value)
+      return facility ? facility.label : 'Unknown'
+    })
+    .filter(Boolean) // Remove null or undefined values
+    .join(', ')
 }

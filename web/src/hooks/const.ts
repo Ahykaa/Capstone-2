@@ -79,6 +79,13 @@ export const requestOptions = [
 ]
 export const facilitieOptions = [
   {
+    value: '0',
+    label: 'Select Facilities',
+    disabled: true,
+    selected: true,
+    hidden: true,
+  },
+  {
     value: '1',
     label: "Martha's Place",
   },

@@ -3,17 +3,25 @@ import { Controller } from 'react-hook-form'
 
 const TimePicker = ({ name, control, placeholder, label, ...rest }) => {
   return (
-    <div className='timepicker-container max-w-[8rem] mx-auto'>
-      {/* Container for positioning */}
-      <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-        {label}
-      </label>
+    <div className='datepicker-container'>
+      {' '}
+      {/* Updated container class */}
+      <label className='floating-label'>{label}</label> {/* Floating label */}
       <Controller
         name={name}
         control={control}
         rules={{ required: 'Time is required' }}
         render={({ field }) => (
           <div className='relative'>
+            <input
+              type='time'
+              id={name}
+              className='bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              placeholder={placeholder}
+              value={field.value || ''}
+              onChange={(e) => field.onChange(e.target.value)}
+              {...rest}
+            />
             <div className='absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none'>
               <svg
                 className='w-4 h-4 text-gray-500 dark:text-gray-400'
@@ -29,15 +37,6 @@ const TimePicker = ({ name, control, placeholder, label, ...rest }) => {
                 />
               </svg>
             </div>
-            <input
-              type='time'
-              id={name}
-              className='bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              placeholder={placeholder}
-              value={field.value || ''}
-              onChange={(e) => field.onChange(e.target.value)}
-              {...rest}
-            />
           </div>
         )}
       />

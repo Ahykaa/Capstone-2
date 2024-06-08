@@ -38,7 +38,6 @@ const Reservation = () => {
               <div className='w-full mb-4'>
                 <SelectInput
                   name='facilities'
-                  className='w-60'
                   options={facilitieOptions}
                   {...formState}
                 />
@@ -48,7 +47,6 @@ const Reservation = () => {
                   placeholder='Date Prepared'
                   name='reserv_at'
                   control={control}
-                  disabled
                   {...formState}
                 />
               </div>
