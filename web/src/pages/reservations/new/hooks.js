@@ -68,7 +68,6 @@ export function useHooks() {
     formData.event_time += ':00' // Append seconds to event_time
     formData.time_at += ':00' // Append seconds to time_at
 
-
     try {
       const { message } = await createReservationMutation(formData).unwrap()
 
@@ -76,7 +75,7 @@ export function useHooks() {
         message: message,
       })
       router.push(`/reservations`)
-    }catch (error) {
+    } catch (error) {
       handleError(error)
     }
   }
