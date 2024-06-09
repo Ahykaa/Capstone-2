@@ -1,11 +1,13 @@
 import React from 'react'
 import { useDepartments } from '@/hooks/redux/useDepartments'
+import { dashboardApi } from '@/hooks/api/dashboardApi'
 import { useUser } from '@/hooks/redux/auth'
 
 import CardItem from '@/components/organisms/Card'
 import { formatAsMoney } from '@/hooks/lib/util'
 
 const StaffDashboard = () => {
+  const { data } = dashboardApi.useGetDashboardQuery()
   const { departments } = useDepartments()
   const { user } = useUser()
 
@@ -13,9 +15,15 @@ const StaffDashboard = () => {
   const userDepartment = departments.find(
     (dept) => dept.id === user.department_id,
   )
+  const userDepartmentStatusCounts =
+    data?.status_counts_per_department?.[user.department_id] ?? {}
+
   const cardData = [
-    { title: userDepartment?.budgets ?? 0, description: 'Approved' },
-    { title: userDepartment?.budgets ?? 0, description: 'Pending' },
+    { title: userDepartmentStatusCounts[9] ?? 0, description: 'Approved' },
+    {
+      title: userDepartmentStatusCounts['pending'] ?? 0,
+      description: 'Pending',
+    },
     {
       title: formatAsMoney(userDepartment?.budget ?? 0),
       description: 'Total Budget',

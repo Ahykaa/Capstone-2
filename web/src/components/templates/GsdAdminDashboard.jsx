@@ -17,10 +17,15 @@ const GsdAdminDashboard = () => {
   const userDepartment = departments.find(
     (dept) => dept.id === user.department_id,
   )
+  const userDepartmentStatusCounts =
+    data?.status_counts_per_department?.[user.department_id] ?? {}
 
   const cardData = [
-    { title: data?.status_counts?.delivered ?? 0, description: 'Approved' },
-    { title: data?.status_counts?.open ?? 0, description: 'Pending' },
+    { title: userDepartmentStatusCounts[9] ?? 0, description: 'Approved' },
+    {
+      title: userDepartmentStatusCounts['pending'] ?? 0,
+      description: 'Pending',
+    },
     {
       title: formatAsMoney(userDepartment?.budget ?? 0),
       description: 'Total Budget',
