@@ -119,7 +119,7 @@ const Reservation = () => {
               <TextAreaInput
                 label='Own Items'
                 name='ownItems'
-                placeholder='Own Items'
+                placeHolder='Own Items'
                 control={control}
                 {...formState}
               />

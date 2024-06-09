@@ -4,7 +4,10 @@ const BreadCrumbs = ({ breadcrumbs }) => {
   if (!breadcrumbs || !breadcrumbs.length) return null
 
   return (
-    <Breadcrumb aria-label='Default breadcrumb example'>
+    <Breadcrumb
+      aria-label='Default breadcrumb example'
+      className='bg-green-100 px-5 py-3 dark:bg-green-800'
+    >
       {breadcrumbs?.map((breadcrumb) => {
         return (
           <Breadcrumb.Item

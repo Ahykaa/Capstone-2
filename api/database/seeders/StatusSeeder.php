@@ -22,7 +22,7 @@ class StatusSeeder extends Seeder
             ['id' => 6, 'label' => 'Approved by Cash Management'],
             ['id' => 7, 'label' => 'Approved by Director for Admin'],
             ['id' => 8, 'label' => 'Approved by Director for Finance'],
-            ['id' => 9, 'label' => 'Aprroved'],
+            ['id' => 9, 'label' => 'Approved'],
         ], ['label'], ['created_at', 'updated_at']);
     }
 }
