@@ -67,7 +67,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::group(['middleware' => ['restrictRole:superadmin'], 'prefix' => 'superadmin'], function () {
-      
         Route::resource('users', UserController::class)->only(['index', 'store', 'destroy']);
     });
 

@@ -25,14 +25,15 @@ const StaffDashboard = () => {
       description: 'Pending',
     },
     {
-      title: formatAsMoney(userDepartment?.budget ?? 0),
+      title: formatAsMoney(userDepartment?.budget - data?.approved_amount ?? 0),
       description: 'Total Budget',
     },
     {
-      title: formatAsMoney(userDepartment?.budgets ?? 0),
+      title: formatAsMoney(data?.approved_amount ?? 0),
       description: 'Total Utilized Budget',
     },
   ]
+
   return (
     <div className='mx-auto max-w-screen-lg'>
       <div className='grid grid-cols-4 gap-4'>
