@@ -10,7 +10,6 @@ const SuperAdminDasboard = () => {
   const { departments } = useDepartments()
   const { user } = useUser()
 
-  // Filter department based on user's department_id
   const userDepartment = departments.find(
     (dept) => dept.id === user.department_id,
   )
@@ -24,11 +23,11 @@ const SuperAdminDasboard = () => {
       description: 'Pending',
     },
     {
-      title: formatAsMoney(userDepartment?.budget ?? 0),
+      title: formatAsMoney(userDepartment?.budget - data?.approved_amount ?? 0),
       description: 'Total Budget',
     },
     {
-      title: formatAsMoney(userDepartment?.budgets ?? 0),
+      title: formatAsMoney(data?.approved_amount ?? 0),
       description: 'Total Utilized Budget',
     },
   ]
