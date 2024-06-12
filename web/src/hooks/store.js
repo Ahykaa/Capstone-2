@@ -13,6 +13,7 @@ import { statusApi } from './api/statusApi'
 import { requestforApi } from './api/requestforApi'
 import { reservationApi } from './api/reservationApi'
 import { orderEntriesApi } from './api/orderEntriesApi'
+import { reservationEntriesApi } from './api/reservationEntriesApi'
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     [requestforApi.reducerPath]: requestforApi.reducer,
     [reservationApi.reducerPath]: reservationApi.reducer,
     [orderEntriesApi.reducerPath]: orderEntriesApi.reducer,
+    [reservationEntriesApi.reducerPath]: reservationEntriesApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
@@ -42,6 +44,7 @@ export const store = configureStore({
       requestforApi.middleware,
       reservationApi.middleware,
       orderEntriesApi.middleware,
+      reservationEntriesApi.middleware,
     ]),
 })
 

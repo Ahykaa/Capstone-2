@@ -2,6 +2,7 @@ import React from 'react'
 import DatePicker from '@/components/organisms/DatePicker'
 import TextInput from '@/components/organisms/TextInput'
 import TemplateGSD from '@/components/templates/TemplateGSD'
+import TextAreaInput from '@/components/organisms/TextAreaInput'
 import { useHooks } from './hooks'
 import { facilitieOptions, particulars } from '@/hooks/const'
 import PageHeader from '@/components/organisms/PageHeader'
@@ -10,10 +11,10 @@ import SelectInput from '@/components/organisms/SelectInput'
 import TimePicker from '@/components/organisms/TimePicker'
 import { Button } from 'flowbite-react'
 import { FaList } from 'react-icons/fa'
-import TextAreaInput from '@/components/organisms/TextAreaInput'
+import { HiPlus } from 'react-icons/hi'
 
 const Reservation = () => {
-  const { formState, handleSubmit, control } = useHooks()
+  const { formState, handleSubmit, control, fields, append } = useHooks()
 
   const breadcrumbs = [
     {
@@ -27,6 +28,10 @@ const Reservation = () => {
       icon: MdOutlineBookmarkAdded,
     },
   ]
+
+  const addEntry = () => {
+    append({ particulars: '', quantity: '', rate: '', amount: '' })
+  }
 
   return (
     <TemplateGSD>
@@ -58,7 +63,6 @@ const Reservation = () => {
               <TextInput
                 label='Company/Name'
                 name='company_name'
-                control={control}
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -66,7 +70,6 @@ const Reservation = () => {
               <TextInput
                 label='Representative'
                 name='representative'
-                control={control}
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -76,7 +79,6 @@ const Reservation = () => {
               <TextInput
                 label='Address'
                 name='address'
-                control={control}
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -84,7 +86,6 @@ const Reservation = () => {
               <TextInput
                 label='Activity'
                 name='activity'
-                control={control}
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -94,7 +95,6 @@ const Reservation = () => {
               <TextInput
                 label='Expected Number of Participants'
                 name='no_participants'
-                control={control}
                 {...formState}
                 variant='outlined'
                 color='success'
@@ -126,50 +126,58 @@ const Reservation = () => {
             </div>
             <div className='shadow-lg p-4 rounded-lg text-center'>
               <span className='font-bold'>Charges</span>
-              <div className='flex space-x-4'>
-                <div className='w-1/2'>
-                  <SelectInput
-                    name='particulars'
-                    options={[
-                      { value: 0, label: 'Select Items', disabled: true },
-                      ...particulars,
-                    ]}
-                    control={control}
-                    {...formState}
-                  />
+              {fields.map((entry, index) => (
+                <div key={entry.id} className='flex space-x-4'>
+                  <div className='w-1/2'>
+                    <SelectInput
+                      name={`entries[${index}].particulars`}
+                      options={[
+                        { value: '', label: 'Select Items', disabled: true },
+                        ...particulars,
+                      ]}
+                      {...formState}
+                    />
+                  </div>
+                  <div className='w-1/2'>
+                    <TextInput
+                      label='Quantity'
+                      name={`entries[${index}].quantity`}
+                      variant='filled'
+                      color='success'
+                      {...formState}
+                    />
+                  </div>
+                  <div className='w-1/2'>
+                    <TextInput
+                      label='Rate'
+                      name={`entries[${index}].rate`}
+                      variant='filled'
+                      color='success'
+                      {...formState}
+                    />
+                  </div>
+                  <div className='w-1/2'>
+                    <TextInput
+                      label='Amount'
+                      name={`entries[${index}].amount`}
+                      variant='filled'
+                      color='success'
+                      {...formState}
+                    />
+                  </div>
                 </div>
-                <div className='w-1/2'>
-                  <TextInput
-                    label='Quantity'
-                    name='quantity'
-                    variant='filled'
-                    control={control}
-                    color='success'
-                    {...formState}
-                  />
-                </div>
-                <div className='w-1/2'>
-                  <TextInput
-                    label='Rate'
-                    name='rate'
-                    variant='filled'
-                    control={control}
-                    color='success'
-                    {...formState}
-                  />
-                </div>
-                <div className='w-1/2'>
-                  <TextInput
-                    label='Amount'
-                    name='amount'
-                    variant='filled'
-                    control={control}
-                    color='success'
-                    {...formState}
-                  />
-                </div>
-              </div>
+              ))}
             </div>
+            <button
+              type='button'
+              onClick={addEntry}
+              className='text-black-500 flex items-center justify-center w-1/4 mx-auto mt-4'
+              color='success'
+            >
+              <HiPlus className='inline-block mr-1' />
+              Add Entry
+            </button>
+            {/* Submit Button */}
             <Button
               color='success'
               type='submit'

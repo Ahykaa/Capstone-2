@@ -1,3 +1,4 @@
+// Reservation Component
 import PageHeader from '@/components/organisms/PageHeader'
 import RowItem from '@/components/organisms/RowItem'
 import TemplateGSD from '@/components/templates/TemplateGSD'
@@ -6,13 +7,14 @@ import { FaList } from 'react-icons/fa'
 import useHooks from './hooks'
 import Loading from '@/components/atoms/Loading'
 import dayjs from 'dayjs'
-import { formatTime, getFacilityLabels } from '@/hooks/lib/util'
+import { formatAsMoney, formatTime, getFacilityLabels } from '@/hooks/lib/util'
 
 const Reservation = () => {
   const router = useRouter()
   const { reservationId } = router.query
 
-  const { reservation, isLoading } = useHooks(reservationId)
+  const { reservation, reservation_entries, isLoading } =
+    useHooks(reservationId)
   const breadcrumbs = [
     {
       href: '/reservations',
@@ -31,7 +33,7 @@ const Reservation = () => {
       {isLoading || !reservation ?
         <Loading />
       : <section className='flex flex-col space-y-4'>
-          <div className='flex space-x-4 '>
+          <div className='flex space-x-4'>
             <div className='w-full'>
               <RowItem
                 label='Facilities'
@@ -99,24 +101,37 @@ const Reservation = () => {
             </div>
           </div>
 
-          <div className='shadow-lg p-4 rounded-lg space-y-4 text-center'>
-            <span className='font-bold g-4'>Charges</span>
-            <div className='flex space-x-4'>
-              <div className='w-1/2'>
-                <RowItem label='Particulars' value={reservation.particulars} />
-              </div>
-              <div className='w-1/2'>
-                <RowItem label='Quantity' value={reservation.quantity} />
-              </div>
-              <div className='w-1/2'>
-                <RowItem label='Rate' value={reservation.rate} />
-              </div>
-              <div className='w-1/2'>
-                <RowItem label='Amount' value={reservation.amount} />
-              </div>
-              <div className='w-1/2'>
-                <RowItem label='Remarks' />
-              </div>
+          <div>
+            <h3 className='font-bold text-center'>Charges</h3>
+            {reservation_entries && reservation_entries.length > 0 ?
+              reservation_entries.map((entry, index) => (
+                <div key={index} className='shadow-lg p-4 rounded-lg space-y-4'>
+                  <div className='flex space-x-4'>
+                    <div className='w-1/5'>
+                      <RowItem label='Particulars' value={entry.particulars} />
+                    </div>
+                    <div className='w-1/5'>
+                      <RowItem label='Quantity' value={entry.quantity} />
+                    </div>
+                    <div className='w-1/5'>
+                      <RowItem label='Rate' value={entry.rate} />
+                    </div>
+                    <div className='w-1/5'>
+                      <RowItem label='Amount' value={entry.amount} />
+                    </div>
+                    <div className='w-1/5'>
+                      <RowItem label='Remarks' value={entry.remarks} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            : <div>No charges available</div>}
+            <div className='flex justify-end mt-4'>
+              <RowItem
+                label='Total Amount'
+                value={formatAsMoney(reservation.total_amount)}
+                className='font-bold'
+              />
             </div>
           </div>
         </section>

@@ -1,9 +1,6 @@
-// Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
 import { getToken } from '../lib/tokenStorage'
 
-// initialize an empty api service that we'll inject endpoints into later as needed
 export const baseApi = createApi({
   reducerPath: 'api',
   tagTypes: [
@@ -17,6 +14,7 @@ export const baseApi = createApi({
     'requestFor',
     'reservations',
     'order_entries',
+    'reservation_entries',
   ],
   overrideExisting: true,
   baseQuery: fetchBaseQuery({

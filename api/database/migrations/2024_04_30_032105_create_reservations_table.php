@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -25,12 +24,11 @@ return new class extends Migration
             $table->date('event_date');
             $table->time('event_time');
             $table->string('ownItems');
-            $table->string('particulars');
-            $table->integer('quantity');
-            $table->decimal('rate');
-            $table->decimal('amount');
             $table->timestamps();
+            $table->softDeletes();
         });
+
+        
     }
 
     /**
