@@ -15,4 +15,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function reservationEntries()
+    {
+        return $this->hasMany(ReservationEntry::class);
+    }
 }

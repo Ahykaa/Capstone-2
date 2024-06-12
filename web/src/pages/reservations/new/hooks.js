@@ -2,7 +2,7 @@ import { reservationApi } from '@/hooks/api/reservationApi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import * as yup from 'yup'
 import { useToast } from '@/hooks/useToast'
 import dayjs from 'dayjs'
@@ -28,16 +28,26 @@ const schema = yup.object({
     .required('Event time is required')
     .matches(/^\d{2}:\d{2}$/, 'Time must be in HH:mm format'),
   ownItems: yup.string().required('Own items are required'),
-  particulars: yup.string().required('Particulars are required'),
-  quantity: yup
-    .number()
-    .required('Quantity is required')
-    .typeError('Must be a number'),
-  rate: yup.number().required('Rate is required').typeError('Must be a number'),
-  amount: yup
-    .number()
-    .required('Amount is required')
-    .typeError('Must be a number'),
+  entries: yup
+    .array()
+    .of(
+      yup.object({
+        particulars: yup.string().required('Particulars are required'),
+        quantity: yup
+          .number()
+          .required('Quantity is required')
+          .typeError('Must be a number'),
+        rate: yup
+          .number()
+          .required('Rate is required')
+          .typeError('Must be a number'),
+        amount: yup
+          .number()
+          .required('Amount is required')
+          .typeError('Must be a number'),
+      }),
+    )
+    .min(1, 'At least one entry is required'),
 })
 
 export function useHooks() {
@@ -55,8 +65,14 @@ export function useHooks() {
       event_date: new Date().toISOString().split('T')[0],
       event_time: '00:00', // Initialize event_time with a default value
       time_at: '00:00', // Initialize time_at with a default value
+      entries: [{ particulars: '', quantity: '', rate: '', amount: '' }], // Initialize entries with a single empty object
     },
     resolver: yupResolver(schema),
+  })
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'entries',
   })
 
   const [createReservationMutation] =
@@ -69,12 +85,12 @@ export function useHooks() {
     formData.time_at += ':00' // Append seconds to time_at
 
     try {
-      const { message } = await createReservationMutation(formData).unwrap()
+      const response = await createReservationMutation(formData).unwrap()
 
       addToast({
-        message: message,
+        message: 'Created reservation successfully',
       })
-      router.push(`/reservations`)
+      router.push(`/reservations/${response.reservation.id}`)
     } catch (error) {
       handleError(error)
     }
@@ -87,5 +103,7 @@ export function useHooks() {
       register,
       control,
     },
+    fields,
+    append,
   }
 }

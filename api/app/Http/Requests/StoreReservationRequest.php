@@ -31,12 +31,15 @@ class StoreReservationRequest extends FormRequest
             'activity' => 'required|string',
             'no_participants' => 'required|numeric',
             'event_date' => 'required|date',
-            'quantity' => 'required|integer',
-            'event_time' => 'required|date_format:H:i:s',
+            'event_time' => 'nullable|date_format:H:i:s',
             'ownItems' => 'required|string',
-            'particulars' => 'required|string',
-            'rate' => 'required|numeric',
-            'amount' => 'required|numeric',
+            'entries' => 'required|array', // Ensure entries is an array
+
+            // Validation rules for each reservation entry
+            'entries.*.particulars' => 'required|string',
+            'entries.*.quantity' => 'required|integer',
+            'entries.*.rate' => 'required|numeric',
+            'entries.*.amount' => 'required|numeric',
         ];
     }
 }
