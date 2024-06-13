@@ -10,10 +10,7 @@ import { errors } from '@/constants/formErrors'
 import { useEffect } from 'react'
 
 const schema = yup.object({
-  facilities: yup
-    .string()
-    .notOneOf(['0'], errors.required)
-    .required(errors.required),
+  facilities: yup.string().required(errors.required),
   reserv_at: yup.date().nullable(),
   time_at: yup
     .string()

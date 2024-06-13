@@ -43,7 +43,10 @@ const Reservation = () => {
               <div className='w-full mb-4'>
                 <SelectInput
                   name='facilities'
-                  options={facilitieOptions}
+                  options={[
+                    { value: '', label: 'Select Facilities', disabled: true },
+                    ...facilitieOptions,
+                  ]}
                   {...formState}
                 />
               </div>
