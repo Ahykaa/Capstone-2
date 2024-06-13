@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import CardItem from '@/components/organisms/Card'
 import { dashboardApi } from '@/hooks/api/dashboardApi'
 import CalendarScheduler from '../organisms/CalendarScheduler'
@@ -8,6 +9,7 @@ import Table from '../organisms/Table'
 import { facilitieOptions } from '@/hooks/const'
 import { useReservations } from '@/hooks/redux/useReservation'
 import Loading from '../atoms/Loading'
+import Pagination from '../organisms/Pagination'
 
 const GsdAdminDashboard = () => {
   const { data } = dashboardApi.useGetDashboardQuery()
@@ -66,6 +68,49 @@ const GsdAdminDashboard = () => {
 
   const { reservations, isLoading } = useReservations()
 
+  // State to keep track of the selected month and year
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
+
+  // Handle month change
+  const handleMonthChange = (month, year) => {
+    setSelectedMonth(month)
+    setSelectedYear(year)
+  }
+
+  // Filter reservations based on the selected month and year
+  const filteredReservations =
+    reservations?.data?.filter((reservation) => {
+      const eventDate = new Date(reservation.event_date)
+      return (
+        eventDate.getMonth() === selectedMonth &&
+        eventDate.getFullYear() === selectedYear
+      )
+    }) || []
+
+  const bookedDates = filteredReservations.map(
+    (reservation) => new Date(reservation.event_date),
+  )
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 5
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(
+    (filteredReservations.length || 0) / itemsPerPage,
+  )
+
+  // Get current reservations based on pagination
+  const currentReservations = filteredReservations.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  )
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+  }
+
   return (
     <div>
       <div className='mx-auto max-w-screen-lg'>
@@ -81,13 +126,24 @@ const GsdAdminDashboard = () => {
       </div>
       <div className='flex mt-8'>
         <div className='w-1/2 p-4'>
-          <CalendarScheduler />
+          <CalendarScheduler
+            bookedDates={bookedDates}
+            onMonthChange={handleMonthChange}
+          />
         </div>
         <div className='w-1/2 shadow-lg p-4 rounded-lg text-center'>
           <span className='font-bold'>Reservations Schedule</span>
           {isLoading ?
             <Loading />
-          : <Table rows={rows} data={reservations.data} />}
+          : <>
+              <Table rows={rows} data={currentReservations} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </>
+          }
         </div>
       </div>
     </div>

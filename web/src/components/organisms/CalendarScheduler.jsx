@@ -1,34 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 
-const CalendarScheduler = () => {
-  // Initialize state for the current date
+const CalendarScheduler = ({ bookedDates, onMonthChange }) => {
   const today = new Date()
 
-  // State to manage the currently viewed month and year
   const [currentMonth, setCurrentMonth] = useState(today.getMonth())
   const [currentYear, setCurrentYear] = useState(today.getFullYear())
-
-  // State for the selected date
   const [selectedDate, setSelectedDate] = useState(today)
 
-  // Function to get the days in a month
+  useEffect(() => {
+    if (onMonthChange) {
+      onMonthChange(currentMonth, currentYear)
+    }
+  }, [currentMonth, currentYear, onMonthChange])
+
   const getDaysInMonth = (month, year) => {
     return new Date(year, month + 1, 0).getDate()
   }
 
-  // Function to get the starting day of the month
   const getStartingDayOfMonth = (month, year) => {
     return new Date(year, month, 1).getDay()
   }
 
-  // Function to handle date selection
   const handleDateClick = (date) => {
     setSelectedDate(date)
-    // Add your logic here to handle the selected date
   }
 
-  // Function to handle month navigation
   const handlePreviousMonth = () => {
     setCurrentMonth((prevMonth) => {
       if (prevMonth === 0) {
@@ -49,10 +46,12 @@ const CalendarScheduler = () => {
     })
   }
 
-  // Render calendar days
   const renderCalendarDays = () => {
     const daysInMonth = getDaysInMonth(currentMonth, currentYear)
     const startingDay = getStartingDayOfMonth(currentMonth, currentYear)
+    const bookedDatesSet = new Set(
+      bookedDates.map((date) => date.toDateString()),
+    )
 
     let calendarDays = []
 
@@ -64,8 +63,11 @@ const CalendarScheduler = () => {
       const date = new Date(currentYear, currentMonth, i)
       const isSelected = date.toDateString() === selectedDate.toDateString()
       const isToday = date.toDateString() === today.toDateString()
+      const isBooked = bookedDatesSet.has(date.toDateString())
       const classNames = `cursor-pointer p-2 rounded-lg text-center ${
-        isSelected ? 'bg-green-500 text-white' : 'hover:bg-green-100'
+        isSelected ? 'bg-green-500 text-white'
+        : isBooked ? 'bg-red-500 text-white'
+        : 'hover:bg-green-100'
       } ${isToday ? 'border-2 border-green-500' : ''}`
 
       calendarDays.push(

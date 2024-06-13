@@ -80,45 +80,38 @@ export const requestOptions = [
 export const facilitieOptions = [
   {
     value: '0',
-    label: 'Select Facilities',
-    disabled: true,
-    selected: true,
-    hidden: true,
-  },
-  {
-    value: '1',
     label: "Martha's Place",
   },
   {
-    value: '2',
+    value: '1',
     label: 'Function Room',
   },
   {
-    value: '3',
+    value: '2',
     label: 'Dining Room',
   },
   {
-    value: '4',
+    value: '3',
     label: 'Kitchen',
   },
   {
-    value: '5',
+    value: '4',
     label: 'Hotel Room',
   },
   {
-    value: '6',
+    value: '5',
     label: 'Classroom',
   },
   {
-    value: '7',
+    value: '6',
     label: 'Amphitheater',
   },
   {
-    value: '8',
+    value: '7',
     label: 'Open Court',
   },
   {
-    value: '9',
+    value: '8',
     label: 'Others',
   },
 ]
