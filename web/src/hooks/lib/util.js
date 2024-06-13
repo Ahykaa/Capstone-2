@@ -1,4 +1,4 @@
-import { facilitieOptions } from '../const'
+import { facilitieOptions, particulars } from '../const'
 
 export const capitalizeFirstLetter = (string) => {
   if (string == null || typeof string !== 'string') {
@@ -48,4 +48,8 @@ export const getFacilityLabels = (facilityValues) => {
     })
     .filter(Boolean) // Remove null or undefined values
     .join(', ')
+}
+export const getParticularLabel = (value) => {
+  const particular = particulars.find((p) => p.value === parseInt(value))
+  return particular ? particular.label : 'Unknown'
 }

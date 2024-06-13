@@ -2,52 +2,42 @@ import { reservationApi } from '@/hooks/api/reservationApi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
 import { useToast } from '@/hooks/useToast'
 import dayjs from 'dayjs'
+import { errors } from '@/constants/formErrors'
+import { useEffect } from 'react'
 
 const schema = yup.object({
-  facilities: yup.string(),
+  facilities: yup
+    .string()
+    .notOneOf(['0'], errors.required)
+    .required(errors.required),
   reserv_at: yup.date().nullable(),
   time_at: yup
     .string()
-    .nullable()
+    .required(errors.required)
     .matches(/^\d{2}:\d{2}$/, 'Time must be in HH:mm format'),
-  company_name: yup.string().required('Company name is required'),
-  representative: yup.string().required('Representative is required'),
-  address: yup.string().required('Address is required'),
-  activity: yup.string().required('Activity is required'),
-  no_participants: yup
-    .number()
-    .required('Number of participants is required')
-    .typeError('Must be a number'),
-  event_date: yup.date().required('Event date is required'),
+  company_name: yup.string().required(errors.required),
+  representative: yup.string().required(errors.required),
+  address: yup.string().required(errors.required),
+  activity: yup.string().required(errors.required),
+  no_participants: yup.number().required(errors.required),
+  event_date: yup.date().required(errors.required),
   event_time: yup
     .string()
-    .required('Event time is required')
+    .required(errors.required)
     .matches(/^\d{2}:\d{2}$/, 'Time must be in HH:mm format'),
-  ownItems: yup.string().required('Own items are required'),
-  entries: yup
-    .array()
-    .of(
-      yup.object({
-        particulars: yup.string().required('Particulars are required'),
-        quantity: yup
-          .number()
-          .required('Quantity is required')
-          .typeError('Must be a number'),
-        rate: yup
-          .number()
-          .required('Rate is required')
-          .typeError('Must be a number'),
-        amount: yup
-          .number()
-          .required('Amount is required')
-          .typeError('Must be a number'),
-      }),
-    )
-    .min(1, 'At least one entry is required'),
+  ownItems: yup.string().nullable(),
+  entries: yup.array().of(
+    yup.object({
+      particulars: yup.string().required(errors.required),
+      quantity: yup.number().required(errors.required),
+      rate: yup.number().required(errors.required),
+      amount: yup.number().required(errors.required),
+    }),
+  ),
 })
 
 export function useHooks() {
@@ -59,13 +49,14 @@ export function useHooks() {
     formState: { errors: formErrors },
     handleSubmit,
     control,
+    setValue,
   } = useForm({
     defaultValues: {
       reserv_at: new Date().toISOString().split('T')[0],
       event_date: new Date().toISOString().split('T')[0],
       event_time: '00:00', // Initialize event_time with a default value
       time_at: '00:00', // Initialize time_at with a default value
-      entries: [{ particulars: '', quantity: '', rate: '', amount: '' }], // Initialize entries with a single empty object
+      entries: [{ particulars: '', quantity: 1, rate: 0, amount: 0 }], // Initialize entries with a single empty object
     },
     resolver: yupResolver(schema),
   })
@@ -77,6 +68,17 @@ export function useHooks() {
 
   const [createReservationMutation] =
     reservationApi.useCreateReservationMutation()
+
+  // Watch for changes in entries
+  const entries = useWatch({ control, name: 'entries' })
+
+  useEffect(() => {
+    entries.forEach((entry, index) => {
+      const { quantity, rate } = entry
+      const amount = quantity * rate
+      setValue(`entries.${index}.amount`, amount)
+    })
+  }, [entries, setValue])
 
   const onSubmit = async (formData) => {
     formData.reserv_at = dayjs(formData.reserv_at).format('YYYY-MM-DD HH:mm:ss')

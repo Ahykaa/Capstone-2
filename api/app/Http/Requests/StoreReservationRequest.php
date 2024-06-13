@@ -32,7 +32,7 @@ class StoreReservationRequest extends FormRequest
             'no_participants' => 'required|numeric',
             'event_date' => 'required|date',
             'event_time' => 'nullable|date_format:H:i:s',
-            'ownItems' => 'required|string',
+            'ownItems' => 'nullable|string',
             'entries' => 'required|array', // Ensure entries is an array
 
             // Validation rules for each reservation entry

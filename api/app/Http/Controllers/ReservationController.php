@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReservationRequest;
 use App\Models\Reservation;
 use App\Models\ReservationEntry;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class ReservationController extends Controller
                 return $q->where('representative', 'LIKE', "%{$keyword}%")
                     ->orWhere('facilities', 'LIKE', "%{$keyword}%");
             })
-            ->orderBy('event_date', 'DESC')
+            ->orderByRaw("ABS(DATEDIFF(event_date, '" . Carbon::now() . "'))")
             ->paginate($perPage);
 
         return response()->json(['reservations' => $reservations]);
@@ -31,12 +32,20 @@ class ReservationController extends Controller
         $user = Auth::user();
 
         $validatedData = $request->validated();
-       
+
         // Add any other necessary modifications to the validated data
-        
+
         // Separate the entries from the main reservation data
         $entries = $validatedData['entries'];
         unset($validatedData['entries']); // Remove entries from the main reservation data
+
+        // Calculate the total amount using array_reduce
+        $totalAmount = array_reduce($entries, function ($carry, $entry) {
+            return $carry + $entry['amount'];
+        }, 0);
+
+        // Add the calculated total amount to the validated data
+        $validatedData['total_amount'] = $totalAmount;
 
         // Create the reservation
         $reservation = Reservation::create($validatedData);
