@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('no_participants');
             $table->date('event_date');
             $table->time('event_time');
-            $table->string('ownItems');
+            $table->string('ownItems')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

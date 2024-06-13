@@ -1,4 +1,3 @@
-// Reservation Component
 import PageHeader from '@/components/organisms/PageHeader'
 import RowItem from '@/components/organisms/RowItem'
 import TemplateGSD from '@/components/templates/TemplateGSD'
@@ -7,7 +6,12 @@ import { FaList } from 'react-icons/fa'
 import useHooks from './hooks'
 import Loading from '@/components/atoms/Loading'
 import dayjs from 'dayjs'
-import { formatAsMoney, formatTime, getFacilityLabels } from '@/hooks/lib/util'
+import {
+  formatAsMoney,
+  formatTime,
+  getFacilityLabels,
+  getParticularLabel,
+} from '@/hooks/lib/util'
 
 const Reservation = () => {
   const router = useRouter()
@@ -104,27 +108,32 @@ const Reservation = () => {
           <div>
             <h3 className='font-bold text-center'>Charges</h3>
             {reservation_entries && reservation_entries.length > 0 ?
-              reservation_entries.map((entry, index) => (
-                <div key={index} className='shadow-lg p-4 rounded-lg space-y-4'>
-                  <div className='flex space-x-4'>
-                    <div className='w-1/5'>
-                      <RowItem label='Particulars' value={entry.particulars} />
-                    </div>
-                    <div className='w-1/5'>
-                      <RowItem label='Quantity' value={entry.quantity} />
-                    </div>
-                    <div className='w-1/5'>
-                      <RowItem label='Rate' value={entry.rate} />
-                    </div>
-                    <div className='w-1/5'>
-                      <RowItem label='Amount' value={entry.amount} />
-                    </div>
-                    <div className='w-1/5'>
-                      <RowItem label='Remarks' value={entry.remarks} />
+              reservation_entries.map((entry, index) => {
+                return (
+                  <div
+                    key={index}
+                    className='shadow-lg p-4 rounded-lg space-y-4'
+                  >
+                    <div className='flex space-x-4'>
+                      <div className='w-1/4'>
+                        <RowItem
+                          label='Particulars'
+                          value={getParticularLabel(entry.particulars)}
+                        />
+                      </div>
+                      <div className='w-1/5'>
+                        <RowItem label='Quantity' value={entry.quantity} />
+                      </div>
+                      <div className='w-1/5'>
+                        <RowItem label='Rate' value={entry.rate} />
+                      </div>
+                      <div className='w-1/5'>
+                        <RowItem label='Amount' value={entry.amount} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                )
+              })
             : <div>No charges available</div>}
             <div className='flex justify-end mt-4'>
               <RowItem
