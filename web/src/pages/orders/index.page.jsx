@@ -147,9 +147,16 @@ const Order = () => {
         <Table
           rows={rows}
           data={orders.data}
-          rowClassName={(row) =>
-            row.department_id === user.department_id ? 'bg-green-200' : ''
-          }
+          rowClassName={(row) => {
+            if (
+              user.role !== 'staff' &&
+              user.role !== 'admin' &&
+              row.department_id === user.department_id
+            ) {
+              return 'bg-green-200'
+            }
+            return ''
+          }}
         />
       </section>
 
