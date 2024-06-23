@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Table = ({ rows, data }) => {
+const Table = ({ rows, data, rowClassName }) => {
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
       <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-striped'>
@@ -15,7 +15,10 @@ const Table = ({ rows, data }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item.id} className={`border-b dark:border-gray-700`}>
+            <tr
+              key={item.id}
+              className={`border-b dark:border-gray-700 ${rowClassName(item)}`}
+            >
               {rows.map((row) => (
                 <td key={row.key} className='px-6 py-4'>
                   {row.render(item)}

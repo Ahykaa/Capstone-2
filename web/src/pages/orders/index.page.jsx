@@ -144,7 +144,13 @@ const Order = () => {
             {...formState}
           />
         </div>
-        <Table rows={rows} data={orders.data} />
+        <Table
+          rows={rows}
+          data={orders.data}
+          rowClassName={(row) =>
+            row.department_id === user.department_id ? 'bg-green-200' : ''
+          }
+        />
       </section>
 
       <Pagination
