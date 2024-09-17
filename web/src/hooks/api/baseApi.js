@@ -18,7 +18,7 @@ export const baseApi = createApi({
   ],
   overrideExisting: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API || 'http://localhost:8000/api',
+    baseUrl: 'https://seagreen-turkey-199518.hostingersite.com/api',
     prepareHeaders: (headers) => {
       const token = getToken()
       if (token) {
